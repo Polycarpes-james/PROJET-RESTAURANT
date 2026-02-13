@@ -1,0 +1,149 @@
+.main-header-content, .body-header-others .main-header-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    padding: 20px 30px;
+    
+}
+
+.main-header-content a, .body-header-others .main-header-content a{
+    color: var(--white-color);
+}
+
+.main-header-content{
+    background: 
+            linear-gradient(to right, #000000, #000000dd, #000000);
+}
+
+.body-header{
+    background: 
+        radial-gradient(600% 200px at 0% 0%, #000000 0, transparent 500%),
+        /* url("/public/img/pexels-pixabay-260922.jpg") */
+        url("/public/img/44-Breeze-Angle-2-1-scaled-aspect-ratio-1366-768-scaled.jpg")
+
+    ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 105vh;
+    color: white;
+}
+.profile-style{
+
+}
+.profile-style .main-header-content .inscription-users div p, .inscription-users div p{
+    color: white;
+}
+.body-header-others{
+    background: 
+        radial-gradient(600% 200px at 0% 0%, #000000 0, transparent 500%),
+        url("/public/img/pexels-pixabay-260922.jpg")
+    ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 55vh;
+    box-shadow: 0 10px 10px grey;
+}
+
+.main-logo h1 a{
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.inscription-users{
+    position: relative;
+}
+
+.nav-content, .inscription-users, .action-container{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-content a, .inscription-users a, .action-container a{
+    text-transform: uppercase;
+    transition: 0.3s;
+    font-size: 15px;
+    opacity: 0.8;
+}
+.nav-content a:hover, .inscription-users div a:hover, .modify{
+    color: var(--main-color)!important;
+    opacity: 1!important;
+    transform: scale(1.1);
+}
+.logo_R{
+    color: var(--main-color);
+}
+
+.inscription-users .inscription-simple a:first-child{
+    border: 1px solid var(--main-color);
+    color: white!important; 
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+.inscription-users div, .inscription-users .inscription-simple{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.inscription-users button{
+    background: transparent;
+    color: white;
+    transition: 0.3s;
+    opacity: 0.7;
+    cursor: pointer;
+    border: none;
+}
+.inscription-users button:hover{
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+
+/*============================================================================================= */
+
+.main-header-container{
+    width: 75%;
+    margin: 6em auto;
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.main-header-container .presentation-part h2{
+    font-size: 100px;
+    font-family: "Brastika";
+    line-height: 0.9;
+}
+.action-container{
+    margin: 3em 0;
+    gap: 0;
+}
+.action-container a{
+    color: var(--white-color)!important;
+    opacity: 1;
+    padding: 15px 35px;
+    border: 1px solid var(--main-color);
+}
+
+.action-container a:first-child{
+    background-color: var(--main-color);
+    color: white;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.action-container a:last-child{
+    color: var(--main-color)!important;
+    background-color: var(--white-color);
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 1px solid var(--white-color);
+}
+/* ================================================================ */
+

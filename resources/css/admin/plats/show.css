@@ -1,0 +1,67 @@
+.plat-item .description{
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #80808010;
+}
+
+.title-category{
+    display: flex;
+    align-items: end;
+    gap: 30px;
+    border: 1px solid #80808034;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.plat-item .ingredients, .plat-item .ingredients-item .total-price{
+    display: flex;
+    margin-top: 5px;
+    justify-content: space-between;
+}
+.plat-item .ingredients-item{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+.plat-item .ingredients-item h2{
+    border-bottom: 1px solid grey;
+}
+
+.plat-item .ingredients-item .ingredients p:last-child{
+    opacity: 0.6;
+}
+
+.plat-item .ingredients-item .total-price{
+    margin-top: 10px;
+    padding: 10px;
+    background-color: var(--main-color);
+    color: var(--white-color);
+    border-radius: 5px;
+}
+.plat-item .ingredients-item .total-price p:last-child{
+    opacity: 0.9;
+}
+
+.valide, .invalide{
+    border-radius: 15px;
+    padding: 10px;
+    width: max-content;
+    /* margin-left: auto; */
+}
+.valide{
+    background-color: #caffca;
+    color: #2f902f;
+}
+.invalide {
+    background-color: #ffbab7;
+    color: #ff655d;
+}
+.plat-item .status{
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 3px;
+}
+.plat-item .status p:first-child{
+    opacity: 0.6;
+}

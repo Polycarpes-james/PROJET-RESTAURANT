@@ -1,0 +1,282 @@
+.container-plats-info{
+    color: white;
+}
+
+.container-plats-info h1{
+    font-size: 80px;
+    line-height: 1;
+    font-family: "Brastika";
+}
+
+.container-plats h2{
+    font-size: 30px;
+    color: var(--main-color);
+    border-bottom: 1px solid var(--main-color);
+    text-transform: uppercase;
+}
+.container-plats{
+    width: 80%;
+    margin: 3em auto;
+}
+
+
+
+/* =============================================== LA PARTIE SHOW ================================== */
+
+.plat-item-body{
+    background-position: center!important;
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    height: 60vh;
+    box-shadow: 0 10px 20px grey;
+    color: white;
+}
+
+.plat-item-header{
+    background: transparent;
+}
+
+.content-plat-item{
+    width: 1000px;
+    max-width: 100%;
+    margin: 2em auto;
+}
+.content-plat-item h1{
+    font-size: 75px;
+    opacity: 0.8;
+}
+.content-plat-item .description-plat p{
+    opacity: 0.7;
+}
+
+.plat-item-body .content-plat-item .price-plat p:first-child{
+    font-size: 90px;
+    color: #c26214;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+
+
+.container-plats{
+    position: relative;
+    padding-top: 2em;
+}
+
+.container-plats .pass-commande-items{
+    display: flex;
+    position: absolute;
+    top: -2%;
+    right: 0;
+    left: 0;
+    box-shadow: 0 0 3px var(--main-color);
+    border-radius: 5px;
+    padding: 40px 20px;
+    background-color: white;
+    flex-direction: column;
+}
+
+.container-plats .pass-commande-items div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-plats .pass-commande-items span{
+    opacity: 0.5;
+}
+
+.content-commandes-header h1{
+    font-size: 70px;
+    opacity: 0.9;
+}
+
+
+.container-plats form .categories-items-commandes{
+    display: flex;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.container-plats form .categories-items-commandes a{
+    padding: 10px 20px;
+    border: none;
+    background-color: #bfd5ff;
+    color: var(--main-color);
+    border-radius: 5px;
+    transition: 0.3s;
+    width: 100%;
+    cursor: pointer;
+}
+
+.container-plats form .categories-items-commandes a:hover{
+    transform: scale(1.04);
+}
+
+.no-height{
+    opacity: 0;
+}
+.container-plats .plats-items .pictures-parts{
+    position: relative;
+}
+.container-plats .plats-items .pictures-parts img{
+    border-radius: 10px;
+    box-shadow: 0 0 5px grey;
+}
+.container-plats .plats-items .pictures-parts::after{
+    background-color: transparent;
+    position: absolute;
+    border: 1px solid #3045ff2c;
+    border-radius: 5px;
+    content: "";
+    top: -3.5%;
+    left: -3.5%;
+    z-index: -2999;
+}
+.container-plats .plats-items .pictures-parts div{
+    padding: 10px;
+    width: 25%;
+}
+.container-plats .plats-items .content-plats{
+    display: flex;
+    flex-direction: column;
+    gap: 4em;
+}
+.container-plats .plats-items .content-plats .item{
+    display: flex;
+    justify-content: space-between;
+    gap: 4em;
+    position: relative;
+    border-radius: 5px;
+}
+.container-plats .plats-items .content-plats .items{
+    position: relative;
+}
+
+.container-plats .plats-items .content-plats .items .btns-panier{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-plats .plats-items .content-plats .items .btns-panier form >*, .container-plats .plats-items .content-plats .items .btns-panier a{
+    color: white;
+    padding: 15px 30px;
+    border-radius: 5px;    
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: none;
+}
+/* .container-plats .plats-items .content-plats .items .btns-panier button{
+    padding: 14px 30px;
+    background-color: #c26214;
+    box-shadow: 0 0 10px #000000;
+} */
+.container-plats .plats-items .content-plats .items .btns-panier button:hover{
+    box-shadow: 0 0 5px #000000;
+}
+
+.container-plats .plats-items .content-plats .items .btns-panier a{
+    box-shadow: 0 0 7px #000000;
+    background-color: var(--main-color);
+}
+
+/* .container-plats .plats-items .content-plats .item::after{
+    position: absolute;
+    content: "";
+    top: 27%;
+    z-index: -400;
+    height: 50%;
+    background-color: #3045ff10;
+} */
+
+
+/* .container-plats .plats-items .content-plats .item:nth-child(odd)::after{
+    width: 1500px;
+    max-width: 130%;
+    transform: translateX(9%);
+}
+.container-plats .plats-items .content-plats .item:nth-child(even)::after{
+    transform: translateX(-11%);
+    max-width: 130%;
+    width: 1550px;
+} */
+
+.container-plats .plats-items .content-plats .item:nth-child(odd){
+    flex-direction: row-reverse;
+}
+
+.container-plats .plats-items .content-plats .item:nth-child(even){
+    flex-direction: row;
+}
+.container-plats .plats-items .content-plats .disponible-plat{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    flex-direction: column;
+}
+.container-plats .plats-items .content-plats .disponible-plat h3{
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--main-color);
+    font-family: "Braven";
+    opacity: 0.9;
+}
+.container-plats .plats-items .content-plats .ingredients{
+    margin-top: 1em;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+.container-plats .plats-items .content-plats .disponible{
+    position: absolute;
+    top: -70px;
+    right: 0;
+}
+
+.container-plats .plats-items .content-plats .valide, .container-plats .plats-items .content-plats .invalide{
+    box-shadow: 0.3px 0.4px 10px grey;
+}
+
+.container-plats .plats-items .content-plats .ingredients h4{
+    font-size: 25px;
+}
+.container-plats .plats-items .content-plats .description{
+    opacity: 0.6;
+}
+.container-plats .plats-items .content-plats .price{
+    color: #c26214;
+    font-weight: bold;
+    width: max-content;
+    margin: 0.5em 0;
+    font-size: 40px;
+}
+
+.container-plats .plats-items h2{
+    font-size: 30px;
+    margin-top: 2em;
+    font-family: "Albemarle Demo";
+    margin-bottom: 0.4em;
+    text-transform: capitalize;
+}
+
+.container-plats .commande-h2{
+    font-size: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.disponible-plat .comments-side{
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+.disponible-plat .comments-side .avis p{
+    opacity: 0.6;
+    color: var(--main-color);
+}

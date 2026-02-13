@@ -1,0 +1,59 @@
+.container-items-admin .plats-items .action-plat{
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    box-shadow: 0.3px 0.4px 5px #a5a5a5;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.container-items-admin .plats-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.container-items-admin .plats-items .action-plat .actions{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.container-items-admin .plats-items .action-plat .show, .show{
+    position: absolute;
+    inset: 0;
+}
+
+.container-items-admin .plats-items .action-plat .actions a, .plats-items .action-plat .actions button{
+    position: relative;
+    padding: 10px 20px;
+    transition: 0.3s;
+}
+
+.container-items-admin .plats-items .action-plat .actions a{
+    border-radius: 3px;
+    background-color: #83aeff;
+    color: white;
+}
+.container-items-admin .plats-items .action-plat .actions button{
+    border: 2px solid #ff8585;
+    cursor: pointer;
+    color: white;
+    background-color: #ff8585;
+    border-radius: 3px;
+}
+.container-items-admin .plats-items .action-plat a#show{
+    transition: 0.3s;
+    font-size: 20px;
+    opacity: 0.8;
+    color: var(--main-color);
+    font-weight: bold;
+}
+.container-items-admin .plats-items .action-plat .show-name-description{
+    display: flex;
+    align-items: end;
+    gap: 10px;
+}
+.container-items-admin .plats-items .action-plat p{
+    opacity: 0.5;
+    position: relative;
+}

@@ -1,0 +1,41 @@
+.panier-body{
+    background: 
+        radial-gradient(600% 200px at 0% 0%, #000000bc 0, transparent 500%),
+        /* url("/public/img/pexels-pixabay-260922.jpg") */
+        url("/public/img/pexels-vanmalidate-769289.jpg")
+    ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    box-shadow: 0 10px 20px grey;
+    color: white;
+}
+
+.panier-container{
+    margin: 0 2em;
+}
+
+.panier-header{
+    backdrop-filter: blur(15px);
+    background: transparent!important;
+}
+.plat-item-modal .items .actions-items{
+    position: relative;
+}
+.plat-item-modal .items input.text{
+  z-index: 0;
+  border: transparent;
+  background-color: transparent;
+  padding: 3px 5px;
+  font-size: 20px;
+  opacity: 0.6;
+  text-align: center;
+  max-width: 100%;
+  width: 44px;
+}
+
+
+.innertTotal{
+    margin-top: 8px;
+}

@@ -1,0 +1,72 @@
+.presentation-categories{
+    display: flex;
+    align-items: end;
+    margin-bottom: 2em;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 2px solid #80808064;
+}
+.presentation-categories h1{
+    font-size: 43px;
+    opacity: 0.9;
+}
+.presentation-categories a{
+    background: linear-gradient(to left, #1E3A8A, #2258ea);
+    color: transparent;
+    color: white;
+    padding: 10px 15px;
+    transition: 0.4s;
+    border-radius: 5px;
+}
+.presentation-categories a:hover{
+    background: linear-gradient(to right, #1E3A8A, #2258ea);
+    transform: scale(1.05);
+}
+
+.categories-items{
+    display: flex;
+    flex-direction: column;
+}
+
+.category-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #8080805c;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.category-item p{
+    color: var(--main-color);
+    font-weight: bold;
+}
+.action-category{
+    display: flex;
+    gap: 15px;
+    justify-content: end;
+    align-items: center;
+}
+.all-categories .action-category a, .all-categories .action-category button{
+    padding: 10px 15px;
+    color: var(--white-color);
+    border-radius: 5px;
+}
+.all-categories .action-category button{
+    border: none;
+    background-color: #800020;
+}
+.all-ingredients button{
+    border: none;
+    background: transparent;
+}
+.lucide-square-pen-icon{
+    color: var(--main-color);
+}
+.lucide-trash2-icon{
+    color: #ff5b5b;
+}
+.all-categories .action-category a{
+    background-color: var(--main-color);
+}
+

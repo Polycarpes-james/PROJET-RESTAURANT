@@ -1,0 +1,27 @@
+.select-item{
+    margin: 10px 0;
+}
+
+.select-item label{
+    font-size: 20px;
+    color: var(--main-color);
+}
+
+.select-item select{
+    border: 1px solid transparent;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 17px;
+    margin-top: 10px;
+    outline: none;
+    transition: all 0.3s ease;
+    padding: 10px;
+    color: #7c7c7c;
+    box-shadow: 0 0 5px #9b9b9b;
+}
+.select-item select option[value=""]{
+    font-size: 17px;
+}
+.select-item select:focus{
+    box-shadow: 0 0 5px #1E3A8A!important;
+}

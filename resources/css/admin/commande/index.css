@@ -1,0 +1,74 @@
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.styled-table thead tr {
+  background-color: #2563eb; /* bleu */
+  color: #fff;
+  text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid #ddd;
+}
+.styled-table th:first-child{
+  border-bottom-left-radius: 5px!important;
+  border-top-left-radius: 5px!important;
+}
+.styled-table th:last-child{
+  border-bottom-right-radius: 5px!important;
+  border-top-right-radius: 5px!important;
+}
+.styled-table td{
+  opacity: 0.5;
+}
+
+
+.styled-table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* Badges statut */
+.badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+.styled-table tbody tr:nth-child(odd) {
+  background-color: #ffffff; /* blanc */
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #0b509637; /* gris clair */
+}
+
+.badge.warning { background: #fef08a; color: #92400e; }
+.badge.success { background: #bbf7d0; color: #166534; }
+.badge.danger { background: #fecaca; color: #991b1b; }
+
+/* Boutons */
+.btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn.success {
+  background-color: #22c55e;
+  color: white;
+}
+
+.btn.success:hover {
+  background-color: #16a34a;
+}

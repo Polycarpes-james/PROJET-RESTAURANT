@@ -1,0 +1,87 @@
+
+.container-admin{
+    padding-top: 1em;
+}
+
+.container-admin .header-container-admin{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 70px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: 
+            radial-gradient(600% 200px at 0% 0%, #002a9e 0, transparent 100%),
+            radial-gradient(600% 200px at 0% 0%, #1d4ccd 0, transparent 100%),
+            #092570    ;
+    padding: 10px 0;
+    box-shadow: 5px 0 10px grey;
+    width: 15%;
+}
+
+
+.container-admin .header-container-admin a{
+    color: var(--white-color);
+    padding: 20px 2em;
+    transition: 0.3s;
+    opacity: 0.9;
+}
+.hover, .container-admin .header-container-admin a.nav-link-admin:hover{
+    background-color: #092570;
+    box-shadow: 0.5px 0.6px 5px #3460d8;
+    padding-left: 50px!important;
+}
+.container-admin .header-container-admin nav{
+    display: flex;
+    flex-direction: column;
+}
+.container-admin .header-container-admin nav{
+
+}
+.all-content-admin{
+    flex: 100;
+    margin-left: 250px;
+    padding: 5px 3em 3em 3em;
+}
+
+.all-content-admin .authentification{
+    text-align: end;
+    border-radius: 3px;
+    box-shadow: 0.3px 0.4px 5px grey;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.all-content-admin .authentification form{
+    margin-left: auto;
+}
+.all-content-admin .authentification button{
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    background-color: #ff8585;
+    border-radius: 5px;
+}
+
+.all-content-admin .content{
+    margin-top: 2em;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0.3px 0.4px 5px grey;
+}
+.success{
+    padding: 10px 15px;
+    background-color: #a8dfa8;
+    color: #1d731d;
+    border-radius: 5px;
+}
+
+.delete{
+    padding: 10px 15px;
+    background-color: #ff8989;
+    border-radius: 5px;
+    color: #da3232;
+}

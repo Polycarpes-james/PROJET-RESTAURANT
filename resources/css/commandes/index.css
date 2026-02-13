@@ -1,0 +1,189 @@
+.commandes-body{
+    background: 
+        radial-gradient(600% 200px at 0% 0%, #000000bc 0, transparent 500%),
+        /* url("/public/img/pexels-pixabay-260922.jpg") */
+        url("/public/img/pexels-evonics-1058277.jpg")
+    ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: auto;
+    box-shadow: 0 10px 20px grey;
+    color: white;
+}
+
+.commandes-header{
+    backdrop-filter: blur(15px);
+    background: transparent!important;
+}
+
+.pass-commande{
+    position: relative;
+    width: 90%;
+    margin: 1em auto;
+}
+
+.pass-commande-items{
+    display: flex;
+    position: sticky;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    left: 0;
+    max-width: 100%;
+    flex-direction: column;
+    padding: 15px 25px 0 25px;
+    gap: 1em;
+    line-height: 1;
+    box-shadow: 0 0 3px grey;
+    border-radius: 5px;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.pass-commande-items .categories-items-commandes{
+    display: flex;
+}
+.pass-commande-items .categories-items-commandes a{
+    padding: 10px;
+    background-color: #c26214;
+    border: 1px solid #c26214;
+    color: white;
+    /* border-radius: 5px; */
+}
+.pass-commande-items .categories-items-commandes a:hover{
+    background-color: white;
+    color: #c26214;
+    border: 1px solid #c26214;
+}
+.total-number-plats{
+    background-color: #ff7300;
+    border-radius: 100%;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    color: white;
+}
+
+
+
+.pass-commande-items div:first-child{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+.pass-commande-items div:first-child div:first-child{
+    display: flex;
+    flex-direction: column;
+}
+#ouvrirPanierBtn{
+    position: relative;
+}
+#ouvrirPanierBtn span{
+    position: absolute;
+    top: -140%;
+    left: 60%;
+}
+.inscription-users #ouvrirPanierBtn span {
+    top: -10%;
+    left: 70%;
+    padding: 2px 11px;
+} 
+
+.pass-commande-items span{
+    opacity: 0.5;
+}
+
+.content-commandes-header h1{
+    font-size: 70px;
+    opacity: 0.9;
+}
+
+/* ====================================== */
+.pass-commande .plats-items{
+    margin-top: 3em;
+}
+.pass-commande .plats-items .content-plats{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.pass-commande .plats-items .items-content, .pass-commande .plats-items .items-content .btns-panier a{
+    position: relative;
+}
+.pass-commande .plats-items .items-content .btns-panier{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+.pass-commande .plats-items .items-content .btns-panier button, .btn-picture{
+    width: 0;
+    height: 0;
+    border: none;
+    background-color: transparent;
+}
+.pass-commande .plats-items .items-content .btns-panier a{
+    background-color: var(--main-color);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+.pass-commande .plats-items .items-content .btns-panier p{
+    opacity: 0.6;
+    margin-bottom: 8px;
+}
+.clickable{
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+}
+
+
+.pass-commande .plats-items .content-plats .items{
+    width: 20%;
+}
+.pass-commande .plats-items .content-plats .items h3{
+    font-size: 20px;
+}
+.pass-commande .plats-items .items-content{
+    display: flex;
+    box-shadow: 0 0 3px #a5a5a5;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px;
+    gap: 10px;
+    cursor: pointer;
+}
+.pass-commande .plats-items .items-content .pictures-parts img{
+    border-radius: 5px;
+}
+.pass-commande .plats-items .items-content:hover{
+    transform: scale(1.01)!important;
+    box-shadow: 0 0 3px #c26214!important;
+}
+.deep-active{
+    box-shadow: 0 0 7px #c26214!important;
+}
+.pass-commande .plats-items .items-content .disponible-plat div{
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.pass-commande .plats-items .items-content .disponible-plat div p.price{
+    color: #c26214;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.pass-commande .plats-items .items-content .disponible-plat div p.price-none{
+    text-decoration: line-through;
+    opacity: 0.4;
+}

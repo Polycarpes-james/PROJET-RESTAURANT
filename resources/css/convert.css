@@ -1,0 +1,37 @@
+.convert-number{
+    padding: 20px;
+    margin-top:1em ;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #9b9b9b;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+}
+
+
+.convert-number label {
+    display: block;
+    color: var(--main-color);
+    opacity: 0.8;
+    font-weight: bolder;
+    letter-spacing: 0.9px;
+    margin: 10px 0 5px;
+}
+
+.convert-number input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.convert-number input:focus{
+    box-shadow: 0 0 5px #9b9b9b;
+}
+.convert-number .element-converted {
+    font-weight: bold;
+    margin-top: 15px;
+    color: rgba(43, 118, 63, 0.797);
+    letter-spacing: 2px;
+    font-size: 25px;
+}

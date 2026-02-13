@@ -1,0 +1,386 @@
+
+
+/* Modale */
+#customModal, #customModalShow, #modal-connect, #suppression_dish{
+    position: fixed;
+    top:0; 
+    left:0;
+    width:100%; 
+    height:100%;
+    display:flex;
+    justify-content:center;
+    background: #00000080;
+    z-index:9999;
+}
+
+#customModal{
+    align-items:center;
+    z-index: 90000399;
+}
+#customModalShow{
+    z-index: 90000399;
+}
+#suppression_dish{
+    z-index: 99999999;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.suppression-footer-modal{
+    background-color: #ff5b5b;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    display: flex;
+    box-shadow: 0 0 20px grey;
+    justify-content: center;
+    gap: 10px;
+}
+.suppression-footer-modal button{
+    color: transparent;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.suppression-footer-modal button:first-child{
+    background-color: transparent;
+    /* color: #ff5b5b; */
+}
+.suppression-footer-modal button:last-child{
+    background-color: transparent;
+    /* color: #ff5b5b; */
+    border: 1px solid #ff5b5b;
+}
+.suppression-header-modal h3{
+    font-size: 28px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+}
+.suppression-main-modal, .suppression-header-modal{
+    padding: 10px;
+    text-align: center;
+}
+.suppression-main-modal{
+    padding-bottom: 20px;
+}
+.suppression-main-modal p{
+    text-align: center;
+    width: 95%;
+    letter-spacing: 1px;
+    margin: 0 auto;
+}
+
+.suppression-modal-item{
+    margin: 0 auto;
+    background-color: white;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    padding: 10px 0 0 0;
+}
+/* 
+#panierModal{
+    position: fixed;
+    top:0; 
+    left:0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    background: #00000080; 
+    border-radius: 15px;
+    box-shadow: 0 5px 20px #00000026;
+    display: flex;
+    justify-content: center;
+} */
+/* .modal-content-panier{
+    padding: 5em 10px 1em 10px;
+    max-height: 100vh; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: space-between;
+    scroll-behavior: smooth;    
+    background-color: white;
+    width: 100%;
+    border-radius: 15px;
+    animation: fadeIn 0.3s ease-out;
+} */
+.modal-content-panier::-webkit-scrollbar {
+    width: 10px;  
+}
+.modal-content-panier::-webkit-scrollbar-thumb {
+  background-color: #2e3b8b; /* couleur de la barre */
+  border-radius: 10px;
+}
+
+.modal-content-panier::-webkit-scrollbar-thumb:hover {
+  background-color: #162061; /* couleur au survol */
+}
+
+.modal-content-panier::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* .modal-content-panier header{
+    background-color: #1e3a8a;
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    box-shadow: 0 0 10px #0000001a;
+} */
+
+.modal-content, #picture_item_show{
+    background: #fff;
+    border-radius: 15px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 25px #00000033;
+    animation: fadeIn 0.3s ease-out;
+}
+.modal-content{
+    max-width: 400px;
+}
+
+#picture_item_show{
+    max-width: 100%;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+
+/* ======================== PLATS MODAL ============================ */
+.plat-item-modal{
+    width: 20%;
+    display: flex;
+}
+.plat-item-modal .items{
+    position: relative;
+}
+.plat-item-modal .plat-item{
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+    box-shadow: 0 0 5px grey;
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.modal-header-content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: black;
+    position: relative;
+}
+.modal-header-content h3{
+    letter-spacing: 5px;
+}
+
+
+#modalPanierList{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    width: 100%;
+}
+
+.modal-close, .delete-dish{
+    color: white;
+    background-color: #ff5b5b;
+    border-radius: 100%;
+    padding: 6px;
+    position: absolute;
+    border: none;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 15%;
+    right: 10px;
+}
+
+.modal-close{
+    border-radius: 30%;
+}
+
+
+.item-description-panier .actions{
+    align-items: center;
+    display: flex;
+    margin-top: 10px;
+    flex-direction: column;
+}
+
+.item-description-panier .actions-items{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+.item-description-panier{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.actions-items p{
+    padding: 0 15px;
+}
+.actions-items button{
+    padding: 5px 15px;
+    border-radius: 5px;
+    color: white;
+    font-size: 25px;
+    border: none;
+}
+.actions-items button.plus{
+    background-color: green;
+}
+.actions-items button.minus{
+    background-color: #ff7171;
+}
+.delete-dish{
+    top: -5px!important;
+    right: -5px; 
+}
+
+.modal-footer-content{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    padding: 0 10px;
+    gap: 10px;
+}
+
+.total-price-number{
+    font-size: 18px;
+    opacity: 0.6;
+}
+
+.total-number{
+    opacity: 0.5;
+}
+.description-plat-panier a{
+    color: var(--main-color);
+    font-size: 18px;
+}
+.description-plat-panier a span{
+    font-size: 20px;
+    font-weight: bold;
+    color: #c26214;
+}
+
+.description-plat-panier p{
+    opacity: 0.6;
+}
+
+.modal-footer-content #btn-commande{
+    padding: 0 15px;
+    border: none;
+    background-color: var(--main-color);
+    color: white;
+    font-size: 17px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+.modal-footer-content p{
+    font-size: 20px;
+}
+.modal-footer-content p span{
+    opacity: 0.6;
+}
+#customModal .modal-footer-content a, #customModalShow .modal-footer-content a{
+    font-size: 20px;
+    background-color: var(--main-color);
+    margin-left: auto;
+    color: white;
+} 
+
+/* =====================  INFORMATIONS CLIENT ======================== */
+
+.modal-information-client .modal-main-content form{
+    padding-top: 10px;
+}
+.modal-information-client .modal-main-content .back-panier{
+    background-color: transparent;
+    color: var(--main-color);
+    border: none;
+    padding: 10px 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+.modal-information-client .modal-main-content .back-panier:hover{
+    transform: scale(1.01);
+    color: #2482e6;
+}
+.modal-information-client .modal-main-content form button{
+    background-color: var(--main-color);
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 10px 30px;
+    border: none;
+    box-shadow: 0 0 5px black;
+    border-radius: 4px;
+    margin-top: 1em;
+}
+
+/* =============================================== LA PARTIE CONNECTION MODAL ============================ */
+
+.modal-content-connect{
+    background-color: white;
+    margin: 1em 0;
+    border-radius: 10px;
+    padding: 0 10px 10px 0;
+    height: 400px;
+    display: flex;
+    align-items: self-start;
+    animation: fadeIn 0.3s ease-out;
+    gap: 1em;
+}
+
+#modal-connect{
+    align-items: center;
+}
+#modal-connect img{
+    width: 350px;
+    height: 400px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;   
+    box-shadow: 1px 0 20px grey; 
+}
+.modal-content-item{
+    width: max-content;
+}
+.modal-content-item .auth-content{
+    padding-top: 15px;
+}
+.modal-content-item .auth-content h3{
+    font-size: 30px;
+    letter-spacing: 1px;
+}

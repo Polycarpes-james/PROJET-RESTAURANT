@@ -1,0 +1,150 @@
+.profile-main-container{
+    display: flex;
+    width: 90%;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 30px 20px;
+    justify-content: space-between;
+}
+.profile-main-container .profile-items{
+    width: 60%;
+    background-color: #7f8cb30e;
+    color: black;
+    box-shadow: 0.3px 0.4px 5px grey;
+    border-radius: 5px;
+    padding:30px 20px 20px 40px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.profile-main-container .profile-items h1{
+    font-size: 70px;
+    opacity: 0.8;
+    line-height:0.8;
+}
+.profile-main-container .profile-items p#compte{
+    font-size: 35px;
+    margin-left: 20px;
+}
+.profile-main-container .profile-itemsp#email{
+    font-size: 20px;
+    opacity: 0.4;
+}
+
+.no-profile{
+    color: white!important;
+    height: 150px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.no-profile:hover, .profile-main-container .picture-profile img:hover{
+    transform: scale(1.05);
+}
+.profile-avatar{
+    width: 150px;
+    height: 150px;
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 100%;
+}
+.profile-main-container .picture-profile img.profile-avatar{
+    box-shadow: 0.4px 0.5px 10px #000000;
+}
+.hidden{
+    opacity: 0;
+}
+.profile-main-container .picture-profile form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+#avatarLoader{
+    position: absolute;
+    inset: 0;
+    border-radius: 100%;
+    background-color: #8080807f;
+    width: 100%;
+    padding: 70px 30%;
+    transition: 0.3s;
+    height: 100%;
+}
+
+
+
+
+/* ======================================================================= */
+
+.profile-container-form{
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    max-width: 100%;
+    padding: 30px 20px;
+    gap: 2em;
+    justify-content: space-between;
+}
+.profile-container-form .formulaire{
+    flex: 90;
+}
+.profile-container-form .formulaire{
+    box-shadow: 0.3px 0.4px 5px grey;
+    padding: 50px;
+    border-radius: 10px;
+    background-color: #6d91ff0e;
+}
+.profile-container-form .formulaire h2{
+    opacity: 0.7;
+    font-size: 30px;
+}
+.profile-container-form .delete-account{
+    flex: 60;
+}
+.profile-container-form .formulaire form .change-password{
+    margin: 2em 0 0 0;
+}
+
+.profile-container-form .formulaire form .change-password p{
+    opacity: 0.5;
+}
+
+.profile-container-form .formulaire form button{
+    border: none;
+    background-color: var(--main-color);
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    margin-top: 1em;
+    border-radius: 5px;
+}
+.profile-container-form .delete-account{
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0.3px 0.4px 5px grey;
+}
+.profile-container-form .delete-account form button{
+    border: none;
+    background-color: #ff7676;
+    padding: 10px 50px;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+}
+
+.profile-container-form .delete-account h2{
+    background-color: #ffb5b5;
+    color: #ff5050;
+    padding: 10px;
+    border-radius: 5px;
+}
+.profile-container-form .delete-account .raisons p{
+    font-size: 25px;
+    margin-top: 10px;
+}
+.profile-container-form .delete-account .raisons ul li{
+    list-style: none;
+    margin: 10px 0;
+    opacity: 0.5;
+}

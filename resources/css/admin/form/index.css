@@ -1,0 +1,75 @@
+.formulaire-create-update {
+    width: 95%;
+    margin: 0 auto;
+}
+.formulaire-create-update form{
+    display: flex;
+    flex-direction: column;
+}
+.formulaire-create-update h1{
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 10px;
+    background-color: var(--main-color);
+    color: var(--white-color);
+    border-radius: 5px;
+    box-shadow: 0.5px 0.6px 10px grey;
+}
+
+.formulaire-create-update form button{
+    padding: 15px 20px;
+    border-radius: 5px;
+    background-color: var(--main-color);
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    border: none;
+}
+.formulaire-create-update form button:hover{
+    transform: scale(1.02);
+}
+.action-picture{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+
+}
+
+.formulaire-create-update .formulaire-h{
+    margin-bottom: 2em;
+}
+.formulaire-create-update .formulaire-h p{
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    color: #1e3b8a73;
+}
+.formulaire-create-update .formulaire-h p a{
+    opacity: 0.5;
+    transition: 0.3s;
+}
+.formulaire-create-update .formulaire-h p a:hover{
+    opacity: 0.9;
+}
+.action-picture label, .action-picture span{
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #9b9b9b;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+.action-picture span{
+    color: var(--white-color);
+    background-color: #2f902f;
+    cursor: pointer;
+}
+.action-picture label{
+    color: var(--main-color);
+    background-color: transparent;
+}
+.action-picture label:hover{
+    background-color: #1e3b8a18;
+    transform: scale(1.004);
+}

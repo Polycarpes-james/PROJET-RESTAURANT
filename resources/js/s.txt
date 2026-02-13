@@ -1,0 +1,116 @@
+.carousel {
+  position: relative;
+  width: 400px;
+  height: 250px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 100%;
+  object-fit: cover;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.carousel-indicators .dot {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carousel-indicators .dot.active {
+  background-color: white;
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector<HTMLDivElement>(".carousel-track");
+  const items = document.querySelectorAll<HTMLImageElement>(".carousel-item");
+  const indicatorsContainer = document.getElementById("indicators");
+
+  if (!track || items.length === 0 || !indicatorsContainer) return;
+
+  let currentIndex = 0;
+  let autoSlideInterval: number | null = null;
+  const delay = 4000; // ⏱️ défilement toutes les 4 secondes
+
+  // === Création des points (indicateurs) ===
+  const dots: HTMLSpanElement[] = [];
+  items.forEach((_, index) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (index === 0) dot.classList.add("active");
+    indicatorsContainer.appendChild(dot);
+    dots.push(dot);
+
+    // Clic sur un point => aller directement à l'image correspondante
+    dot.addEventListener("click", () => {
+      currentIndex = index;
+      updateCarousel();
+      resetAutoSlide(); // redémarre le timer après un clic
+    });
+  });
+
+  // === Fonction principale pour défiler ===
+  function updateCarousel(): void {
+    const offset = -currentIndex * 100;
+    track.style.transform = `translateX(${offset}%)`;
+    updateDots();
+  }
+
+  // === Mise à jour des points ===
+  function updateDots(): void {
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentIndex);
+    });
+  }
+
+  // === Défilement automatique ===
+  function startAutoSlide(): void {
+    stopAutoSlide(); // sécurité : éviter plusieurs intervals en même temps
+    autoSlideInterval = window.setInterval(() => {
+      currentIndex = (currentIndex + 1) % items.length;
+      updateCarousel();
+    }, delay);
+  }
+
+  function stopAutoSlide(): void {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+      autoSlideInterval = null;
+    }
+  }
+
+  function resetAutoSlide(): void {
+    stopAutoSlide();
+    startAutoSlide();
+  }
+
+  // === Pause quand la souris survole le carrousel ===
+  const carousel = document.getElementById("carousel");
+  if (carousel) {
+    carousel.addEventListener("mouseenter", stopAutoSlide);
+    carousel.addEventListener("mouseleave", startAutoSlide);
+  }
+
+  // Démarrer le carrousel
+  startAutoSlide();
+});

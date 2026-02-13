@@ -1,0 +1,55 @@
+.connexion-container form{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.connexion-container form button{
+    padding: 10px 15px;
+    border: none;
+    background:
+        linear-gradient(to bottom, #0c441f, #16ae5d)
+    ;
+    border-radius: 5px;
+    color: white;
+    font-size: 18px;
+    width: 100%;
+    margin: 1em auto;
+    max-width: 100%;
+}
+.connexion-container a{
+    color: var(--main-color);
+    margin-top: 10px;
+    transition: 0.3s;
+    transform: translateX(-1%);
+}
+.connexion-container a:hover{
+    transform: scale(1.06);
+}
+.body-connexion{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    height: 100vh;
+    width: 100%;
+}
+.body-connexion .picture-part{
+    width: 50%;
+}
+.body-connexion .content-login{
+    width: 50%;
+    padding-top: 3em;
+
+    /* padding: 9em; */
+}
+.body-connexion .content-login h1{
+    margin-left: 1.5em;
+    margin-bottom: 0.5em;
+    font-size: 50px;
+}
+.body-connexion .picture-part img{
+    height: 100vh;
+    width: 100%;
+    box-shadow: 0 5px 10px grey;
+}

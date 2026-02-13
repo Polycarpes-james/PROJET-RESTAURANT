@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto";
+    transition: 0.3s;
+}
+
+a{
+    text-decoration: none;
+    color: initial;
+}
+
+input, textarea{
+    outline: none;
+}
+
+:root{
+    --main-color:#1E3A8A;
+    --white-color:white;
+}
+
+/* body{
+    
+} */
+li{
+    list-style: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+.items-entree,
+.items-boissons,
+.items-plat-principal,
+.items-accompagnement-snack {
+    scroll-margin-top: 130px;
+}

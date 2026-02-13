@@ -1,0 +1,29 @@
+@import "tomSelect/index.css";
+@import "home/index.css";
+@import "base.css";
+@import "plats/index.css";
+@import "plats/show.css";
+@import "header.css";
+@import "admin/form/index.css";
+@import "panier/index.css";
+@import "footer.css";
+
+
+@import "admin/header.css";
+
+@import "components/form/input.css";
+@import "components/form/select.css";
+@import "admin/categories/index.css";
+
+@import "admin/plats/show.css";
+
+@import "auth/login/index.css";
+@import "profil/index.css";
+@import "commandes/index.css";
+@import "admin/plats/index.css";
+@import "admin/menus/index.css";
+
+@import "./admin/commande/index.css";
+@import "./modal/index.css";
+
+@import './convert.css'

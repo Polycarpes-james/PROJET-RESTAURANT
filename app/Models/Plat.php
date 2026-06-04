@@ -29,6 +29,11 @@ class Plat extends Model
         'category_id'
     ];
 
+    public function panierPlats()
+    {
+        return $this->hasMany(PanierPlat::class);
+    }
+    
     public function category ():BelongsTo
     {
         return $this->belongsTo(Category::class);

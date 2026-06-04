@@ -15,7 +15,7 @@ class IngredientController extends Controller
      public function index()
     {
         return view('admin.ingredients.index', [
-            'ingredients' => Ingredient::orderBy('created_at', 'asc')->paginate(100)
+            'ingredients' => Ingredient::orderBy('price', 'desc')->paginate(100)
         ]);
     }
 

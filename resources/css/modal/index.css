@@ -1,7 +1,7 @@
 
 
 /* Modale */
-#customModal, #customModalShow, #modal-connect, #suppression_dish{
+#customModal, #platWindowsInfo, #customModalShow, #modal-connect, #suppression_dish{
     position: fixed;
     top:0; 
     left:0;
@@ -13,10 +13,12 @@
     z-index:9999;
 }
 
-#customModal{
+
+#customModal, #platWindowsInfo{
     align-items:center;
     z-index: 90000399;
 }
+
 #customModalShow{
     z-index: 90000399;
 }
@@ -29,30 +31,45 @@
 }
 
 .suppression-footer-modal{
-    background-color: #ff5b5b;
     border-bottom-right-radius: 10px;
-    padding: 10px;
+    padding: 5px;
     border-bottom-left-radius: 10px;
     display: flex;
-    box-shadow: 0 0 20px grey;
+    box-shadow: 0 0 2px #808080;
     justify-content: center;
-    gap: 10px;
 }
+
+/* =========================================== BOITE MODAL POUR AFFICHER UN PLAT ==================================== */
+.main-modal-containt{
+    background-color: white;
+    padding: 10px;
+    width: 30%;
+}
+
+
+/* =============================================================================================== */
 .suppression-footer-modal button{
-    color: transparent;
     border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
+    border-radius: 2px;
     cursor: pointer;
 }
 .suppression-footer-modal button:first-child{
     background-color: transparent;
-    /* color: #ff5b5b; */
+    padding: 8px 40px;
+    font-size: 18px;
+    background-color: #ff5b5b;
+    color: white;
 }
 .suppression-footer-modal button:last-child{
-    background-color: transparent;
-    /* color: #ff5b5b; */
+    background-color: #ff5b5b;
     border: 1px solid #ff5b5b;
+    font-size: 20px;
+    border-radius: 100%;
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    padding: 5px 13px;
+    color: white;
 }
 .suppression-header-modal h3{
     font-size: 28px;
@@ -141,17 +158,19 @@
     box-shadow: 0 0 10px #0000001a;
 } */
 
-.modal-content, #picture_item_show{
+.modal-content, #picture_item_show, .modal-content-plat{
     background: #fff;
-    border-radius: 15px;
     width: 90%;
     text-align: center;
     box-shadow: 0 8px 25px #00000033;
     animation: fadeIn 0.3s ease-out;
 }
 .modal-content{
-    max-width: 400px;
+    max-width: 500px;
+    border-radius: 3px;
+    padding: 12px;
 }
+
 
 #picture_item_show{
     max-width: 100%;
@@ -165,68 +184,73 @@
 
 
 /* ======================== PLATS MODAL ============================ */
-.plat-item-modal{
-    width: 20%;
+#modalPanierList{
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
 }
-.plat-item-modal .items{
+
+#modalPanierList .plat-item-modal .items{
+    margin: 0.35em;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+.plat-item-modal{
+    width: max-content;
+    display: flex;
+    width: 20%;
+}
+
+
 .plat-item-modal .plat-item{
     display: flex;
     align-items: center;
-    flex-direction: column; 
+    position: relative;
     justify-content: center;
-    box-shadow: 0 0 5px grey;
-    border-radius: 15px;
-    margin: 10px;
+    box-shadow: 0 0 2px #c26214;
+    text-align: center;
+    border-radius: 3px;
 }
+
 
 .modal-header-content{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     color: black;
     position: relative;
 }
 .modal-header-content h3{
-    letter-spacing: 5px;
-}
-
-
-#modalPanierList{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px;
-    width: 100%;
+    letter-spacing: 2px;
 }
 
 .modal-close, .delete-dish{
     color: white;
     background-color: #ff5b5b;
     border-radius: 100%;
-    padding: 6px;
     position: absolute;
     border: none;
-    width: 30px;
-    height: 30px;
+    box-shadow: 0 0 5px grey;
+    top: -100%;
+    right:-5% ;
+    padding: 5px 12px;
     font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 15%;
-    right: 10px;
+}
+#minus-btn{
+    background-color: #ff7171;
+}
+.btn-show{
+    padding: 5px 15px;
+    font-size: 30px;
+    top: 10%!important;
+    right: 10px!important;
 }
 
-.modal-close{
-    border-radius: 30%;
-}
-
-
-.item-description-panier .actions{
+.actions{
     align-items: center;
     display: flex;
     margin-top: 10px;
@@ -237,24 +261,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid grey;
-    border-radius: 5px;
+    /* border: 1px solid grey; */
+    border-radius: 100%;
 }
 .item-description-panier{
-    padding: 10px;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 }
-.actions-items p{
-    padding: 0 15px;
-}
+
 .actions-items button{
-    padding: 5px 15px;
-    border-radius: 5px;
+    padding: 5px 10px;
+    border-radius: 100%;
     color: white;
-    font-size: 25px;
+    font-size: 15px;
     border: none;
 }
 .actions-items button.plus{
@@ -264,21 +286,13 @@
     background-color: #ff7171;
 }
 .delete-dish{
-    top: -5px!important;
+    top: -5px;
     right: -5px; 
 }
 
-.modal-footer-content{
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    padding: 0 10px;
-    gap: 10px;
-}
-
 .total-price-number{
-    font-size: 18px;
-    opacity: 0.6;
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 .total-number{
@@ -286,20 +300,35 @@
 }
 .description-plat-panier a{
     color: var(--main-color);
+    letter-spacing: 1px;
     font-size: 18px;
 }
-.description-plat-panier a span{
+.description-plat-panier p span{
     font-size: 20px;
     font-weight: bold;
     color: #c26214;
+    text-align: start;
 }
 
-.description-plat-panier p{
-    opacity: 0.6;
+.panier-footer-content{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
 }
-
-.modal-footer-content #btn-commande{
-    padding: 0 15px;
+.panier-footer-content .footer-header{
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
+.panier-footer-content h1{
+    text-align: justify;
+    background-color: #6f380a;
+    color: white;
+    margin:5px;
+    padding: 5px 10px;
+}
+.panier-footer-content #btn-commande{
+    padding: 7px 15px;
     border: none;
     background-color: var(--main-color);
     color: white;
@@ -307,23 +336,38 @@
     border-radius: 3px;
     text-transform: uppercase;
 }
-.modal-footer-content p{
+.panier-footer-content .footer-header p{
     font-size: 20px;
+    background-color: #1620612e;
+    color: #162061;
+    padding: 5px 15px;
 }
-.modal-footer-content p span{
-    opacity: 0.6;
-}
+
 #customModal .modal-footer-content a, #customModalShow .modal-footer-content a{
     font-size: 20px;
-    background-color: var(--main-color);
-    margin-left: auto;
-    color: white;
+    background-color: #16206144;
+    color: var(--main-color);
+    padding: 13px 10px;
+    /* border-top-left-radius:4px;  */
+    /* border-top-right-radius:4px; */
+    border-radius: 100%;
 } 
+#customModal .modal-footer-content a:hover, #customModalShow .modal-footer-content a:hover{
+    background-color: var(--main-color);
+    color: white;
+}
 
 /* =====================  INFORMATIONS CLIENT ======================== */
 
 .modal-information-client .modal-main-content form{
     padding-top: 10px;
+}
+.modal-information-client{
+    display: flex;
+    gap: 2em;
+}
+.modal-information-client .modal-content-panier{
+    width: 67%;
 }
 .modal-information-client .modal-main-content .back-panier{
     background-color: transparent;
@@ -350,6 +394,13 @@
     margin-top: 1em;
 }
 
+.modal-content .modal-main-content{
+    padding: 15px 15px 25px 15px;
+}
+.modal-content .modal-main-content p{
+    font-size: 20px;
+    letter-spacing: 2px;
+}
 /* =============================================== LA PARTIE CONNECTION MODAL ============================ */
 
 .modal-content-connect{

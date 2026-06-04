@@ -1,4 +1,5 @@
 import './bootstrap';
+import './reservation';
 import './panier';
 import './avis';
 import './carousel';

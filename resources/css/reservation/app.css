@@ -1,0 +1,69 @@
+.reservations-body{
+    background: 
+        radial-gradient(600% 200px at 0% 0%, #000000bc 0, transparent 500%),
+        /* url("/public/img/pexels-pixabay-260922.jpg") */
+        url("/public/img/brianpenny-reserved-9112145_1920.jpg")
+    ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 550px;
+    box-shadow: 0 2px 2px grey;
+    color: white;
+}
+
+.reservations-header{
+    backdrop-filter: blur(15px);
+    background: transparent!important;
+}
+
+.reservation-main-contain{
+    margin: 2em auto;
+    width: 70%;
+}
+.horaires-reservation .time_part{
+    display: flex;
+    gap: 2em;
+    align-items: end;
+}
+.horaires-reservation .horaires-item{
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    left: 10%;
+    box-shadow: 0 0 5px #80808062;
+    border-radius: 5px;
+    background-color: white;
+    height: 400px;
+}
+
+.reservation-containt-btn{
+    text-align: center;
+}
+.reservation-btn{
+    padding: 15px;
+    background-color: #ff7300;
+    color: white;
+    border: none;
+    width: 70%;
+    font-size: 18px;
+    box-shadow: 0 0 5px grey;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-radius: 5pc;
+    margin-top: 1em;
+}
+.informations-reservations {
+    margin-top: 2em;
+}
+.informations-reservations h3{
+    padding: 15px;
+    text-transform: uppercase;
+    color: var(--main-color);
+    background-color: #5757b737;
+    border-radius: 4px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 1.5em;
+}
+

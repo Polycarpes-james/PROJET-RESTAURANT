@@ -26,4 +26,5 @@
 @import "./admin/commande/index.css";
 @import "./modal/index.css";
 
+@import "reservation/app.css";
 @import './convert.css'

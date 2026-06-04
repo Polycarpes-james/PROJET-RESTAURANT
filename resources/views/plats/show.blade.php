@@ -31,6 +31,20 @@
 
 @endphp
 @section('content')
+    <aside id="suppression_dish" class="modal" style="display: none;">
+        <div class="suppression-modal-item">
+            <header class="suppression-header-modal">
+                <h3 id="suppression-title-modal">Suppression du plat</h3>
+            </header>
+            <main class="suppression-main-modal">
+                <p class="suppression-message"></p>
+            </main>
+            <footer class="suppression-footer-modal">
+                <button class="btn-suppression">Ok</button>
+                <button class="btn-modal-close">×</button>
+            </footer>
+        </div>
+    </aside>
     <div class="main-container-show-plat-item">
         <div class="back-side">
             <a href="{{ route('.rettine') }}">Accueil</a>/
@@ -39,10 +53,10 @@
             <p>{{ $plat->name }}</p>
         </div>
         <div class="main-show-plat">
-           <div class="panier-item">
+           <div class="panier-item" data-plat="{{ $plat->id }}">
                 <div class="remove-from-card">
                     <p class="max-hidden"></p>
-                    <button class="btn-suppression border-radius" data-id="{{ $plat->id }}" >×</button>
+                    <button class="delete-dish delete-dish-link btn-show border-radius" data-id="{{ $plat->id }}" data-name="{{ $plat->name }}">×</button>
                 </div>
                 <div class="header-panier">
                     <h3>Votre panier</h3>
@@ -60,7 +74,7 @@
                         <button class="minus"  data-id="{{ $plat->id }}" data-quantite="1" >-</button>
                     </div>
                 </div>      
-                <p class="total-price innertTotal">Totals : {{ decimal($plat_quantite * $plat->price) }}€</p>        
+                <p class="total-price innertTotal">{{ decimal($plat_quantite * $plat->price) }}€</p>        
             </div>
             <div class="category">
                 <p>Le plat est un(e) {{ $plat->category->name }}</p>
@@ -85,7 +99,7 @@
                 @foreach ($plat->pictures as $picture)
                     <div class="picture-item">
                         <div class="item">
-                            <img src="{{ $picture->getPictureUrl(750, 500) }}" alt="photo">
+                            <img src="{{ $picture->getPictureUrl(400, 350) }}" alt="photo">
                             <button class="btn-picture" type="button">
                                 <span class="clickable" data-picture="{{ $picture->getPictureUrl(1450, 650) }}" data-name="{{ $picture->plat()->first()->name }}"></span>
                             </button>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 header('Content-Type: application/json; charset=utf-8');
 
+use App\Models\Category;
 use App\Models\Plat;
 use App\Models\Panier;
 use App\Models\Commande;
@@ -24,8 +25,8 @@ class PanierController extends Controller
         ]);
 
         $session = session()->put('invite_session', $request->session_element);
-
-        return response()->json(['success' => true, 'message' => "Vous pouvez passez vos commandes en tant qu'invité"]);
+        
+        return response()->json(['success' => true, 'session' => $session,'message' => "Vous pouvez passez vos commandes en tant qu'invité"]);
     }
 
     public function ajouterAuPanierInvite(Request $request)
@@ -56,11 +57,11 @@ class PanierController extends Controller
                 'name' => $plat->name,
                 'quantite' => $request->quantite,
                 'price' => $plat->price,
+                'category_id' => $plat->category->id,
                 'prix_total' => $plat->price * $request->quantite,
                 'description' => $plat->truncateText($plat->description, 75),
-                'picture' => $plat->getPicture()->getPictureUrl(270, 200),
+                'picture' => $plat->getPicture()->getPictureUrl(160, 140),
                 'link_view' => route('rettine.plats.show', ['plat' => $plat, 'slug' => $plat->getSlug()]),
-                'prix_total' => $plat->price * $request->quantite
             ];
         }
 
@@ -68,6 +69,7 @@ class PanierController extends Controller
             $platsInCard[] = $plat->getSlug();
             session()->put('platsInCard', $platsInCard); 
         }
+
 
         session()->put('panier_invite', $panier);
 
@@ -79,24 +81,105 @@ class PanierController extends Controller
         ]);
     }
 
-
+    /**
+     * La fonction "getPanierInvite" permet d'afficher le panier d'un invité
+     */
     public function getPanierInvite()
     {
         
         $panier = session()->get('panier_invite');
 
         $session_invite = session()->get('invite_session');
+        
+        $categoriesData = [];
 
+        $categories = Category::all();
+                                                                                                            
+        foreach ($categories as $cate) {
+            
+            $platsCategorie = array_filter($panier ?? [], function ($plat) use ($cate) {
+                return $plat['category_id'] == $cate->id;
+            });
 
+            $categoriesData[] = [
+                'category'      => $cate,
+                'plats'         => $platsCategorie,
+                'totalQuantite' => array_sum(array_column($platsCategorie, 'quantite')),
+                'totalPrix'     => array_sum(array_column($platsCategorie, 'prix_total')),
+                'nombreDifferents' => count($platsCategorie),
+            ];
+        }            
+                                  
         return view('panier.index', [
+            'categories' => $categoriesData,
+            'panier' => $panier,
             'plats' => $panier ? array_values($panier) : [],
-            'total' => $panier ? array_sum(array_column($panier, 'prix_total')) : 0, 
+            'totalPrice' => $panier ? array_sum(array_column($panier, 'prix_total')) : 0, 
+            'total' => $panier ? array_sum(array_column($panier, 'quantite')) : 0, 
             'session' => $session_invite
         ]);
     }
+    
+    public function voirPanier()
+    {
+        $session_invite = session()->get('invite_session');
+        
+        if (!auth()->check()) {
+            return response()->json([
+                'error' => 'connect',
+                'message' => 'Veuillez vous connecter ou continuer en tant qu’invité.',
+                'session' => $session_invite                
+            ], 403);
+        }
+    
+        $panier = Panier::where('user_id', Auth::id())->first();
 
-    
-    
+        if (!$panier) {
+            return view('panier.index', [
+                'plats' => [],
+                'total' => 0,
+                'categories' => [],
+                'totalPrice' => 0,
+                'panier' => $panier
+            ]);
+        }
+
+        $panierDetails = $panier->panierPlats()->with('plat')->get();
+        $totalPrice = $panierDetails->sum('prix_total');
+
+        // dd($totalPrice);
+        $panier->total = $totalPrice;
+        $panier->save();
+        
+        $categoriesData = [];
+
+        $categories = Category::all();
+
+        foreach ($categories as $cate) {
+
+            $platsCategorie = $panier->panierPlats->where('plat.category_id', $cate->id);
+
+            $categoriesData[] = [
+                'category' => $cate,
+                'plats' => $platsCategorie,
+                'totalQuantite' => $platsCategorie->sum('quantite'),
+                'totalPrix' => $platsCategorie->sum('prix_total'),
+                'nombreDifferents' => $platsCategorie->count(),
+            ];
+        }
+
+        return view('panier.index', [
+            'plats' => $panierDetails,
+            'categories' => $categoriesData,
+            'totalPrice' => $totalPrice, 
+            'panier' => $panier,
+            'total' => $this->total(),
+            'session' => $session_invite
+        ]);
+    }
+    /**
+     * La fonction "ajouterAuPanier" permet d'ajouter un plat au panier (Invité|Abonné)
+     */
     public function ajouterAuPanier(Request $request)
     {
 
@@ -108,60 +191,52 @@ class PanierController extends Controller
         }
         $request->validate([
             'plat_id' => 'required|exists:plats,id',
-            'quantite' => 'required|integer|max:100',
+            'quantite' => 'required|integer|max:100|min:1',
             'nature' => 'nullable|boolean'
         ]);
 
         $user = auth()->user();
-
         // Récupérer ou créer le panier
         $panier = $user->panier ?? Panier::create(['user_id' => $user->id]);
-
         $plat = Plat::findOrFail($request->plat_id);
+
         $quantiteAjoutee = $request->quantite;
 
         $panierDetails = $panier->panierPlats()->with('plat')->get()->map(function ($item) {
                 return [
                     'plat_id' => $item->plat->id,
                     'name' => $item->plat->name,
+                    'category_id' => $item->plat->category->id,
                     'description' => $item->plat->truncateText($item->plat->description, 80),
                     'price' => $item->plat->price,
-                    'picture' => $item->plat->getPicture()->getPictureUrl(200, 200),
+                    'picture' => $item->plat->getPicture()->getPictureUrl(160, 140),
                     'quantite' => $item->quantite,
                     'link_view' => route('rettine.plats.show', ['plat' => $item->plat, 'slug' => $item->plat->getSlug()]),
                     'prix_total' => $item->prix_total
                 ];
             });
         // Vérifier si le plat est déjà dans le panier
-        $panierPlat = PanierPlat::where('panier_id', $panier->id)
-                                ->where('plat_id', $plat->id)
-                                ->first();
+        $panierPlat = PanierPlat::where('panier_id', $panier->id)->where('plat_id', $plat->id)->first();
 
         $totalGeneral = null;
 
         $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
 
         if ($panierPlat) {
-
             $nouvelleQuantite = $panierPlat->quantite + $quantiteAjoutee;
-           
             $panierPlat->update([
                 'quantite' => $request->nature ? $quantiteAjoutee : $nouvelleQuantite,
                 'prix_total' => $plat->price * ($request->nature ? $quantiteAjoutee : $nouvelleQuantite)
             ]);
-            return response()->json(['success' => true, 'total' => $total_number + 1, 'message' => $plat->name . ' a été augmentée dans le panier !']);
-
+            return response()->json(['success' => true, 'platTotal' => $panierPlat->quantite,'total' => $total_number + 1, 'message' => 'Le plat ' . "'$plat->name'" . ' a été augmentée dans le panier !']);
         } else {
             // Création d'une nouvelle entrée
-            
             if($request->nature){
-                
                 $panierPlat->update([
                     'quantite' => $quantiteAjoutee,
                     'prix_total' => $plat->price * $quantiteAjoutee
                 ]);
             }
-
             PanierPlat::create([
                 'panier_id' => $panier->id,
                 'plat_id' => $plat->id,
@@ -172,7 +247,6 @@ class PanierController extends Controller
 
         // Préparer le JSON simplifié pour le frontend
       
-
         $totalGeneral = $panierDetails->sum('prix_total');
 
         $panier->total = $totalGeneral;
@@ -183,9 +257,10 @@ class PanierController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => $plat->name . ' a été ajouté dans le panier !',
+            'message' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
             'panier' => $panierDetails,
             'total' => $total_number + 1,
+            'platTotal' => 1,
             'total_general' => $totalGeneral  
         ]);
     }
@@ -203,45 +278,15 @@ class PanierController extends Controller
 
         return $total_number;
     }
-    public function voirPanier()
-    {
-        $session_invite = session()->get('invite_session');
-        
-        if (!auth()->check()) {
-            return response()->json([
-                'error' => 'connect',
-                'message' => 'Veuillez vous connecter ou continuer en tant qu’invité.',
-                'session' => $session_invite                
-            ], 403);
-        }
-    
-        $panier = Panier::where('user_id', Auth::id())->first();
-
-        if (!$panier) {
-            return response()->json(['plats' => $panier, 'total' => 0]);
-        }
-        $panierDetails = $panier->panierPlats()->with('plat')->get();
-        $totalPrice = $panierDetails->sum('prix_total');
-
-        // dd($totalPrice);
-        $panier->total = $totalPrice;
-        $panier->save();
-        
-        return view('panier.index', [
-            'plats' => $panierDetails,
-            'totalPrice' => $totalPrice, 
-            'total' => $this->total()
-        ]);
-    }
 
     public function voirPanierReflesh () {
         $panierDetails = Panier::where('user_id', Auth::id())->first()->panierPlats()->with('plat')->get()->map(function ($item) {
             return [
                 'plat_id' => $item->plat->id,
                 'name' => $item->plat->name,
-                'description' => $item->plat->truncateText($item->plat->description, 75),
+                // 'description' => $item->plat->truncateText($item->plat->description, 75),
                 'price' => $item->plat->price,
-                'picture' => $item->plat->getPicture()->getPictureUrl(270, 200),
+                'picture' => $item->plat->getPicture()->getPictureUrl(160, 140),
                 'quantite' => $item->quantite,
                 'link_view' => route('rettine.plats.show', ['plat' => $item->plat->id, 'slug' => $item->plat->getSlug()]),
                 'prix_total' => $item->prix_total

@@ -130,6 +130,10 @@
   font-size: 30px;
   font-weight: bold;
   letter-spacing: 3px;
+  background-color: #c262143a;
+  color: #c26214;
+  border-radius: 5px;
+  padding: 5px 20px;
 }
 .remove-from-card{
   position: absolute;
@@ -199,6 +203,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+
 }
 .main-show-plat .panier-item .items .item:nth-child(1), 
 .main-show-plat .panier-item .items .item:nth-child(3){

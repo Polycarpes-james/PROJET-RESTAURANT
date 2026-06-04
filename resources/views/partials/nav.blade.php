@@ -8,7 +8,7 @@
         <a href="#">menus</a>
         <a href="{{ route('rettine.commandes') }}" @class(['nav-link', 'modify' => str_contains($route, '.commandes')])>commander</a>
         <a href="#">avis</a>
-        <a href="#">reservation</a>
+        <a href="{{ route('rettine.reservations') }}" @class(['nav-link', 'modify' => str_contains($route, '.reservations')])>reservation</a>
         <a href="#">a propos</a>
     </nav>
     <div class="inscription-users">

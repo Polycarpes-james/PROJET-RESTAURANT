@@ -18,6 +18,23 @@
 @endsection
 
 @section('content_second')
+    <aside id="customModal" class="modal" style="display: none;">
+        <div class="modal-content" id="modalContent">
+            <header class="modal-header-content">
+                <h3 id="modalTitle"></h3>
+                <button id="closeModal" class="modal-close">×</button>
+            </header>   
+            <main class="modal-main-content">
+                <p id="modalMessage"></p>
+            </main>
+            <footer class="modal-footer-content">
+                <a href="{{ auth()->check() ? route('rettine.panier') : route('invite.panier') }}" id="ouvrirPanierBtn" class="btn btn-open-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                </a>
+            </footer>
+        </div>
+    </aside>
+
     <div class="pass-commande-items">
         <div>
             <div>
@@ -40,46 +57,12 @@
             </div>
         </aside>
 
-        <aside id="panierModal" class="modal modal-information-client" style="display: none;">
-            <div class="modal-content-panier">
-                <header class="modal-header-content">
-                    <h3 id="modalTitle">INFORMATIONS POUR LA LIVRAISON</h3>
-                    <button id="closePanierModal" class="modal-close">×</button>
-                </header>
-                <main class="modal-main-content">
-                    <button class="back-panier">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                        Revenir au panier</button>
-                    <form action="{{ route('rettine.livraison.store', $commande ? $commande->id : 1) }}" method="POST" id="information-client-form">
-                        @csrf
-                        @method("POST")
-                        <div style="display:flex; gap:1em;">
-                            <x-form.index name="name" label="Entrer votre nom" value="{{ $livraison ? $livraison->name : null }}" placeholder="Dohe" paragraphe="votre nom, permet de vous identifier avec coutoisi lors de la livraison" />
-                            <x-form.index name="lastname" label="Entrer votre prenom" value="{{ $livraison ? $livraison->lastname : null }}"  placeholder="John" paragraphe="votre prenom, permet de vous identifier avec coutoisi lors de la livraison" />
-                        </div>
-                        <x-form.index name="email" label="Entrer le adresse email" value="{{ $livraison ? $livraison->email : null  }}"  placeholder="johnDohe@gmail.com" paragraphe="votre adresse email peut aider à vous contacter en cas de difficulté" />
-                        <x-form.index name="address" label="Entrer votre adresse de livraison" value="{{ $livraison ? $livraison->address : null  }}"  placeholder="144 Rue de volie" paragraphe="votre adresse de livraison est indispensable pour la livraison" />
-                        <div style="display:flex; gap:1em;">
-                            <x-form.index name="instructions" label="Entrer vos instructions pour la livraison" value="{{ $livraison ? $livraison->instructions : null  }}"  placeholder="Code, etage, batiment" paragraphe="vos instruction permettra de vous retrouver plus facilement malgé votre adresse" />
-                            <x-form.index name="phone" label="Entrer votre numero de telephone" value="{{ $livraison ? $livraison->phone : null }}"  placeholder="+242 06 800 0906" paragraphe="votre nous permettra de communiquer si besoin" />
-                        </div>
-                        <button type="submit">
-                            @if (!$livraison)
-                                Envoyer les informations
-                            @else
-                                Modifier les informations
-                            @endif
-                        </button>
-                    </form>
-                </main>
-            </div>
-        </aside>
         <div class="plats-items">
-            @foreach ($categories as $category)
-                <div class="items-{{ $category->getSlug() }}" id="{{ $category->getSlug() }}">
-                    <h2>{{ $category->name }}</h2>
+            @foreach ($categories as $cate)
+                <div class="items-{{ $cate->getSlug() }} plats-item" id="{{ $cate->getSlug() }}">
+                    <h2>{{ $cate->name }}</h2>
                     <div class="content-plats">
-                        @foreach ($category->plates as $plat)
+                        @forelse ($cate->plates as $plat)
                             <div class="items">
                                 <div class="items-content {{  in_array($plat->getSlug(), session('platsInCard') ?? []) ? "deep-active" : "" }}" data-plat-id="{{ $plat->id }}">
                                     <div class="item">
@@ -97,7 +80,15 @@
                                                     <span class="clickable"></span>
                                                 </button>
                                             @endif
-                                            <a href="{{ route('rettine.plats.show', ['plat' => $plat, 'slug' => $plat->getSlug()]) }}">VOIR LE PLAT</a>
+                                            <div class="items-btns">
+                                                <a href="{{ route('rettine.plats.show', ['plat' => $plat, 'slug' => $plat->getSlug()]) }}">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                                                </a>
+                                            <div>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                                                <span class="total-number-plats-command total-number-plats-header" data-id="{{ $plat->id }}" >{{ auth()->check() ? $plat->panierPlats->where('panier_id', ($panier ? $panier->id : 0))->pluck('quantite')->sum() : 0  }}</span>                                                   
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="pictures-parts">
@@ -107,7 +98,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @empty
+                            <p>Il n'y pas de plat sur cette category</p>
+                        @endforelse
                     </div>
                 </div>
             @endforeach

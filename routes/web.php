@@ -1,26 +1,29 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AvisController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PlatsController;
-use App\Http\Controllers\PanierController;
-use App\Http\Controllers\PictureController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\AviController;
 use App\Http\Controllers\Admin\AvisController as AdminAvisController;
-use App\Http\Controllers\LivraisonController;
-use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\PlatController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommandeController;
-use App\Http\Controllers\CommandeInviteController;
-use App\Http\Controllers\Admin\IngredientController;
-use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\IngredientController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PlatController;
+use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AvisController;
 use App\Http\Controllers\CommandeController as UserCommandeController;
+use App\Http\Controllers\CommandeInviteController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LivraisonController;
+use App\Http\Controllers\PanierController;
+use App\Http\Controllers\PictureController;
+use App\Http\Controllers\PlatsController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+use function Symfony\Component\String\u;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,12 +51,15 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
     Route::post('/panier/supprimer', [PanierController::class, 'removeDish'])->name('panier.supprimer');
     Route::post('/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');
 
-    // Route::get('/livraison/{commande}', [LivraisonController::class, 'create'])->name('livraison.create');
+    Route::get('/valider-plats-00000{panier}', [LivraisonController::class, 'index'])->name('commande_plats.index')->
+    where([
+        'panier' => '[0-9]+'
+    ]);
+    
     Route::post('/livraison/{commande}', [LivraisonController::class, 'store'])->name('livraison.store')->
     where([
         'commande' => '[0-9]+'
     ]);
-
     Route::post('/plats/{plat}/avis', [AvisController::class, 'store'])->name('avis.store')->
      where([
         'plat' => '[0-9]+'
@@ -84,7 +90,7 @@ Route::name('invite.')->group(function() {
     Route::get('shopCardUp@/card', [PanierController::class, 'getPanierInvite'])->name('panier');
 
     Route::get('/invite/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
-    Route::post('/commande', [CommandeInviteController::class, 'commanderInvite']);
+    Route::post('/invite/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');
     Route::post('/invite/session', [PanierController::class, 'sessionInvite']);
     Route::get('/invite/plats/{plat}', [PlatsController::class, "show_modalInvite"])->where([
         'plat' => '[0-9]+',
@@ -94,7 +100,12 @@ Route::name('invite.')->group(function() {
 
 
 Route::get('/rettine', [HomeController::class, "index"])->name('.rettine');
+
 Route::get('/rettine/commandes', [UserCommandeController::class, "index"])->name('rettine.commandes');
+
+Route::get('/rettine/reservation', [ReservationController::class, 'index'])->name('rettine.reservations');
+
+Route::post('/rettine/reservation/store', [ReservationController::class, 'store'])->name('rettine.reservations.store');
 
 Route::get('/rettine/plats', [PlatsController::class, "plats"])->name('rettine.plats');
 
@@ -135,7 +146,7 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('plat', PlatController::class);
     Route::resource('category', CategoryController::class);
     Route::resource('menu', MenuController::class);
-    Route::resource('reservation', ReservationController::class);
+    Route::resource('reservation', AdminReservationController::class);
     Route::resource('commande', CommandeController::class);
     Route::resource('ingredient', IngredientController::class);
     Route::resource('avis', AdminAvisController::class);

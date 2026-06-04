@@ -2,22 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Commande;
 use App\Models\Livraison;
+use App\Models\Panier;
+use Dom\Comment;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class LivraisonController extends Controller
 {
-    // public function create($commande_id)
-    // {
-    //     $commande = Commande::findOrFail($commande_id);
-    //     return view('livraison.create', compact('commande'));
-    // }
+    
+    public function index () {
+        
+        $livraison = null;
+        $total_number = 0;
+        if(Auth::user() && Commande::where('user_id', Auth::id()) && Panier::where('user_id', Auth::id())->first()){
+            $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
+            if (Commande::where('user_id', Auth::id())->first()) {
+                $livraison = Commande::with('livraisons')->where('user_id', Auth::id())->first()->livraisons->first();
+            }
+        } else {
+            $panier = session()->get('panier_invite');          
+            if($panier){
+                $total_number = array_sum(array_column($panier, 'quantite'));
+            }
+        }
+       
+        return view('panier.infos_livraison', [
+            'commande' => Commande::where('user_id', Auth::id())->first(),
+            'livraison' => $livraison,
+            'total' => $total_number
+        ]);
+    }
+    
+    public function create (Commande $commande_id){
+        $commande = Commande::findOrFail($commande_id);
+        return view('commandes.index', compact($commande));
+    }
 
-
-    public function store(Request $request, $commande_id)
+    public function store(Request $request, Commande $commande_id)
     {
         $request->validate([
             'name' => 'required|string|max:255',

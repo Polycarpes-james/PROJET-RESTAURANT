@@ -1,5 +1,5 @@
 .header-content{
-    width: 75%;
+    width: 100%;
     margin: 2em auto 0 auto;
     padding-bottom: 2.5em;
     backdrop-filter: blur(2px);
@@ -8,6 +8,17 @@
     position: relative;
     flex-direction: column;
     text-align: center;
-    opacity: 0.8;
+    opacity: 0.8; 
+} 
+
+.flatpickr-input {
+    /* height: 50px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    padding: 0 15px; */
 }
 
+.flatpickr-calendar {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px #00000026;
+}

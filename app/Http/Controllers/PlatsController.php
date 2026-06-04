@@ -16,6 +16,9 @@ use SebastianBergmann\Type\TypeName;
 
 class PlatsController extends Controller
 {
+    /**
+     * La fonction "total" renvoie le nombre total de plats pour les invités et les abonnés
+     */
     public function total () {
         $total_number = 0;
         if(Auth::user() && Commande::where('user_id', Auth::id()) && Panier::where('user_id', Auth::id())->first()){
@@ -26,17 +29,13 @@ class PlatsController extends Controller
                 $total_number = array_sum(array_column($panier, 'quantite'));
             }
         }
-
         return $total_number;
     }
-    public function plats () {
 
-        return view('plats.index', [
-            'plats' => Plat::all(),
-            'total' => $this->total()
-        ]);
-    }
-    public function show(string $slug, Plat $plat)
+    /**
+     * La fonction "show" permet de voir le contenu d'un plat en particulié
+     */
+    public function show (string $slug, Plat $plat)
     {
         // Récupération des avis du plat avec l'utilisateur associé
         $quantite = 0;
@@ -62,7 +61,6 @@ class PlatsController extends Controller
         if($ok){
             $quantite = session()->get('panier_invite')[$plat->id]['quantite']; 
         }
-        // dd(session()->get('panier_invite'));
         return view('plats.show', [
             'plat' => $plat,
             'plat_quantite' => $quantite,
@@ -90,7 +88,7 @@ class PlatsController extends Controller
                 $quantite = Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first()->pivot->quantite;
             }
         }
-    
+
         $picture = $plat->getPicture()->getPictureUrl(266, 200);
         
         return response()->json(['plat' => $plat, 'quantite' => $quantite, 'picture' => $picture, 'session' => $session_invite]);
@@ -98,7 +96,6 @@ class PlatsController extends Controller
 
     public function show_modalInvite (Plat $plat) {
         $session_invite = session()->get('invite_session');
-        
         $panier = session()->get('panier_invite');
         // $platPanier =  $panier[$plat->id];
         return response()->json(['plat' => $plat, 'panier' => $panier, 'session' => $session_invite]);

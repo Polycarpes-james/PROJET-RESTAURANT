@@ -12,10 +12,12 @@
     color: white;
 }
 
-.panier-container{
+.panier-container, .panier-container-livraison{
     margin: 0 2em;
 }
-
+.panier-container-livraison{
+    margin-top: 1em;
+}
 .panier-header{
     backdrop-filter: blur(15px);
     background: transparent!important;
@@ -23,6 +25,40 @@
 .plat-item-modal .items .actions-items{
     position: relative;
 }
+.plat-item-modal .btn-suppression{
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    padding: 10px 15px;
+    color: white;
+    background-color: #ff7171;
+    border: none;
+    font-size: 15px;
+    border-radius: 100%;
+}
+#invisible-btn{
+    position: absolute;
+    inset: 0;
+    background:transparent;
+    border: none;
+    cursor: pointer;
+}
+#invisible-btn:hover{
+    box-shadow: 0 0 4px #c26214;
+}
+.picture-panier-panier{
+    position: relative;
+    background-color: grey;
+    backdrop-filter: blur(15px);
+}
+.picture-panier-panier img{
+    /* border-top-right-radius: 10px; */
+    display: block;
+}
+.picture-panier-panier .delete-dish{
+    padding: 5px;
+}
+
 .plat-item-modal .items input.text{
   z-index: 0;
   border: transparent;
@@ -35,7 +71,61 @@
   width: 44px;
 }
 
-
 .innertTotal{
     margin-top: 8px;
 }
+
+.hidden-part-plat{
+    background-color: white;
+    position: absolute;
+    transition: 0.3s;
+    inset: 0;
+    transform: translateY(0);
+}
+.none-height{
+    height: 0;
+    transform: translateY(-10px);
+    display: none;
+}
+.plat-item-modal .items span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #c26214e7;
+    color:white;
+    padding: 6px 10px;
+    border-bottom-right-radius: 5px;
+}
+
+.footer-main-container{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.footer-main-container .category-plat-item{
+    width: 33.33%;
+}
+.footer-main-container .category-plat-item .items{
+    margin: 5px;
+}
+.footer-main-container .category-plat-item h4{
+    background-color: #c2621430;
+    color: #c26214;
+    padding: 5px;
+}
+.footer-main-container .category-plat-item .plat-item{
+    padding: 5px;
+    background-color: #dadada23;
+    border-bottom: 1px solid #c262141d;
+    display: flex;
+    justify-content: space-between;
+}
+.decompte-plats{
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .footer-main-container .category-plat-item .plat-item div{
+
+} */

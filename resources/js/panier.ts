@@ -38,6 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ======================= FERMETURE DES MODALES =========================
+
+    document.querySelectorAll<HTMLElement>('#closeBtn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modal = document.getElementById('platWindowsInfo')
+            if (modal) modal.style.display = 'none';
+        })
+    })
+
     document.querySelectorAll<HTMLElement>('#closeModal').forEach(btn => {
         btn.addEventListener('click', () => {
             const modal = document.getElementById('customModal');
@@ -95,18 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.querySelectorAll<HTMLElement>('.back-panier').forEach(btn => {
+    // ==================================================================================
+
+    document.querySelectorAll('.show-panier-plat').forEach(btn => {
         btn.addEventListener('click', () => {
-            const customModal = document.getElementById('customModal');
-            const infoClient = document.querySelector('.modal-information-client') as HTMLElement | null;
-            const modalPanier = document.querySelector('.modal-panier') as HTMLElement | null;
-
-            if (customModal) customModal.style.display = "none";
-            if (infoClient) infoClient.style.display = "none";
-            if (modalPanier) modalPanier.style.display = "flex";
-        });
-    });
-
+            document.querySelector('.hidden-part-plat')?.classList.remove('none-height')
+        })
+    })
     // ======================= MODALE D’AUTHENTIFICATION =========================
     function showAuthModal(): void {
         const modal = document.getElementById('modal-connect') as HTMLElement | null;
@@ -129,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         modal.style.display = "flex";
-
         const btnLogin = document.getElementById('btnLogin') as HTMLButtonElement | null;
         const btnRegister = document.getElementById('btnRegister') as HTMLButtonElement | null;
         const btnGuest = document.getElementById('btnGuest') as HTMLButtonElement | null;
@@ -162,6 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.success) {
                 showModal('success', data.message)
+                console.log(data);
+                
             }
 
         } catch (e) {
@@ -176,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let total:any
         let btnMinus:any
 
-        content = document.querySelector('.panier-item')
+        content = document.querySelector(`.panier-item[data-plat="${plat_id}"]`)
         text = content ? content.querySelector('.text') as HTMLInputElement : null
         total = content ? content.querySelector('.innertTotal') as HTMLParagraphElement : null
         btnMinus = content.querySelector('.minus') as HTMLButtonElement
@@ -204,19 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 quantite = data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0                
                 if (text && total) {
                     text.value = `${data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0}`          
-                    total.textContent = `Totals : ${(data.plat.price * (data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0)).toFixed(2)} €`
+                    total.textContent = `${(data.plat.price * (data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0)).toFixed(2)} €`
                 }
             } else {
                 if (text && total) {
-                    
                     text.value = `${data.quantite === undefined  ? "0" : (data.quantite === null ? "0" : data.quantite)}`          
-                    total.textContent = `Totals : ${(data.plat.price * data.quantite).toFixed(2)} €`
+                    total.textContent = `${(data.plat.price * data.quantite).toFixed(2)} €`
                 }
                 quantite = data.quantite
             }
-                       
-            console.log(quantite);
-            
+                                   
             if(quantite === null){
                 btnMinus?.classList.add('disabled')
             } else {
@@ -235,14 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // loadPanierShow()
-
     // ======================= CHARGEMENT DU PANIER =========================
     async function loadPanier(): Promise<void> {
         const list = document.getElementById('modalPanierList') as HTMLElement;
         const totalEl = document.getElementById('modalPanierTotal') as HTMLElement;
+        const totalBtn = document.querySelectorAll('.total-number-plats-header');
         
-        if (!list || !totalEl) return;
+        if (!list || !totalEl || !totalBtn) return;
         try {
             
             let res = await fetch('/rettine/panier/refresh', { 
@@ -252,10 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
             let data:any;
-
             data = await res.json()
-
-            
 
             if (data.session === 'invite') {
                 if (res.status === 403) {
@@ -276,58 +273,59 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
             }
-
-            console.log(data);
-            
             list.innerHTML = '';
-            totalEl.textContent = data.total.toFixed(2);
-            
+            totalEl.textContent = `${ data.total.toFixed(2) } €`;
+
             if (data.total !== 0 && data.plats) {
                 data.plats.forEach((item: any) => {
                     const div = document.createElement('div');
                     div.classList.add('plat-item-modal');
+            
                     div.innerHTML = `
-                    <div class="items">
-                        <div class="plat-item panier-item" data-plat="${item.plat_id}">
-                            <button class="delete-dish" data-id="${item.plat_id}" data-name="${item.name}">×</button>
-                            <div class="picture-panier-panier">
-                                <img src="${item.picture}" alt="">
-                            </div>
-                            <div class="item-description-panier">
-                                <div class="description-plat-panier">
-                                    <a href="${item.link_view}">${item.name} <br> <span>${item.price} €</span></a>
-                                    <p>${item.description}</p>
+                       <div class="items">
+                            <div class="plat-item panier-item" data-plat="${ item.plat_id }">
+                                <div class="picture-panier-panier">
+                                    <img src="${ item.picture }" alt="">
                                 </div>
-                                <div class="actions">
-                                    <div class="actions-items">
-                                        <button class="minus" data-id="${item.plat_id}">−</button>
-                                        <input type="text" class="text" data-id="${ item.plat_id }" value="${ item.quantite }" data-name="${ item.name }" data-quantite="1" >
-                                        <button class="plus" data-id="${item.plat_id}">+</button>
+                                <div class="item-description-panier">
+                                    <div class="description-plat-panier">
+                                        <a href="${ item.link_view }">${ item.name}</a>
+                                        <span>${ item.price } €</span>
                                     </div>
-                                    <div class="total-price-number-item">
-                                        <p class="total-price-number innertTotal">Totals : ${Number(item.prix_total).toFixed(2)} €</p> 
+                                    <div class="actions">
+                                        <div class="actions-items">
+                                            <button class="${ item.quantite === 1 ? "delete-dish-link" : "minus"}" id="minus-btn" data-id="${ item.plat_id }" data-name="${ item.name }" >
+                                            ${ item.quantite <= 1 ? "×" : "−"}
+                                            </button>
+                                            <input type="text" class="text" data-id="${ item.plat_id }" value="${ item.quantite }" data-name="${ item.name }" data-quantite="1" >
+                                            <button class="plus" data-id="${ item.plat_id }">+</button>
+                                        </div>
+                                        <div class="total-price-number-item">
+                                            <p class="total-price-number innertTotal">${Number(item.prix_total).toFixed(2)} €</p> 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     `;
                     list.appendChild(div);
                 });
+                btn()
             }
-            // document.getElementById('panierModal')!.style.display = 'flex';
-
             all()         
-
-
         } catch (err) {
             console.error(err);
             showModal("Erreur", "Impossible de charger le panier", "error");
         }
     }
-    document.querySelectorAll<HTMLButtonElement>('.delete-dish').forEach(btn => btn.addEventListener('click', (e) => {
-        showModalSuppression(btn.dataset.id!, btn.dataset.name!)
-    }));
+    function btn(){
+        document.querySelectorAll<HTMLButtonElement>('.delete-dish-link').forEach(btn => btn.addEventListener('click', () => {
+            showModalSuppression(btn.dataset.id!, btn.dataset.name!)
+        }));
+    }
+
+    btn();
+
     async function ajouterAuPanier(platId: string, quantite: number, condition: boolean, nature:boolean): Promise<void> {
         try {
             let data: any
@@ -366,6 +364,12 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if(data.success){                
                 complet(data, condition)
+
+                const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
+                if (totalBtn) {
+                    totalBtn.textContent = `${data.platTotal}`                
+                }
+                
                 const card = document.querySelector<HTMLElement>(`.items-content[data-plat-id="${platId}"]`);
                 if (card) {
                     card.classList.add('deep-active');
@@ -382,9 +386,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e) {
             e.textContent = data.total
         }
-        // console.log(data.total);
         if (condition) {
-            showModal("Succès", data.message, "success");                
+            showModal("Ajout du plat", data.message, "success");                
         }
     }
     
@@ -396,7 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const quantite = e.target.value;
             loadPanierShow(e.target.dataset.id!)
             ajouterAuPanier(platId, quantite, false, true)
-
         }))
     }
 
@@ -452,7 +454,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
             loadPanier()
         } catch (e) {
-            // console.log(e);
             showModal("Erreur serveur", "Impossible de modifier la quantité", "error");
         }
     }
@@ -517,7 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
         btn.addEventListener('click', () => {
             const platId = btn.dataset.id!;
-            const quantite = parseInt(btn.dataset.quantite || '1');
+            const quantite = parseInt(btn.dataset.quantite || '1');            
             ajouterAuPanier(platId, quantite, true, false);
         });
     });
@@ -556,11 +557,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await res.json();
-            console.log(data);
+            console.log(data.commande);
             
             if (data.success) {
-                (document.querySelector('.modal-information-client') as HTMLElement).style.display = "flex";
-                (document.querySelector('.modal-panier') as HTMLElement).style.display = "none";
+                // (document.querySelector('.modal-information-client') as HTMLElement).style.display = "flex";
+                // (document.querySelector('.modal-panier') as HTMLElement).style.display = "none";
+                
             } 
             if (data.error === 'vide') {
                 showModal("Panier vide", data.message, "error");

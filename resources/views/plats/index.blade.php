@@ -2,7 +2,7 @@
 
 @section('title', "PLATS")
 
-@section('nammain-style')
+@section('main-style')
 
 @section('body-style', 'body-header-others')
 

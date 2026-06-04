@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     @vite(['resources/js/app.ts', 'resources/css/app.css'])
     <title>@yield('title') | RETTINE</title>
 </head>
@@ -24,6 +26,7 @@
         @yield('content_second')
     </main>
 </body>
+
 <footer class="footer">
   <div class="footer-container">
 

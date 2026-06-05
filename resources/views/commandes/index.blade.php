@@ -7,7 +7,9 @@
 @section('body-style', 'commandes-body')
 
 @section('background_header', "commandes-header")
-
+@php
+    $panierVar = session()->get('panier_invite')
+@endphp
 @section('header-content')
     <div class="content-commandes-header">
         <h1>Faites vos commandes en ligne, pour une meuilleur experience</h1>
@@ -61,10 +63,10 @@
             @foreach ($categories as $cate)
                 <div class="items-{{ $cate->getSlug() }} plats-item" id="{{ $cate->getSlug() }}">
                     <h2>{{ $cate->name }}</h2>
-                    <div class="content-plats">
+                    <div class="{{ $cate->plates->isNotEmpty() ? "content-plats" : ""}}">
                         @forelse ($cate->plates as $plat)
                             <div class="items">
-                                <div class="items-content {{  in_array($plat->getSlug(), session('platsInCard') ?? []) ? "deep-active" : "" }}" data-plat-id="{{ $plat->id }}">
+                                <div class="items-content" data-plat-id="{{ $plat->id }}">
                                     <div class="item">
                                         <div class="disponible-plat">
                                             <h3>{{ $plat->truncateText($plat->name, 25)}}</h3>
@@ -86,7 +88,7 @@
                                                 </a>
                                             <div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-                                                <span class="total-number-plats-command total-number-plats-header" data-id="{{ $plat->id }}" >{{ auth()->check() ? $plat->panierPlats->where('panier_id', ($panier ? $panier->id : 0))->pluck('quantite')->sum() : 0  }}</span>                                                   
+                                                <span class="total-number-plats-command total-number-plats-header" data-id="{{ $plat->id }}" >{{ auth()->check() ? $plat->panierPlats->where('panier_id', ($panier ? $panier->id : 0))->pluck('quantite')->sum() : data_get($panierVar, $plat->id . '.quantite', 0)  }}</span>                                                   
                                             </div>
                                             </div>
                                         </div>
@@ -99,7 +101,10 @@
                                 </div>
                             </div>
                         @empty
-                            <p>Il n'y pas de plat sur cette category</p>
+                            <div class="category_plat_empty">
+                                <p>Il n'y pas de plat sur cette categorie : <span style="font-weight:bold">{{ $cate->name }}</span></p>
+                                <img src="/img/dossier.png" width="80px" alt="">
+                            </div>
                         @endforelse
                     </div>
                 </div>

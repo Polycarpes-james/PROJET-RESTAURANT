@@ -126,6 +126,25 @@
     justify-content: space-between;
 }
 
-/* .footer-main-container .category-plat-item .plat-item div{
-
-} */
+.modal-content-panier .panier_empty{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.modal-content-panier .panier_empty .commandFromCart{
+    text-transform: uppercase;
+    padding: 20px 60px;
+    background-color: #c26214;
+    color: white;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-left: 20px;
+    box-shadow: 0 0 10px grey;
+}
+.modal-content-panier .panier_empty h2{
+    letter-spacing: 2px;
+    font-size: 25px;
+    color: #ff7171;
+    background-color: #ff717128;
+    padding: 10px 20px;
+}

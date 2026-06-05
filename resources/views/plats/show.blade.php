@@ -45,6 +45,22 @@
             </footer>
         </div>
     </aside>
+    <aside id="customModal" class="modal" style="display: none;">
+        <div class="modal-content" id="modalContent">
+            <header class="modal-header-content">
+                <h3 id="modalTitle"></h3>
+                <button id="closeModal" class="modal-close">×</button>
+            </header>   
+            <main class="modal-main-content">
+                <p id="modalMessage"></p>
+            </main>
+            <footer class="modal-footer-content">
+                <a href="{{ auth()->check() ? route('rettine.panier') : route('invite.panier') }}" id="ouvrirPanierBtn" class="btn btn-open-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                </a>
+            </footer>
+        </div>
+    </aside>
     <div class="main-container-show-plat-item">
         <div class="back-side">
             <a href="{{ route('.rettine') }}">Accueil</a>/
@@ -116,21 +132,6 @@
             </div>
         </div>
 
-        <aside id="customModal" class="modal" style="display: none;">
-            <div class="modal-content" id="modalContent">
-                <header class="modal-header-content">
-                    <h3 id="modalTitle">Mon panier</h3>
-                    <button id="closeModal" class="modal-close">×</button>
-                </header>
-                <main class="modal-main-content">
-                    <p id="modalMessage"></p>
-                </main>
-                <footer class="modal-footer-content">
-                    <a href="#panier" id="ouvrirPanierBtn" class="btn btn-primary">Voir votre panier</a>
-                </footer>
-            </div>
-        </aside> 
-
         
         <aside id="modal-connect" class="connect-modal" style="display: none;">
             <div class="modal-content-connect">
@@ -139,17 +140,6 @@
             </div>
         </aside>
 
-        <aside id="customModalShow" class="modal" style="display: none;">
-            <div class="modal-content">
-                <header class="modal-header-content">
-                    <h3 id="modalTitle">Mon panier</h3>
-                    <button id="closeModal" class="modal-close">×</button>
-                </header>
-                <main class="modal-main-content">
-                    <p id="modalMessage"></p>
-                </main>
-            </div>
-        </aside>
         <div class="comments-side">
             <div class="header-avis">
                 <h3>Les avis et notes des clients sur ce plat</h3>

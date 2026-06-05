@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Avis;
 use App\Models\Plat;
-use App\Models\User;
 use App\Models\Panier;
 use App\Models\Commande;
-use Illuminate\Http\Request;
-use function PHPSTORM_META\type;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use SebastianBergmann\Type\TypeName;
 
 class PlatsController extends Controller
 {
+       
+    public function plats () {
+        return view('plats.index', [
+            'plats' => Plat::all(),
+            'total' => $this->total()
+        ]);
+    }
     /**
      * La fonction "total" renvoie le nombre total de plats pour les invités et les abonnés
      */

@@ -222,3 +222,16 @@
 .pass-commande .plats-items .content-plats .items .items-btns div{
     display: flex;
 }
+.category_plat_empty{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.category_plat_empty p{
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    background-color: #ff73001a;
+    color: #ff7300;
+    padding: 5px 10px;
+}

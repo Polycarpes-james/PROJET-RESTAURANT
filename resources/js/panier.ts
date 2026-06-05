@@ -2,7 +2,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const element_plat = document.querySelectorAll('.pass-commande .items-content')
     // Interface de configuration globale
 
 
@@ -165,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 showModal('success', data.message)
                 console.log(data);
-                
             }
 
         } catch (e) {
@@ -240,9 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadPanier(): Promise<void> {
         const list = document.getElementById('modalPanierList') as HTMLElement;
         const totalEl = document.getElementById('modalPanierTotal') as HTMLElement;
-        const totalBtn = document.querySelectorAll('.total-number-plats-header');
         
-        if (!list || !totalEl || !totalBtn) return;
+        if (!list || !totalEl) return;
         try {
             
             let res = await fetch('/rettine/panier/refresh', { 
@@ -318,6 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showModal("Erreur", "Impossible de charger le panier", "error");
         }
     }
+    
     function btn(){
         document.querySelectorAll<HTMLButtonElement>('.delete-dish-link').forEach(btn => btn.addEventListener('click', () => {
             showModalSuppression(btn.dataset.id!, btn.dataset.name!)
@@ -326,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btn();
 
-    async function ajouterAuPanier(platId: string, quantite: number, condition: boolean, nature:boolean): Promise<void> {
+    async function ajouterAuPanier(platId: string, quantite: number, condition: boolean, state:boolean): Promise<void> {
         try {
             let data: any
 
@@ -337,10 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ plat_id: platId, quantite: quantite, nature: nature})
+                body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state})
             });
 
             data = await res.json()
+            
 
             if(data.session === 'invite'){
                 if (res.status === 403) {
@@ -351,10 +350,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             'X-CSRF-TOKEN': "{{ csrf_token() }}",
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({ plat_id: platId, quantite: quantite, nature: nature })
+                        body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state })
                     });
+
                     data = await resGuest.json()
                 }
+                
             } else {
                 if(res.status === 403) {
                     showAuthModal()
@@ -362,17 +363,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } 
             
+            console.log(data);
+            
             if(data.success){                
                 complet(data, condition)
-
                 const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
                 if (totalBtn) {
                     totalBtn.textContent = `${data.platTotal}`                
-                }
-                
-                const card = document.querySelector<HTMLElement>(`.items-content[data-plat-id="${platId}"]`);
-                if (card) {
-                    card.classList.add('deep-active');
                 }
             }
             loadPanier()
@@ -391,6 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    
+
     function all () {
         document.querySelectorAll<HTMLButtonElement>('.plus').forEach(btn => btn.addEventListener('click', () => modifierQuantite(btn.dataset.id!, 1)));
         document.querySelectorAll<HTMLButtonElement>('.minus').forEach(btn => btn.addEventListener('click', () => modifierQuantite(btn.dataset.id!, -1)));
@@ -518,8 +517,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
         btn.addEventListener('click', () => {
             const platId = btn.dataset.id!;
-            const quantite = parseInt(btn.dataset.quantite || '1');            
-            ajouterAuPanier(platId, quantite, true, false);
+            const quantite = parseInt(btn.dataset.quantite || '1');   
+            ajouterAuPanier(platId, quantite, true, true);
         });
     });
     
@@ -528,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const platId = btn.dataset.id!;
             const quantite = parseInt(btn.dataset.quantite || '1');
             loadPanierShow(platId)
-            ajouterAuPanier(platId, quantite, false, false)
+            ajouterAuPanier(platId, quantite, true, true)
         })
     })
 

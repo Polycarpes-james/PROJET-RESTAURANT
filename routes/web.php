@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AviController;
 use App\Http\Controllers\Admin\AvisController as AdminAvisController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommandeController;
@@ -20,10 +19,8 @@ use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PlatsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-use function Symfony\Component\String\u;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,7 +84,7 @@ Route::name('invite.')->group(function() {
     Route::post('/invite/panier/supprimer', [PanierController::class, 'removeDishInvite']);
     Route::post('/invite/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);
 
-    Route::get('shopCardUp@/card', [PanierController::class, 'getPanierInvite'])->name('panier');
+    Route::get('shopCartUp@/cart', [PanierController::class, 'getPanierInvite'])->name('panier');
 
     Route::get('/invite/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
     Route::post('/invite/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');

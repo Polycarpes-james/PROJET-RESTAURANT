@@ -347,10 +347,8 @@
     font-size: 20px;
     background-color: #16206144;
     color: var(--main-color);
-    padding: 13px 10px;
     /* border-top-left-radius:4px;  */
     /* border-top-right-radius:4px; */
-    border-radius: 100%;
 } 
 #customModal .modal-footer-content a:hover, #customModalShow .modal-footer-content a:hover{
     background-color: var(--main-color);

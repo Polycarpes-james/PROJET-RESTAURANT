@@ -87,8 +87,9 @@ class PlatsController extends Controller
         $session_invite = session()->get('invite_session');
 
         if (auth()->check()) {
-            if (Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first()) {
-                $quantite = Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first()->pivot->quantite;
+            $panierElement = Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first();
+            if ($panierElement) {
+                $quantite = $panierElement->pivot->quantite;
             }
         }
 
@@ -101,6 +102,7 @@ class PlatsController extends Controller
         $session_invite = session()->get('invite_session');
         $panier = session()->get('panier_invite');
         // $platPanier =  $panier[$plat->id];
+        // dd($panier);
         return response()->json(['plat' => $plat, 'panier' => $panier, 'session' => $session_invite]);
 
     }

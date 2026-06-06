@@ -34,7 +34,33 @@
     box-shadow: 0 0 5px #80808062;
     border-radius: 5px;
     background-color: white;
+    display: flex;
+    flex-direction:column ;
+    justify-content: center;    
+    padding: 10px;
     height: 400px;
+}
+.horaires-reservation .horaires-item .picture-part{
+    margin-left: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    justify-content: center;
+}
+.horaires-reservation .horaires-item .picture-part a{
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.horaires-reservation .horaires-item .horaires-part{
+    width: 70%;
+}
+.horaires-reservation .horaires-item .item-part{
+    display: flex;
+    flex-wrap: wrap;
+}
+.horaires-reservation .horaires-item h2{
+    text-align: center;
 }
 
 .reservation-containt-btn{
@@ -54,7 +80,7 @@
     margin-top: 1em;
 }
 .informations-reservations {
-    margin-top: 2em;
+    margin-top: 16em;
 }
 .informations-reservations h3{
     padding: 15px;
@@ -66,4 +92,5 @@
     letter-spacing: 2px;
     margin-bottom: 1.5em;
 }
+
 

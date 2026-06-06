@@ -23,9 +23,9 @@ class PanierPlat extends Model
         return $this->belongsTo(Plat::class);
     }
 
-    public function user()
+    public function panier()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Panier::class);
     }
 }
 

@@ -46,6 +46,9 @@ class PanierController extends Controller
             
             $panier[$plat->id]['quantite'] = $request->state ? $quantiteAjoutee : $nouvelleQuantite;
             $panier[$plat->id]['prix_total'] = ($request->state ? $quantiteAjoutee : $nouvelleQuantite) * $panier[$plat->id]['price'];
+
+            session()->put('panier_invite', $panier);
+
             return response()->json(['success' => true, 'platTotal' => $panier[$plat->id]['quantite'],  'total' => array_sum(array_column($panier, 'quantite')), 'message' => 'Le plat ' . "'$plat->name'" . ' a été augmentée dans le panier !']);
         } else {
             $panier[$plat->id] = [
@@ -71,7 +74,7 @@ class PanierController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
+            'message_first' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
             'panier' => $panier,
             'total' => array_sum(array_column($panier, 'quantite')),
             'platTotal' => $panier[$plat->id]['quantite'],
@@ -139,11 +142,14 @@ class PanierController extends Controller
                 'total' => 0,
                 'categories' => [],
                 'totalPrice' => 0,
-                'panier' => $panier
+                'panier' => $panier,
+                'panier_condition' => 0,
+                'session' => $session_invite
             ]);
         }
 
-        $panierDetails = $panier->panierPlats()->with('plat')->get();
+        $panierDetails = $this->panierPlats($panier);;
+
         $totalPrice = $panierDetails->sum('prix_total');
 
         // dd($totalPrice);
@@ -167,6 +173,7 @@ class PanierController extends Controller
             ];
         }
         
+
         return view('panier.index', [
             'plats' => $panierDetails,
             'categories' => $categoriesData,
@@ -174,7 +181,7 @@ class PanierController extends Controller
             'panier' => $panier,
             'total' => $this->total(),
             'session' => $session_invite,
-            'panier_condition' => $panier->total
+            'panier_condition' => $panier->total ?? null
         ]);
     }
     /**
@@ -202,25 +209,11 @@ class PanierController extends Controller
 
         $quantiteAjoutee = $request->quantite;
 
-        $panierDetails = $panier->panierPlats()->with('plat')->get()->map(function ($item) {
-                return [
-                    'plat_id' => $item->plat->id,
-                    'name' => $item->plat->name,
-                    'category_id' => $item->plat->category->id,
-                    'description' => $item->plat->truncateText($item->plat->description, 80),
-                    'price' => $item->plat->price,
-                    'picture' => $item->plat->getPicture()->getPictureUrl(160, 140),
-                    'quantite' => $item->quantite,
-                    'link_view' => route('rettine.plats.show', ['plat' => $item->plat, 'slug' => $item->plat->getSlug()]),
-                    'prix_total' => $item->prix_total
-                ];
-            });
         // Vérifier si le plat est déjà dans le panier
         $panierPlat = PanierPlat::where('panier_id', $panier->id)->where('plat_id', $plat->id)->first();
 
         $totalGeneral = null;
 
-        $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
 
         if ($panierPlat) {
             $nouvelleQuantite = $panierPlat->quantite + $quantiteAjoutee;
@@ -228,15 +221,8 @@ class PanierController extends Controller
                 'quantite' => $request->state ? $quantiteAjoutee : $nouvelleQuantite,
                 'prix_total' => $plat->price * ($request->state ? $quantiteAjoutee : $nouvelleQuantite)
             ]);
-            return response()->json(['success' => true, 'platTotal' => $panierPlat->quantite,'total' => $total_number + 1, 'message' => 'Le plat ' . "'$plat->name'" . ' a été augmentée dans le panier !']);
+            return response()->json(['success' => true, 'platTotal' => $panierPlat->quantite, 'total' => $panier->panierPlats()->sum('quantite'), 'message' => 'Le plat ' . "'$plat->name'" . ' a été augmentée dans le panier !']);
         } else {
-            // Création d'une nouvelle entrée
-            if($request->state){
-                $panierPlat->update([
-                    'quantite' => $quantiteAjoutee,
-                    'prix_total' => $plat->price * $quantiteAjoutee
-                ]);
-            }
             PanierPlat::create([
                 'panier_id' => $panier->id,
                 'plat_id' => $plat->id,
@@ -245,30 +231,46 @@ class PanierController extends Controller
             ]);
         }
 
-        // Préparer le JSON simplifié pour le frontend
-      
+        $panierDetails = $this->panierPlats($panier);;
+
         $totalGeneral = $panierDetails->sum('prix_total');
 
         $panier->total = $totalGeneral;
         $panier->save();
         // Calcul du total général
 
-        session()->put("plat", 'is');
-
         return response()->json([
             'success' => true,
-            'message' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
+            'message_first' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
             'panier' => $panierDetails,
-            'total' => $total_number + 1,
-            'platTotal' => 1,
-            'total_general' => $totalGeneral  
+            'total' => $panier->panierPlats()->sum('quantite'),
+            'platTotal' => $quantiteAjoutee,
+            'total_general' => $totalGeneral
         ]);
+    }
+    
+    public function panierPlats (Panier $panier) {
+
+        $panierDetails = $panier->panierPlats()->with('plat')->get()->map(function ($item) {
+            return [
+                'plat_id' => $item->plat->id,
+                'name' => $item->plat->name,
+                'category_id' => $item->plat->category->id,
+                'price' => $item->plat->price,
+                'picture' => $item->plat->getPicture()->getPictureUrl(160, 140),
+                'quantite' => $item->quantite,
+                'link_view' => route('rettine.plats.show', ['plat' => $item->plat, 'slug' => $item->plat->getSlug()]),
+                'prix_total' => $item->prix_total
+            ];
+        });
+        return $panierDetails;
     }
 
     public function total () {
         $total_number = 0;
-        if(Auth::user() && Commande::where('user_id', Auth::id()) && Panier::where('user_id', Auth::id())->first()){
-            $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
+        $panier = Panier::where('user_id', Auth::id())->first();
+        if(Auth::user() && Commande::where('user_id', Auth::id()) && $panier){
+            $total_number = $panier->panierPlats()->sum('quantite');;
         } else {
             $panier = session()->get('panier_invite');    
             if($panier){
@@ -327,7 +329,7 @@ class PanierController extends Controller
         if ($panierPlat) {
             $panierPlat->delete();
 
-            $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
+            $total_number = $panier->panierPlats()->sum('quantite');;
 
             return response()->json(['success' => true, 'total' => $total_number, 'message' => 'le plat a été supprimé du panier']);
         } else {
@@ -344,7 +346,7 @@ class PanierController extends Controller
         
         $platsInCard = session()->get('platsInCard', []);
 
-        if($panier[$request->plat_id]){
+        if(isset($panier[$request->plat_id])){
             unset($panier[$request->plat_id]);
             session()->put('panier_invite', $panier);
             $totalNumber = array_sum(array_column($panier, 'quantite'));
@@ -427,7 +429,7 @@ class PanierController extends Controller
             return response()->json(['error' => 'Plat non trouvé dans le panier'], 404);
         }
 
-        $nouvelleQuantite = $panierPlat->quantite + $request->delta;
+        $nouvelleQuantite = $panierPlat->quantite + $request->delta;                                         
         $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
 
         if ($nouvelleQuantite <= 0) {
@@ -437,7 +439,13 @@ class PanierController extends Controller
                 'quantite' => $nouvelleQuantite,
                 'prix_total' => $panierPlat->plat->price * $nouvelleQuantite
             ]);
-            return response()->json(['success' => true, 'total' => $total_number + $request->delta, 'message' => $panierPlat->plat->name . ' a été modifié dans le panier']);
+            return response()->json([
+                'success' => true,
+                'plat_id' => $panierPlat->plat_id,
+                'quantite' => $nouvelleQuantite,
+                'total' => $total_number + $request->delta,
+                'message' => $panierPlat->plat->name . ' a été modifié dans le panier'
+            ]);
         }
     }
 
@@ -457,7 +465,6 @@ class PanierController extends Controller
         } 
 
         $nouvelleQuantite = $panier[$plat->id]['quantite'] + $request->delta;
-        $totalNumber = array_sum(array_column($panier, 'quantite'));
 
         $panierPlat = $panier[$plat->id];
 
@@ -467,8 +474,18 @@ class PanierController extends Controller
             $panier[$plat->id]['quantite'] = $nouvelleQuantite;
             $panier[$plat->id]['prix_total'] = $panier[$plat->id]['price'] * $nouvelleQuantite;
 
+            $totalNumber = array_sum(array_column($panier, 'quantite'));
+
+
             session()->put('panier_invite', $panier);
-            return response()->json(['success' => true, 'total' => $totalNumber, 'plat' => $panierPlat, 'message' => $panier[$plat->id]['name'] . ' a été modifié dans le panier']);
+            return response()->json([
+                'success' => true,
+                'plat_id' => $plat->id,
+                'quantite' => $nouvelleQuantite,
+                'total' => $totalNumber,
+                'plat' => $panierPlat,
+                'message' => $panier[$plat->id]['name'] . ' a été modifié dans le panier'
+            ]);
         }
     }
         

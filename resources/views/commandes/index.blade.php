@@ -102,7 +102,7 @@
                             </div>
                         @empty
                             <div class="category_plat_empty">
-                                <p>Il n'y pas de plat sur cette categorie : <span style="font-weight:bold">{{ $cate->name }}</span></p>
+                                <p>Il n'y pas de plat pour <span style="font-weight:bold">{{ $cate->name }}</span></p>
                                 <img src="/img/dossier.png" width="80px" alt="">
                             </div>
                         @endforelse

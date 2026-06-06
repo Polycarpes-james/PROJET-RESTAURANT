@@ -171,21 +171,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } 
 
-    async function loadPanierShow (plat_id: string) {
+     async function loadPanierShow (plat_id: string) {
         
         let content:any
         let text:any
         let total:any
-        let btnMinus:any
 
-        content = document.querySelector(`.panier-item[data-plat="${plat_id}"]`)
-        text = content ? content.querySelector('.text') as HTMLInputElement : null
+        content = document.querySelector(`.panier-item[data-plat="${plat_id}"]`) as HTMLElement | null;
+        text = content ? content.querySelector('input.text') as HTMLInputElement : null
         total = content ? content.querySelector('.innertTotal') as HTMLParagraphElement : null
-        btnMinus = content.querySelector('.minus') as HTMLButtonElement
+
+        if (!content) return;
+    
         try {
             let data: any;
-            let quantite: any
-
             let res = await fetch(`/rettine/plats/${plat_id}`, { 
                 headers: { 
                     'Content-Type': 'application/json',
@@ -203,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 data = await resGuest.json()
 
-                quantite = data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0                
                 if (text && total) {
                     text.value = `${data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0}`          
                     total.textContent = `${(data.plat.price * (data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0)).toFixed(2)} €`
@@ -213,26 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     text.value = `${data.quantite === undefined  ? "0" : (data.quantite === null ? "0" : data.quantite)}`          
                     total.textContent = `${(data.plat.price * data.quantite).toFixed(2)} €`
                 }
-                quantite = data.quantite
             }
                                    
-            if(quantite === null){
-                btnMinus?.classList.add('disabled')
-            } else {
-                btnMinus?.classList.remove('disabled')
-                if (quantite <= 1) {
-                    btnMinus?.setAttribute('disabled', '')
-                    btnMinus?.classList.add('disabled')
-                } else {
-                    btnMinus?.removeAttribute('disabled')
-                    btnMinus?.classList.remove('disabled')
-                }              
-            }
-            loadPanier()
+            await loadPanier()
+            
         } catch (e) {
             console.log(e);
         }
     }
+
 
     // ======================= CHARGEMENT DU PANIER =========================
     async function loadPanier(): Promise<void> {
@@ -291,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </div>
                                     <div class="actions">
                                         <div class="actions-items">
-                                            <button class="${ item.quantite === 1 ? "delete-dish-link" : "minus"}" id="minus-btn" data-id="${ item.plat_id }" data-name="${ item.name }" >
+                                            <button class="${ item.quantite === 1 ? "delete-dish-link" : "minus"} minus-btn" data-id="${ item.plat_id }" data-name="${ item.name }" >
                                             ${ item.quantite <= 1 ? "×" : "−"}
                                             </button>
                                             <input type="text" class="text" data-id="${ item.plat_id }" value="${ item.quantite }" data-name="${ item.name }" data-quantite="1" >
@@ -325,6 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn();
 
     async function ajouterAuPanier(platId: string, quantite: number, condition: boolean, state:boolean): Promise<void> {
+        
         try {
             let data: any
 
@@ -338,8 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state})
             });
 
-            data = await res.json()
-            
+            data = await res.json()          
 
             if(data.session === 'invite'){
                 if (res.status === 403) {
@@ -363,41 +350,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } 
             
-            console.log(data);
-            
-            if(data.success){                
-                complet(data, condition)
+            if(data.success){  
+                complet_actions(data, condition)                
                 const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
                 if (totalBtn) {
                     totalBtn.textContent = `${data.platTotal}`                
                 }
+                await loadPanierShow(platId);
             }
             loadPanier()
-        } catch {
-            showModal("Erreur", "Impossible de contacter le serveur", "error");
+        } catch{            
+            showModal("Erreur", "Impossible de contacter le serveur ", "error");
         }
     }
 
-    function complet (data:any, condition:boolean) {
-        const e = document.querySelector('.total-number-plats') as HTMLParagraphElement
-        if (e) {
-            e.textContent = data.total
+    function complet_actions(data: any, condition: boolean) {
+
+        if (data.plat_id !== undefined) {
+
+            const compteur = document.querySelector(
+                `.total-number-plats-header[data-id="${data.plat_id}"]`
+            ) as HTMLElement | null;
+
+            if (compteur) {
+                compteur.textContent = String(data.quantite);
+            }
         }
-        if (condition) {
-            showModal("Ajout du plat", data.message, "success");                
+        const totalGeneral = document.querySelector(
+            '.total-number-plats'
+        ) as HTMLElement | null;
+
+        if (totalGeneral && data.total !== undefined) {
+            totalGeneral.textContent = String(data.total);
+        }
+        
+        if (condition && data.message_first) {
+            showModal("Ajout du plat dans le panier", data.message_first, "success");
         }
     }
-    
-    
-
     function all () {
         document.querySelectorAll<HTMLButtonElement>('.plus').forEach(btn => btn.addEventListener('click', () => modifierQuantite(btn.dataset.id!, 1)));
         document.querySelectorAll<HTMLButtonElement>('.minus').forEach(btn => btn.addEventListener('click', () => modifierQuantite(btn.dataset.id!, -1)));
-        document.querySelectorAll<HTMLInputElement>('.text').forEach(field => field.addEventListener('change', (e:any) => {
+        document.querySelectorAll<HTMLInputElement>('.text').forEach(field => field.addEventListener('change', async (e:any) => {
             const platId = e.target.dataset.id!;
-            const quantite = e.target.value;
-            loadPanierShow(e.target.dataset.id!)
-            ajouterAuPanier(platId, quantite, false, true)
+            const quantite = parseInt(e.target.value, 10)            
+            await ajouterAuPanier(platId, quantite, false, true)
         }))
     }
 
@@ -447,11 +444,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            if (data.success) {                   
-                complet(data, false)                             
-                loadPanierShow(platId)
-            } 
-            loadPanier()
+            if (data.success) {
+                complet_actions(data, false);
+                await loadPanierShow(platId);
+            }
         } catch (e) {
             showModal("Erreur serveur", "Impossible de modifier la quantité", "error");
         }
@@ -517,8 +513,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
         btn.addEventListener('click', () => {
             const platId = btn.dataset.id!;
-            const quantite = parseInt(btn.dataset.quantite || '1');   
-            ajouterAuPanier(platId, quantite, true, true);
+            const quantite = parseInt(btn.dataset.quantite!, 10);               
+            ajouterAuPanier(platId, quantite, true, false);
         });
     });
     
@@ -527,7 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const platId = btn.dataset.id!;
             const quantite = parseInt(btn.dataset.quantite || '1');
             loadPanierShow(platId)
-            ajouterAuPanier(platId, quantite, true, true)
+            ajouterAuPanier(platId, quantite, true, false)
         })
     })
 

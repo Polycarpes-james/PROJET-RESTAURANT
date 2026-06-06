@@ -1,6 +1,6 @@
 <header class="main-header-content {{ $background_header ?? null }}">
     <div class="main-logo">
-        <h1><a href="#"><span class="logo_R">R</span>ettine</a></h1>
+        <h1><a href="{{ route('.rettine') }}"><span class="logo_R">R</span>ettine</a></h1>
     </div>
     <nav class="nav-content">
         <a href="{{ route('.rettine') }}" @class(['nav-link', 'modify' => str_contains($route, '.rettine')])>Acceuil</a>
@@ -14,7 +14,7 @@
     <div class="inscription-users">
         <a href="{{ auth()->check() ? route('rettine.panier') : route('invite.panier') }}" id="ouvrirPanierBtn" class="btn btn-open-modal">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            <span class="total-number-plats total-number-plats-header">{{ $total }}</span>   
+            <span class="total-number-plats">{{ $total }}</span>   
         </a>
         @auth
             <div style="display: flex; align-items:center;">

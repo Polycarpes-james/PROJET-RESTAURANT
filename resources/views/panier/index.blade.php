@@ -24,7 +24,9 @@
         echo '<pre>';
 print_r($panier);
 die();
-
+ @endphp --}}
+ {{-- @php
+    dump($plats)
  @endphp --}}
     <aside id="suppression_dish" class="modal" style="display: none;">
         <div class="suppression-modal-item">
@@ -81,23 +83,23 @@ die();
                                 <div class="items">
                                     <div class="plat-item panier-item" data-plat="{{ $item['plat_id'] }}">
                                         <div class="picture-panier-panier">
-                                            <img class="picture-plat-item" src="{{ $item['picture'] ?? $item['plat']->getPicture()->getPictureUrl(160, 140)}}" alt="">
+                                            <img class="picture-plat-item" src="{{ $item['picture'] }}" alt="">
                                         </div>
                                         <div class="item-description-panier">
-                                            <div class="description-plat-panier">
-                                                <a href="{{ $item['link_view'] }}">{{ $item['name'] ?? $item['plat']['name'] }}</a>
-                                                <span>{{ $item['price'] ?? $item['plat']['price']}} €</span>
+                                            <div class="description-plat-panier">                                                
+                                                <a href="{{ $item['link_view'] }}">{{ $item['name'] }}</a>
+                                                <span>{{ $item['price'] }} €</span>
                                             </div>
                                             <div class="actions">
                                                 <div class="actions-items">
-                                                    <button class="{{ $item['quantite'] === 1 ? "delete-dish-link" : "minus"}}" id="minus-btn" data-name="{{ $item['name'] ?? $item['plat']['name']}}" data-id="{{ $item['plat_id'] }}">
+                                                    <button class="{{ $item['quantite'] === 1 ? "delete-dish-link" : "minus"}} minus-btn"  data-name="{{ $item['name'] }}" data-id="{{ $item['plat_id'] }}">
                                                         @if ($item['quantite'] <= 1)
                                                         ×
                                                         @else
                                                         −
                                                         @endif
                                                     </button>
-                                                    <input type="text" class="text" data-id="{{ $item['plat_id'] }}" value="{{ $item['quantite'] }}" data-name="{{ $item['name'] ?? $item['plat']['name']}}" data-quantite="1" >
+                                                    <input type="text" class="text" data-id="{{ $item['plat_id'] }}" value="{{ $item['quantite'] }}" data-name="{{ $item['name'] }}" data-quantite="1" >
                                                     <button class="plus" data-id="{{ $item['plat_id'] }}">+</button>
                                                 </div>
                                                 <div class="total-price-number-item">

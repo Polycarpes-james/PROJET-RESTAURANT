@@ -34,18 +34,16 @@
                     <h1><a href="{{ route('.rettine') }}"><span class="logo_R">La R</span>ettine</a></h1>
                 </div>
                 <div class="horaires-part">
-                    <h2>Horaires d'ouverture et de fermeture</h2>
                     <div class="opening-horaires">
-                        <h1>OUVERT 7J/7</h1>
-                        <p class="hours-opening">heures d'ouvertures</p>
-                        <div class="mon-sat-hours">
+                        <h1>Ouvert toute la semaine</h1>
+                        <h2 class="hours-opening">heures d'ouvertures</h2>
+                        <div class="mon-sat-hours hours">
                             <p>Lundi - Samedi</p>
                             <small>19H-23H</small>
                         </div>
-                        <div class="sund-hours">
+                        <div class="sund-hours hours">
                             <p>Dimanche</p>
-                            <small>12H-15H</small>
-                            <small>19H-23H</small>
+                            <small>12H-15H • 19H-23H</small>                            
                         </div>
                     </div>
                 </div>

@@ -54,6 +54,10 @@
 }
 .horaires-reservation .horaires-item .horaires-part{
     width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .horaires-reservation .horaires-item .item-part{
     display: flex;
@@ -61,7 +65,35 @@
 .horaires-reservation .horaires-item h2{
     text-align: center;
 }
+.horaires-reservation .horaires-item .horaires-part .opening-horaires .hours{
+    border-radius: 40px;
+    padding: 20px 20px;
+    box-shadow: 0 0 10px grey;
+    text-align: center;
+    margin: 1em 0;
+    width: 500px;
+    max-width: 80%;
 
+}
+.horaires-reservation .horaires-item .horaires-part .opening-horaires .hours p, .horaires-reservation .horaires-item .horaires-part .opening-horaires h2{
+    text-transform: uppercase;
+}
+.horaires-reservation .horaires-item .horaires-part .opening-horaires{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.horaires-reservation .horaires-item .horaires-part .opening-horaires h2{
+    margin: 10px 0;
+    background-color: #ff730020;
+    letter-spacing: 2px;
+    color: #ff7300;
+    padding: 10px 20px;
+}
+.horaires-reservation .horaires-item .horaires-part .opening-horaires h1{
+    font-family: "QuillPerpendicularRegular";
+    font-size: 30px;
+}
 .reservation-containt-btn{
     text-align: center;
 }
@@ -90,6 +122,10 @@
     font-size: 20px;
     letter-spacing: 2px;
     margin-bottom: 1.5em;
+}
+
+.mon-sat-hours{
+    
 }
 
 

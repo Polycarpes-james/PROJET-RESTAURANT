@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/images/{path}', [PictureController::class, 'show'])->where('path', '.*');
 
+Route::delete('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
 
 Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (){
 

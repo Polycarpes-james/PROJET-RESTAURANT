@@ -364,6 +364,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    async function viderPanier() {
+
+        const response = await fetch('/panier/vider', {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN':
+                    (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
+                'Accept': 'application/json'
+            }
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            console.log('dds');
+            
+            location.reload();
+        }
+    }
+
+    document.querySelector('.vider-panier')?.addEventListener('click', (e)=>{
+        viderPanier()
+    })
+
     function complet_actions(data: any, condition: boolean) {
 
         if (data.plat_id !== undefined) {

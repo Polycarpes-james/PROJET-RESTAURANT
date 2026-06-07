@@ -544,6 +544,25 @@ class PanierController extends Controller
     }
 
 
+    public function viderPanier()
+    {
+        if (auth()->check()) {
+
+            $panier = Panier::where('user_id', Auth::id())->first();
+            if ($panier) {
+                $panier->plats()->detach();
+            }
+
+        } else {
+            session()->forget('panier_invite');
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Panier vidé avec succès.'
+        ]);
+    }
+    
     public function annulerCommande(Request $request)
     {
         $panier = Panier::where('user_id', Auth::id())

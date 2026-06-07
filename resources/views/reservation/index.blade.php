@@ -30,15 +30,15 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-plus-inside-icon lucide-map-pin-plus-inside"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><path d="M12 7v6"/><path d="M9 10h6"/></svg> --}}
             <div class="item-part">
                 <div class="picture-part">
+                    <h1><a href="{{ route('.rettine') }}">La <span class="logo_R">R</span>ettine  horaires</a></h1>
                     <img src="{{ asset('img/outil-de-reveil-circulaire.png') }}" width="60%" alt="">
-                    <h1><a href="{{ route('.rettine') }}"><span class="logo_R">La R</span>ettine</a></h1>
                 </div>
                 <div class="horaires-part">
                     <div class="opening-horaires">
                         <h1>Ouvert toute la semaine</h1>
                         <h2 class="hours-opening">heures d'ouvertures</h2>
                         <div class="mon-sat-hours hours">
-                            <p>Lundi - Samedi</p>
+                            <p>Lundi & Samedi</p>
                             <small>19H-23H</small>
                         </div>
                         <div class="sund-hours hours">

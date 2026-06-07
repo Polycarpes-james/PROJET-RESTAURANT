@@ -57,7 +57,6 @@
 }
 .horaires-reservation .horaires-item .item-part{
     display: flex;
-    flex-wrap: wrap;
 }
 .horaires-reservation .horaires-item h2{
     text-align: center;

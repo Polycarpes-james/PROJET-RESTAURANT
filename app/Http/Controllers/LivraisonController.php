@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Commande;
 use App\Models\Livraison;
 use App\Models\Panier;
-use Dom\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

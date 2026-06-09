@@ -10,9 +10,9 @@
 
 @section('header-content')
     <div class="content-commandes-header">
-        <h1>Reservez vous un espace au restaurant</h1>
+        <h1>Réservez votre table en toute simplicité</h1>
         <p>
-            Faites vos reservations avec nous, fiable, et simple
+            Organisez votre prochaine visite en quelques clics. Que ce soit pour un repas en famille, un rendez-vous professionnel ou une occasion spéciale, nous vous accueillons dans un cadre chaleureux pour une expérience mémorable.
         </p>
     </div>
 @endsection

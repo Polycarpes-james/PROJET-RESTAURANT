@@ -26,7 +26,7 @@ print_r($panier);
 die();
  @endphp --}}
  {{-- @php
-    dump($plats)
+    dump($panier)
  @endphp --}}
    
     <aside id="suppression_dish" class="modal" style="display: none;">
@@ -92,7 +92,7 @@ die();
                             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush-cleaning-icon lucide-brush-cleaning"><path d="m16 22-1-5"/><path d="M19 14a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v1a1 1 0 0 0 1 1"/><path d="M19 14H5l-1.973 6.767A1 1 0 0 0 4 22h16a1 1 0 0 0 .973-1.233z"/><path d="m8 22 1-5"/></svg>
                         </button>
                         <button class="actualise">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 -1 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-ccw-icon lucide-refresh-ccw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>                        
                         </button>
                     </div>
                 </div>
@@ -169,8 +169,7 @@ die();
                 </div>
                 <div class="footer-header">
                     <p id="modalPanierTotal">{{ decimal($totalPrice) }} €</p>
-                    {{-- <a href="{{ auth()->check() ? route('rettine.commande_plats.index', $panier ?? 0) : ( $session ? route('invite.commande') : null) }}" id="btn-commande">Valide le panier</a> --}}
-                    <button id="btn-commande" data-panier="{{ $panier->id ?? $panier }}">valider le panier</button>
+                    <button id="btn-commande" data-panier="{{ $panier->id ?? ($panier === [] ? 0 : $panier) }}">valider le panier</button>
                 </div>
         </footer>
         </div>

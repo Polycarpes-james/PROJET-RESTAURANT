@@ -12,7 +12,10 @@ class CommandeInviteController extends Controller
         $panier = session()->get('panier_invite', []);
 
         if(empty($panier)) {
-            return response()->json(['error' => 'vide']);
+            return response()->json(['error' => 'vide',
+            'message' => 'Votre panier est vide, vous ne pouvez pas la valider, veillez passer une commande!',
+            
+            ]);
         }
 
         $commande = new CommandeInvite();

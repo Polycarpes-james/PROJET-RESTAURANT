@@ -109,10 +109,9 @@ class PanierController extends Controller
                 'nombreDifferents' => count($platsCategorie),
             ];
         }            
-                                  
         return view('panier.index', [
             'categories' => $categoriesData,
-            'panier' => $panier ,
+            'panier' => array_sum(array_column($panier, 'quantite')),
             'panier_condition' => array_sum(array_column($panier, 'prix_total')),
             'plats' => $panier ? array_values($panier) : [],
             'totalPrice' => $panier ? array_sum(array_column($panier, 'prix_total')) : 0, 

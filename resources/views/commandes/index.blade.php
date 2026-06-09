@@ -14,7 +14,7 @@
     <div class="content-commandes-header">
         <h1>Faites vos commandes en ligne, pour une meuilleur experience</h1>
         <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur adipisci totam voluptatibus nesciunt dolor distinctio velit fugit consequuntur voluptas mollitia, a eligendi facilis vero accusantium eveniet reprehenderit doloribus in eos? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt, ut. Voluptates, non distinctio voluptatibus laboriosam quas officiis nam unde tempore aperiam rerum eius, omnis fuga. Alias atque nihil dignissimos nesciunt.
+            Commandez facilement vos plats préférés et profitez d'une cuisine préparée avec passion. Des ingrédients frais, des recettes savoureuses et un service rapide pour vous offrir une expérience culinaire inoubliable.        
         </p>
     </div>
 @endsection

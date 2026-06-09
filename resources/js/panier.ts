@@ -271,7 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.session === 'invite') {
                 if (res.status === 403) {
-                    const guestRes = await fetch('/invite/panier/refresh', { headers: { 
+                    const guestRes = await fetch('/invite/panier/refresh', { 
+                        headers: { 
                             'Content-Type': 'application/json',
                             'Accept': 'application/json' 
                         } 
@@ -612,10 +613,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (res.status === 403) {
-                res = await fetch(window.appConfig.routeInviteCommande, {
+                res = await fetch('/invite/commande', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN':
+                    (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify(formData)
@@ -626,13 +629,15 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(data);
             
             if (data.success) {
-                console.log('hzgzgg');
+                window.location.href = `/rettine/valider-plats-00000${data.panier.id}`
             } 
             if (data.error === 'vide') {
                 showModal("Panier vide", data.message, "error");
             }
-        } catch {
-            showModal("Erreur", "Impossible de passer la commande", "error");
+        } catch (e){
+            showModal("Erreur", "Impossible de passer la commande"+ e, "error");
+            console.log(e);
+            
         }
     }
 

@@ -62,6 +62,7 @@
             </footer>
         </div>
     </aside>
+    
     <div class="main-container-show-plat-item">
         <div class="back-side">
             <a href="{{ route('.rettine') }}">Accueil</a>/

@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = document.getElementById('modalContent') as HTMLElement | null;
         const titleEl = document.getElementById('modalTitle') as HTMLElement | null;
         const messageEl = document.getElementById('modalMessage') as HTMLElement | null;
+        const footer = document.querySelector('.modal-footer-content') as HTMLElement;
 
-        if (!modal || !content || !titleEl || !messageEl) return;
+        if (!modal || !content || !titleEl || !messageEl || !footer) return;
 
         const colors: Record<string, string> = {
             success: "modal-success",
@@ -20,10 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
             info: "modal-info"
         };
 
+        const url = footer.dataset.auth ? '/rettine/panier' : '/shopCartUp@/cart';
+
         content.className = "modal-content " + (colors[type] || '');
         titleEl.textContent = title;
         messageEl.textContent = message;
         modal.style.display = "flex";
+
+        if(modal.dataset.panier){
+            footer.innerHTML = `<a href="${'/rettine/commandes'}" class="commandFromCart">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            Ajouter un plat
+            </a>`
+        } else {
+            footer.innerHTML = `
+            <a href="${url}" id="ouvrirPanierBtn" class="btn btn-open-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            </a>`
+        }
+      
+       
     }
 
     function showModalMulti (title:string, content:string) {
@@ -563,10 +580,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    document.getElementById("btn-commande")?.addEventListener('click', ()=>{
-        validerPanier()
-    })
-
     // Attache l'événement d’ajout
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -610,19 +623,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const data = await res.json();
-            console.log(data.commande);
+            console.log(data);
             
             if (data.success) {
                 console.log('hzgzgg');
-                
-                // (document.querySelector('.modal-information-client') as HTMLElement).style.display = "flex";
-                // (document.querySelector('.modal-panier') as HTMLElement).style.display = "none";
-                
             } 
             if (data.error === 'vide') {
                 showModal("Panier vide", data.message, "error");
-                const panierModal = document.getElementById('panierModal');
-                if (panierModal) panierModal.style.display = "none";
             }
         } catch {
             showModal("Erreur", "Impossible de passer la commande", "error");

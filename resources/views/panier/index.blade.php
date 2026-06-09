@@ -58,7 +58,19 @@ die();
             </footer>
         </div>
     </aside>
-
+    <aside id="customModal" class="modal" style="display: none;" data-panier="true">
+        <div class="modal-content" id="modalContent">
+            <header class="modal-header-content">
+                <h3 id="modalTitle"></h3>
+                <button id="closeModal" class="modal-close">×</button>
+            </header>   
+            <main class="modal-main-content">
+                <p id="modalMessage"></p>
+            </main>
+            <footer class="modal-footer-content" data-auth="{{ auth()->check() }}">
+            </footer>
+        </div>
+    </aside>
     <aside id="platWindowsInfo" class="modal" style="display: none;">
         <div class="main-modal-containt" id="mainModalContaint">
             <header id="modalHead">
@@ -158,7 +170,7 @@ die();
                 <div class="footer-header">
                     <p id="modalPanierTotal">{{ decimal($totalPrice) }} €</p>
                     {{-- <a href="{{ auth()->check() ? route('rettine.commande_plats.index', $panier ?? 0) : ( $session ? route('invite.commande') : null) }}" id="btn-commande">Valide le panier</a> --}}
-                    <button id="btn-commande" data-panier="{{ $panier ?? 0 }}">valider le panier</button>
+                    <button id="btn-commande" data-panier="{{ $panier->id ?? $panier }}">valider le panier</button>
                 </div>
         </footer>
         </div>

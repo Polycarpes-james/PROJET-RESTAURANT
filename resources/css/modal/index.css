@@ -342,6 +342,21 @@
     color: white;
 }
 
+#customModal .modal-footer-content .commandFromCart{
+    padding: 10px 15px;
+    background-color: var(--main-color);
+    color: white;
+    border-radius: 5px;
+    display:flex;
+    gap:5px; 
+    width:max-content;
+    text-align:center;
+    justify-content: center;
+}
+#customModal .modal-footer-content{
+    display: flex;
+    justify-content: center;
+}
 /* =====================  INFORMATIONS CLIENT ======================== */
 
 .modal-information-client .modal-main-content form{

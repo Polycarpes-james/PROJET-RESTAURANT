@@ -99,6 +99,9 @@
     animation: fadeIn 0.3s ease-in-out;
     padding: 10px 0 0 0;
 }
+.modal-header-content{
+    position: relative;
+}
 /* 
 #panierModal{
     position: fixed;
@@ -185,22 +188,32 @@
 
 /* ======================== PLATS MODAL ============================ */
 #modalPanierList{
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
-    width: 100%;
+    gap: 10px; */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 10px;
+     grid-auto-rows: 1fr; /* IMPORTANT */
+    align-items: stretch;
 }
 
 #modalPanierList .plat-item-modal .items{
-    margin: 0.35em;
     position: relative;
     display: flex;
     flex-direction: column;
+      height: 100%;
     align-items: center;
 }
+
 .plat-item-modal{
-    width: max-content;
+    /* width: max-content;
     display: flex;
-    width: 20%;
+    width: 20%; */
+      height: 100%;
+  display: flex;
+  flex-direction: column;
+    /* flex: 0 1 200px; */
 }
 
 
@@ -342,6 +355,7 @@
     color: white;
 }
 
+
 #customModal .modal-footer-content .commandFromCart{
     padding: 10px 15px;
     background-color: var(--main-color);
@@ -356,6 +370,11 @@
 #customModal .modal-footer-content{
     display: flex;
     justify-content: center;
+}
+.modal-header-content h3{
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--main-color);
 }
 /* =====================  INFORMATIONS CLIENT ======================== */
 

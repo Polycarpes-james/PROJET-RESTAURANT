@@ -12,15 +12,20 @@ class CommandeInvite extends Model
 {
     use HasFactory;
     
-    protected $table = 'commande_invites';
+    protected $table = 'commande_invites_info';
 
     protected $fillable = [
-        'nom', 
-        'email', 
-        'adresse', 
-        'panier', 
-        'total'
+        'commande_client_id',
+        'name', 
+        'lastname', 
+        'email',
+        'address', 
+        'phone', 
+        'instructions',
+        'total_quantite',
+        'total_prix'
     ];
+
     public function plats ():BelongsToMany
     {
         return $this->belongsToMany(Plat::class, 'commande_invite_plat')

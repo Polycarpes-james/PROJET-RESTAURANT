@@ -146,7 +146,7 @@
 
 .pass-commande .plats-items .content-plats .items{
     /* width: 19%; */
-    flex: 1 1 100px;
+    flex: 0 1 100px;
 }
 .pass-commande .plats-items .content-plats .items h3{
     font-size: 20px;

@@ -42,7 +42,7 @@
             </header>
             {{-- @dd($commande->id) --}}
             <main class="modal-main-content">
-                <form action="{{ route('rettine.livraison.store', $commande ?? 1) }}" method="POST" id="information-client-form">
+                <form action="{{ auth()->check() ? route('rettine.livraison.store', $commande ?? 1) : route('invite.commande') }}" method="POST" id="information-client-form">
                     @csrf
                     @method("POST")
                     <div style="display:flex; gap:1em;">

@@ -87,13 +87,18 @@ Route::name('invite.')->group(function() {
     Route::post('/invite/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);
 
     Route::get('shopCartUp@/cart', [PanierController::class, 'getPanierInvite'])->name('panier');
+    Route::post('/invite/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');   
 
     Route::get('/invite/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
     Route::post('/invite/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');
+    Route::get('/invite/valider-plats-00000{panier}', [LivraisonController::class, 'index'])->name('commande.valider')->where([
+        'panier' => '[0-9]+',
+    ]);
+
     Route::post('/invite/session', [PanierController::class, 'sessionInvite']);
     Route::get('/invite/plats/{plat}', [PlatsController::class, "show_modalInvite"])->where([
         'plat' => '[0-9]+',
-    ]);;
+    ]);
 });
 
 

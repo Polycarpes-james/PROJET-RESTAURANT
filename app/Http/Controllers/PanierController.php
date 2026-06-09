@@ -111,7 +111,7 @@ class PanierController extends Controller
         }            
         return view('panier.index', [
             'categories' => $categoriesData,
-            'panier' => array_sum(array_column($panier, 'quantite')),
+            'panier' => array_sum(array_column($panier, 'quantite')) + 115,
             'panier_condition' => array_sum(array_column($panier, 'prix_total')),
             'plats' => $panier ? array_values($panier) : [],
             'totalPrice' => $panier ? array_sum(array_column($panier, 'prix_total')) : 0, 
@@ -488,59 +488,125 @@ class PanierController extends Controller
         }
     }
         
+    // public function validerPanier()
+    // {
+    //     $panier = Panier::with('panierPlats')->where('user_id', Auth::id())->firstOrFail();
+
+    //     if ($panier->user_id !== Auth::id()) {
+    //         abort(403, 'Accès non autorisé');
+    //     }
+
+    //     // Marquer le panier comme validé
+    //     $panier->update(['status' => 'valide']);
+
+    //     // Calcul du total
+    //     $total = $panier->total;
+
+    //     // 🔹 Récupérer ou créer UNE seule commande par utilisateur
+    //     $commande = Commande::firstOrCreate(
+    //         ['user_id' => Auth::id()], // uniquement le critère de recherche
+    //         [
+    //             'total_price' => $total,
+    //             'status' => 'en_attente',
+    //         ]
+    //     );
+
+    //     if(!$panier || $panier->plats->isEmpty()){
+    //         return response()->json([
+    //         'error' => 'vide',
+    //         'message' => 'Votre panier est vide, vous ne pouvez pas la valider, veillez passer une commande!',
+    //     ]);
+    //     }
+
+    //     // 🔹 Si la commande existait déjà → on la met simplement à jour
+    //     if (!$commande->wasRecentlyCreated) {
+    //         $commande->update([
+    //             'total_price' => $total,
+    //             'status' => 'en_attente',
+    //         ]);
+    //     }
+
+    //     // 🔹 Synchroniser le panier sans doublons
+    //     $commande->paniers()->syncWithoutDetaching([
+    //         $panier->id => [
+    //             'quantite' => $panier->panierPlats->sum('quantite'),
+    //             'price' => $total,
+    //         ],
+    //     ]);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'commande' => $commande,
+    //         'panier' => $panier,
+    //     ]);
+    // }
     public function validerPanier()
     {
-        $panier = Panier::with('panierPlats')->where('user_id', Auth::id())->firstOrFail();
+        if (Auth::check()) {
 
-        if ($panier->user_id !== Auth::id()) {
-            abort(403, 'Accès non autorisé');
-        }
+            $panier = Panier::with('panierPlats')->where('user_id', Auth::id())->first();
 
-        // Marquer le panier comme validé
-        $panier->update(['status' => 'valide']);
+            if (!$panier || $panier->panierPlats->isEmpty()) {
+                return response()->json([
+                    'error' => 'vide',
+                    'message' => 'Votre panier est vide, vous ne pouvez pas la valider, veillez passer une commande!',
+                ]);
+            }
 
-        // Calcul du total
-        $total = $panier->total;
+            $panier->update([
+                'status' => 'valide'
+            ]);
 
-        // 🔹 Récupérer ou créer UNE seule commande par utilisateur
-        $commande = Commande::firstOrCreate(
-            ['user_id' => Auth::id()], // uniquement le critère de recherche
-            [
-                'total_price' => $total,
-                'status' => 'en_attente',
-            ]
-        );
+            $total = $panier->total;
 
-        if(!$panier || $panier->plats->isEmpty()){
+            $commande = Commande::firstOrCreate(
+                ['user_id' => Auth::id()],
+                [
+                    'total_price' => $total,
+                    'status' => 'en_attente',
+                ]
+            );
+
+            if (!$commande->wasRecentlyCreated) {
+                $commande->update([
+                    'total_price' => $total,
+                    'status' => 'en_attente',
+                ]);
+            }
+
+            $commande->paniers()->syncWithoutDetaching([
+                $panier->id => [
+                    'quantite' => $panier->panierPlats->sum('quantite'),
+                    'price' => $total,
+                ]
+            ]);
+
             return response()->json([
-            'error' => 'vide',
-            'message' => 'Votre panier est vide, vous ne pouvez pas la valider, veillez passer une commande!',
-        ]);
-        }
-
-        // 🔹 Si la commande existait déjà → on la met simplement à jour
-        if (!$commande->wasRecentlyCreated) {
-            $commande->update([
-                'total_price' => $total,
-                'status' => 'en_attente',
+                'success' => true,
+                'commande' => $commande,
+                'panier' => $panier,
             ]);
         }
 
-        // 🔹 Synchroniser le panier sans doublons
-        $commande->paniers()->syncWithoutDetaching([
-            $panier->id => [
-                'quantite' => $panier->panierPlats->sum('quantite'),
-                'price' => $total,
-            ],
-        ]);
+        // ========================
+        // INVITÉ
+        // ========================
+
+        $panier = session('panier_invite', []);
+
+        if (empty($panier)) {
+            return response()->json([
+                'error' => 'vide',
+                'message' => 'Votre panier est vide, vous ne pouvez pas la valider, veillez passer une commande!',
+            ]);
+        }
 
         return response()->json([
-            'success' => true,
-            'commande' => $commande,
-            'panier' => $panier,
+            'session' => true,
+            'panier' => array_sum(array_column($panier, 'quantite')) + 115,
         ]);
-    }
 
+    }
 
     public function viderPanier()
     {

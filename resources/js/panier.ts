@@ -602,6 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======================= VALIDATION DU PANIER =========================
     async function validerPanier(formData: Record<string, any> = {}): Promise<void> {
         try {
+            let data
             let res = await fetch('/rettine/panier/commander', {
                 method: 'POST',
                 headers: {
@@ -609,11 +610,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify(formData)
             });
 
-            if (res.status === 403) {
-                res = await fetch('/invite/commande', {
+            data = await res.json();      
+
+            if (res.status === 403) {  
+                let resGuest = await fetch('/invite/panier/commander', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -621,21 +623,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify(formData)
                 });
-            }
+                data = await resGuest.json();      
+                if (data.session){
+                    window.location.href = `/invite/valider-plats-00000${data.panier}`
+                }
+            }            
 
-            const data = await res.json();
-            console.log(data);
-            
             if (data.success) {
                 window.location.href = `/rettine/valider-plats-00000${data.panier.id}`
             } 
+            
             if (data.error === 'vide') {
                 showModal("Panier vide", data.message, "error");
             }
         } catch (e){
-            showModal("Erreur", "Impossible de passer la commande"+ e, "error");
+            showModal("Erreur", "Impossible de passer la commande" + e, "error");
             console.log(e);
             
         }

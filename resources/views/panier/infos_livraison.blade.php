@@ -34,29 +34,15 @@
         </div>
     </aside>
 
-    <aside id="customModal" class="modal" style="display: none;">
-        <div class="modal-content" id="modalContent">
-            <header class="modal-header-content">
-                <h3 id="modalTitle">Mon panier</h3>
-                <button id="closeModal" class="modal-close">×</button>
-            </header>
-            <main class="modal-main-content">
-                <p id="modalMessage"></p>
-            </main>
-            <footer class="modal-footer-content">
-                <a href="#panier" id="ouvrirPanierBtn" class="btn btn-primary">Voir votre panier</a>
-            </footer>
-        </div>
-    </aside>
-
     <aside class="modal modal-information-client">
         <div class="modal-content-panier">
             <header class="modal-header-content">
                 <h3 id="modalTitle">INFORMATIONS POUR LA LIVRAISON</h3>
                 <a href="{{ auth()->check() ? route('rettine.panier') : route('invite.panier') }}" class="back-panier">Revenir au panier</a>
             </header>
+            {{-- @dd($commande->id) --}}
             <main class="modal-main-content">
-                <form action="{{ route('rettine.livraison.store', $commande ? $commande->id : 1) }}" method="POST" id="information-client-form">
+                <form action="{{ route('rettine.livraison.store', $commande ?? 1) }}" method="POST" id="information-client-form">
                     @csrf
                     @method("POST")
                     <div style="display:flex; gap:1em;">

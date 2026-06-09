@@ -1,7 +1,7 @@
 
 
 /* Modale */
-#customModal, #platWindowsInfo, #customModalShow, #modal-connect, #suppression_dish{
+#customModal, #platWindowsInfo, #customModalShow, #modal-connect, #multi_tasks_modal, #suppression_dish{
     position: fixed;
     top:0; 
     left:0;
@@ -22,7 +22,7 @@
 #customModalShow{
     z-index: 90000399;
 }
-#suppression_dish{
+#multi_tasks_modal, #suppression_dish{
     z-index: 99999999;
     align-items: center;
     width: 100%;
@@ -30,7 +30,7 @@
     margin: 0 auto;
 }
 
-.suppression-footer-modal{
+.multi_footer_modal, .suppression-footer-modal{
     border-bottom-right-radius: 10px;
     padding: 5px;
     border-bottom-left-radius: 10px;
@@ -48,19 +48,19 @@
 
 
 /* =============================================================================================== */
-.suppression-footer-modal button{
+.multi_footer_modal button, .suppression-footer-modal button{
     border: none;
     border-radius: 2px;
     cursor: pointer;
 }
-.suppression-footer-modal button:first-child{
+.multi_footer_modal button:first-child, .suppression-footer-modal button:first-child{
     background-color: transparent;
     padding: 8px 40px;
     font-size: 18px;
     background-color: #ff5b5b;
     color: white;
 }
-.suppression-footer-modal button:last-child{
+.multi_footer_modal button:last-child, .suppression-footer-modal button:last-child{
     background-color: #ff5b5b;
     border: 1px solid #ff5b5b;
     font-size: 20px;
@@ -71,26 +71,26 @@
     padding: 5px 13px;
     color: white;
 }
-.suppression-header-modal h3{
+.multi_tasks_modal_container h3, .suppression-header-modal h3{
     font-size: 28px;
     opacity: 0.7;
     letter-spacing: 2px;
 }
-.suppression-main-modal, .suppression-header-modal{
+.multi_main_modal, .multi_tasks_modal_container, .suppression-header-modal{
     padding: 10px;
     text-align: center;
 }
-.suppression-main-modal{
+.multi_main_modal, .suppression-main-modal{
     padding-bottom: 20px;
 }
-.suppression-main-modal p{
+.multi_main_modal p, .suppression-main-modal p{
     text-align: center;
     width: 95%;
     letter-spacing: 1px;
     margin: 0 auto;
 }
 
-.suppression-modal-item{
+.multi_tasks_modal_container, .suppression-modal-item{
     margin: 0 auto;
     background-color: white;
     max-width: 500px;
@@ -215,19 +215,6 @@
 }
 
 
-.modal-header-content{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    color: black;
-    position: relative;
-}
-.modal-header-content h3{
-    letter-spacing: 2px;
-}
-
 .modal-close, .delete-dish{
     color: white;
     background-color: #ff5b5b;
@@ -280,7 +267,7 @@
     border: none;
 }
 .actions-items button.plus{
-    background-color: green;
+    background-color: #075307bd;
 }
 .actions-items button.minus{
     background-color: #ff7171;

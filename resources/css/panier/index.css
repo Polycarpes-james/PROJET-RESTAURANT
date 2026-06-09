@@ -7,8 +7,8 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: auto;
-    box-shadow: 0 10px 20px grey;
+    height: 320px;
+    box-shadow: 0 10px 10px #80808036;
     color: white;
 }
 
@@ -133,11 +133,11 @@
 }
 .modal-content-panier .panier_empty .commandFromCart{
     text-transform: uppercase;
-    padding: 20px 60px;
+    padding: 15px 30px;
     background-color: #c26214;
     color: white;
     border-radius: 5px;
-    margin-top: 1em;
+    margin-top: 0.2em;
     margin-left: 20px;
     box-shadow: 0 0 10px grey;
 }
@@ -147,4 +147,43 @@
     color: #ff7171;
     background-color: #ff717128;
     padding: 10px 20px;
+}
+
+
+.modal-header-content, .modal-header-content-panier{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    color: black;
+    position: relative;
+
+}
+.modal-header-content-panier{
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 0 10px #145ac230;
+}
+
+.modal-header-content-panier button{
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #80808041;
+}
+.modal-header-content-panier button.vider-panier{
+    color: #ff7171;
+    background-color: #ff71713b;
+}
+.modal-header-content-panier button.actualise{
+    margin-left: 10px;
+    color: #1a6a35;
+    background-color: #1a6a3540;
+}
+.modal-header-content-panier button.vider-panier:hover{
+    background-color: #ff717161;
+}
+.modal-header-content-panier button.actualise:hover{   
+    background-color: #1a6a3565;
 }

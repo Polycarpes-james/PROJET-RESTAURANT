@@ -35,7 +35,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/images/{path}', [PictureController::class, 'show'])->where('path', '.*');
 
-Route::delete('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
 
 Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (){
 
@@ -44,6 +43,8 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
     Route::post('/panier/ajouter', [PanierController::class, 'ajouterAuPanier'])->name('panier.add');
     Route::get('/panier', [PanierController::class, 'voirPanier'])->name('panier');
     Route::get('/panier/refresh', [PanierController::class, 'voirPanierReflesh']);
+    Route::post('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
+
 
     Route::post('/panier/modifier', [PanierController::class, 'modifierQuantite'])->name('panier.modifier');
     Route::post('/panier/supprimer', [PanierController::class, 'removeDish'])->name('panier.supprimer');

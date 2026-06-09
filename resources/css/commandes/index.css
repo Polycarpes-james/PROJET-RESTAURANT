@@ -96,6 +96,7 @@
 .pass-commande .plats-items .plats-item{
     border: 1px solid #80808022;
     padding-bottom: 10px;
+
 }
 .pass-commande .plats-items h2{
     padding: 10px 10px;
@@ -105,8 +106,8 @@
 }
 .pass-commande .plats-items .content-plats{
     display: flex;
-    width: 100%;
     flex-wrap: wrap;
+    gap: 10px;
 }
 .pass-commande .plats-items .items-content, .pass-commande .plats-items .items-content .btns-panier a{
     position: relative;
@@ -143,9 +144,9 @@
     cursor: pointer;
 }
 
-
 .pass-commande .plats-items .content-plats .items{
-    width: 20%;
+    /* width: 19%; */
+    flex: 1 1 100px;
 }
 .pass-commande .plats-items .content-plats .items h3{
     font-size: 20px;
@@ -158,7 +159,7 @@
     justify-content: space-between;
     flex-direction: column;
     padding: 10px;
-    margin: 5px;
+    /* margin: 5px; */
     gap: 10px;
     cursor: pointer;
 }

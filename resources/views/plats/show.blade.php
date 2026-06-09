@@ -31,6 +31,7 @@
 
 @endphp
 @section('content')
+
     <aside id="suppression_dish" class="modal" style="display: none;">
         <div class="suppression-modal-item">
             <header class="suppression-header-modal">

@@ -28,6 +28,7 @@ die();
  {{-- @php
     dump($plats)
  @endphp --}}
+   
     <aside id="suppression_dish" class="modal" style="display: none;">
         <div class="suppression-modal-item">
             <header class="suppression-header-modal">
@@ -43,17 +44,17 @@ die();
         </div>
     </aside>
 
-    <aside id="customModal" class="modal" style="display: none;">
-        <div class="modal-content" id="modalContent">
-            <header class="modal-header-content">
-                <h3 id="modalTitle">Mon panier</h3>
-                <button id="closeModal" class="modal-close">×</button>
+    <aside id="multi_tasks_modal" class="modal" style="display: none;">
+        <div class="multi_tasks_modal_container">
+            <header class="multi_tasks_header_modal">
+                <h3 id="multi_title_modal"></h3>
             </header>
-            <main class="modal-main-content">
-                <p id="modalMessage"></p>
+            <main class="multi_main_modal">
+                <p class="multi_tasks_message"></p>
             </main>
-            <footer class="modal-footer-content">
-                <a href="{{ auth()->check() ? route('rettine.panier') : route('invite.panier') }}" id="ouvrirPanierBtn" class="btn btn-primary">Voir votre panier</a>
+            <footer class="multi_footer_modal">
+                <button class="multi_vide_btn">Ok</button>
+                <button class="btn-modal-close">×</button>
             </footer>
         </div>
     </aside>
@@ -71,15 +72,22 @@ die();
 
     <aside id="panierModal" class="modal modal-panier" data-condition="{{ $panier_condition }}">
         <div class="modal-content-panier">
-            <header class="modal-header-content">
-                <h1 id="modalTitle">PANIER</h1>
-                <button class="vider-panier">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush-cleaning-icon lucide-brush-cleaning"><path d="m16 22-1-4"/><path d="M19 14a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v1a1 1 0 0 0 1 1"/><path d="M19 14H5l-1.973 6.767A1 1 0 0 0 4 22h16a1 1 0 0 0 .973-1.233z"/><path d="m8 22 1-4"/></svg>
-                </button>
+            <header class="modal-header-content-panier">
+                <div style="display: flex; justify-content:space-between">
+                    <h1 id="modalTitle">PANIER</h1>
+                    <div>
+                        <button class="vider-panier">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush-cleaning-icon lucide-brush-cleaning"><path d="m16 22-1-5"/><path d="M19 14a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v1a1 1 0 0 0 1 1"/><path d="M19 14H5l-1.973 6.767A1 1 0 0 0 4 22h16a1 1 0 0 0 .973-1.233z"/><path d="m8 22 1-5"/></svg>
+                        </button>
+                        <button class="actualise">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-icon lucide-clock"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <p style="opacity: 0.6;color:#1E3A8A">La valeur TTC minimale des plats commandés doit être de <span style="font-weight: bold">20.0€</span> pour passer une commande</p>
             </header>
             @if ($panier_condition !== 0)
                 <main class="panier-main-content">
-                    <p>La valeur TTC minimale des plats commandés doit être de 20.0€</p>
                     <div id="modalPanierList">
                         @foreach ($plats as $item)
                             <div class="plat-item-modal">
@@ -116,49 +124,43 @@ die();
                         @endforeach
                     </div>
                 </main>
-                <footer class="panier-footer-content">
-                        <h1>Listing et bilan des plats du panier</h1>
-                        <div class="footer-main-container">
-                            @foreach ($categories as $cate)
-                                <div class="category-plat-item category-plat-{{ $cate['category']->getSlug()}}">
-                                    <div class="items">
-                                        <h4>{{ $cate['category']->name }}</h4>
-                                        @foreach ($cate['plats'] as $item)
-                                            {{-- @if ($item['category_id'] === $cate['category']->id) --}}
-                                                <div class="plat-item plat-{{ $item['plat_id'] ?? $item->plat->id }}">
-                                                <p style="opacity: 0.7">{{ $item['name'] ?? $item->plat->name }}</p>
-                                                <div>
-                                                    <small>{{ $item['quantite'] ?? $item->quantite }} × {{ $item['price'] ?? $item->plat->price }} €</small>
-                                                    <p style="font-weight: bold">{{ $item['prix_total'] ?? $item->prix_total }} €</p>
-                                                </div>
-                                            </div> 
-                                            {{-- @endif    --}}
-                                        @endforeach
-                                        <div class="decompte-plats">
-                                            <p>Totals : {{ $cate['totalQuantite'] }} </p>
-                                            <p style="font-weight: bold; color:#1E3A8A"> Prix : {{ $cate['totalPrix'] }} €</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="footer-header">
-                            <p id="modalPanierTotal">{{ decimal($totalPrice) }} €</p>
-                            <a href="{{ $session ? route('invite.commande') : route('rettine.commande_plats.index', $panier ?? 0) }}" id="btn-commande">Valide le panier</a>
-                        </div>
-                </footer>
             @else
                 <div class="panier_empty">
                     <h2>Votre panier est vide pour le moment</h2>
-                    <img src="/img/panier-vide.png" alt="PANIER VIDE" width="20%">
+                    <img src="/img/panier-vide.png" alt="PANIER VIDE" width="7%">
                     <a href="{{ route('rettine.commandes') }}" class="commandFromCart">Ajouter un plat au panier</a>
                 </div>
             @endif
-            <div class="panier_empty" style="display:none">
-                <h2>Votre panier est vide pour le moment</h2>
-                <img src="/img/panier-vide.png" alt="PANIER VIDE" width="20%">
-                <a href="{{ route('rettine.commandes') }}" class="commandFromCart">Ajouter un plat au panier</a>
-            </div>
+            <footer class="panier-footer-content">
+                <h1>Listing et bilan des plats du panier</h1>
+                <div class="footer-main-container">
+                    @foreach ($categories as $cate)
+                        <div class="category-plat-item category-plat-{{ $cate['category']->getSlug()}}">
+                            <div class="items">
+                                <h4>{{ $cate['category']->name }}</h4>
+                                @foreach ($cate['plats'] as $item)
+                                        <div class="plat-item plat-{{ $item['plat_id'] ?? $item->plat->id }}">
+                                        <p style="opacity: 0.7">{{ $item['name'] ?? $item->plat->name }}</p>
+                                        <div>
+                                            <small>{{ $item['quantite'] ?? $item->quantite }} × {{ $item['price'] ?? $item->plat->price }} €</small>
+                                            <p style="font-weight: bold">{{ $item['prix_total'] ?? $item->prix_total }} €</p>
+                                        </div>
+                                    </div> 
+                                @endforeach
+                                <div class="decompte-plats">
+                                    <p>Totals : {{ $cate['totalQuantite'] }} </p>
+                                    <p style="font-weight: bold; color:#1E3A8A"> Prix : {{ $cate['totalPrix'] }} €</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="footer-header">
+                    <p id="modalPanierTotal">{{ decimal($totalPrice) }} €</p>
+                    {{-- <a href="{{ auth()->check() ? route('rettine.commande_plats.index', $panier ?? 0) : ( $session ? route('invite.commande') : null) }}" id="btn-commande">Valide le panier</a> --}}
+                    <button id="btn-commande" data-panier="{{ $panier ?? 0 }}">valider le panier</button>
+                </div>
+        </footer>
         </div>
     </aside>
 @endsection

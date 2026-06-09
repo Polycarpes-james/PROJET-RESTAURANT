@@ -27,11 +27,10 @@ class LivraisonController extends Controller
                 $total_number = array_sum(array_column($panier, 'quantite'));
             }
         }
-       
         return view('panier.infos_livraison', [
             'commande' => Commande::where('user_id', Auth::id())->first(),
             'livraison' => $livraison,
-            'total' => $total_number
+            'total' => $total_number,
         ]);
     }
     
@@ -51,9 +50,11 @@ class LivraisonController extends Controller
             'instructions' => 'nullable|string',
         ]);
 
+        $commande_id = Commande::where('user_id', Auth::id())->first();
+
         Livraison::updateOrCreate(
             [
-                'commande_id' => $commande_id,
+                'commande_id' => $commande_id->id,
                 'user_id' => Auth::id(),
             ],
             [

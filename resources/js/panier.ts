@@ -26,6 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = "flex";
     }
 
+    function showModalMulti (title:string, content:string) {
+        const modal = document.getElementById('multi_tasks_modal') as HTMLElement
+        const contentMain = document.querySelector('.multi_tasks_message') as HTMLElement;
+        const titleContent = document.getElementById('multi_title_modal') as HTMLElement
+    
+        contentMain.innerHTML = `${content}`
+        titleContent.textContent = `${title}`
+        modal.style.display = 'flex';
+    }
+
     function showModalSuppression (plat_id: string, name: string) {
         const modal = document.getElementById('suppression_dish') as HTMLElement;
         const contentMain = document.querySelector('.suppression-message') as HTMLElement;
@@ -35,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         btnSuppression.setAttribute('data-id', plat_id)
         modal.style.display = 'flex';
     }
+
+
 
     // ======================= FERMETURE DES MODALES =========================
 
@@ -54,8 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll<HTMLButtonElement>('.btn-modal-close').forEach(btn => {
         btn.addEventListener('click', () => {
-            const modal = document.getElementById('suppression_dish');
+            const modal = document.getElementById('multi_tasks_modal');
+            const modal2 = document.getElementById('suppression_dish');
             if (modal) modal.style.display = "none"
+            if (modal2) modal2.style.display = "none"
         })
     })
 
@@ -356,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (totalBtn) {
                     totalBtn.textContent = `${data.platTotal}`                
                 }
+                // location.reload();
                 await loadPanierShow(platId);
             }
             loadPanier()
@@ -366,26 +381,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function viderPanier() {
 
-        const response = await fetch('/panier/vider', {
-            method: 'DELETE',
+        const response = await fetch('/rettine/panier/vider', {
+            method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'X-CSRF-TOKEN':
                     (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                 'Accept': 'application/json'
-            }
+            },
+            credentials: 'same-origin',
         });
 
         const data = await response.json();
 
-        if (data.success) {
-            console.log('dds');
-            
+        console.log(data);
+        
+        if (data.success) {            
             location.reload();
         }
     }
 
     document.querySelector('.vider-panier')?.addEventListener('click', (e)=>{
-        viderPanier()
+        showModalMulti('Nettoyer votre panier', "Voulez vous vraiment nettoyer votre panier!");
     })
 
     function complet_actions(data: any, condition: boolean) {
@@ -423,12 +440,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     all()
+    function delete_containt (id_name:string){
+        const contentSuppression = document.getElementById(id_name) as HTMLElement;
+        contentSuppression.style.display = "none" 
+    }
 
     document.querySelectorAll<HTMLButtonElement>('.btn-suppression').forEach(btn => btn.addEventListener('click', () => {
         supprimerPlat(btn.dataset.id!)  
-        const contentSuppression = document.getElementById('suppression_dish') as HTMLElement;
-        contentSuppression.style.display = "none" 
+        delete_containt('suppression_dish')
     }))
+
+    document.querySelector('.multi_vide_btn')?.addEventListener('click', () => {
+        viderPanier()
+        delete_containt('multi_tasks_modal')
+    })
     // ======================= MODIFIER QUANTITÉ =========================
     async function modifierQuantite(platId: string, delta: number): Promise<void> {
         try {
@@ -471,11 +496,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.success) {
                 complet_actions(data, false);
                 await loadPanierShow(platId);
+                // location.reload();
             }
         } catch (e) {
             showModal("Erreur serveur", "Impossible de modifier la quantité", "error");
         }
     }
+
+    document.querySelector('.actualise')?.addEventListener('click', ()=>{
+        location.reload()
+    })
 
     // ======================= SUPPRIMER UN PLAT =========================
     async function supprimerPlat(platId: string): Promise<void> {
@@ -520,7 +550,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(e){
                     e.textContent = data.total
                 }
-                loadPanierShow(platId)     
+                location.reload();
+
+                loadPanierShow(platId)   
             } else {
                 console.log('Déjà');
             }   
@@ -531,7 +563,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    
+    document.getElementById("btn-commande")?.addEventListener('click', ()=>{
+        validerPanier()
+    })
 
     // Attache l'événement d’ajout
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
@@ -561,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}",
                     'Accept': 'application/json'
                 },
-                // body: JSON.stringify(formData)
+                body: JSON.stringify(formData)
             });
 
             if (res.status === 403) {
@@ -579,6 +613,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(data.commande);
             
             if (data.success) {
+                console.log('hzgzgg');
+                
                 // (document.querySelector('.modal-information-client') as HTMLElement).style.display = "flex";
                 // (document.querySelector('.modal-panier') as HTMLElement).style.display = "none";
                 

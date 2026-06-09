@@ -112,7 +112,7 @@ class PanierController extends Controller
                                   
         return view('panier.index', [
             'categories' => $categoriesData,
-            'panier' => $panier,
+            'panier' => $panier ,
             'panier_condition' => array_sum(array_column($panier, 'prix_total')),
             'plats' => $panier ? array_values($panier) : [],
             'totalPrice' => $panier ? array_sum(array_column($panier, 'prix_total')) : 0, 
@@ -178,7 +178,7 @@ class PanierController extends Controller
             'plats' => $panierDetails,
             'categories' => $categoriesData,
             'totalPrice' => $totalPrice, 
-            'panier' => $panier,
+            'panier' => Panier::where('user_id', Auth::id())->first(),
             'total' => $this->total(),
             'session' => $session_invite,
             'panier_condition' => $panier->total ?? null
@@ -512,7 +512,6 @@ class PanierController extends Controller
             ]
         );
 
-        
         if(!$panier || $panier->plats->isEmpty()){
             return response()->json([
             'error' => 'vide',

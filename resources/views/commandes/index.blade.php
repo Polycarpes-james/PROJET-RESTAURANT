@@ -29,7 +29,7 @@
             <main class="modal-main-content">
                 <p id="modalMessage"></p>
             </main>
-            <footer class="modal-footer-content"data-auth="{{ auth()->check() }}" >
+            <footer class="modal-footer-content" data-invite_id="{{ Cookie::get('invite_id') }}" data-auth="{{ auth()->check() }}" >
             </footer>
         </div>
     </aside>

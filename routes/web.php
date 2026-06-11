@@ -86,7 +86,9 @@ Route::name('invite.')->middleware('ensure')->group(function() {
     Route::post('/invite/panier/supprimer', [PanierController::class, 'removeDishInvite']);
     Route::post('/invite/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);
 
-    Route::get('shopCartUp@/cart', [PanierController::class, 'getPanierInvite'])->name('panier');
+    Route::get('shopCartUp@/cart-{invite_id}', [PanierController::class, 'getPanierInvite'])->name('panier')->where([
+        'invite_id' => '[0-9a-z\-]+'
+    ]);
     Route::post('/invite/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');   
 
     Route::get('/invite/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);

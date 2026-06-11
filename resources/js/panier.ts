@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             info: "modal-info"
         };
 
-        const url = footer.dataset.auth ? '/rettine/panier' : '/shopCartUp@/cart';
+        const url = footer.dataset.auth ? '/rettine/panier' : `/shopCartUp@/cart-${footer.dataset.invite_id}`;
 
         content.className = "modal-content " + (colors[type] || '');
         titleEl.textContent = title;
@@ -637,7 +637,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
             
             if (data.error === 'vide') {
-                showModal("Panier vide", data.message, "error");
+                showModal("Panier vide !", data.message, "error");
             }
         } catch (e){
             showModal("Erreur", "Impossible de passer la commande" + e, "error");

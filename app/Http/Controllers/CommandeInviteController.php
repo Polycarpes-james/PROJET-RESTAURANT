@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CommandeInvite;
+use App\Models\CommandeInvitePlat;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class CommandeInviteController extends Controller
 {
@@ -19,20 +21,48 @@ class CommandeInviteController extends Controller
             
             ]);
         }
-        $commande = new CommandeInvite();
-
-        $commande->commande_client_id = array_sum(array_column($panier, 'quantite')) + 115;
-        $commande->name = $request->name; 
-        $commande->lastname = $request->lastname; 
-        $commande->email = $request->email;
-        $commande->address = $request->address ?? null;
-        $commande->phone = $request->phone ?? null;
-        $commande->instructions = $request->instructions ?? null;
-        $commande->total_quantite = array_sum(array_column($panier, 'quantite'));
-        $commande->total_prix = array_sum(array_column($panier, 'prix_total'));
-
-        $commande->save();
+        // $request->validate([
+        //     "name" => 'required|string',
+        //     "lastname" => 'required|string',
+        //     "email" => 'required|email',
+        //     "address" => 'required|string',
+        //     "phone" => 'required|strin',
+        //     "instructions" => 'required|string',
+        //     "total_quantite" => 'required|integer',
+        //     "total_prix" =>'required|integer'
+        // ]);
+        // dd(Cookie::get());
+        $elements = [
+                "invite_id" => Cookie::get('invite_id'),
+                "name" => $request->name,
+                "lastname" => $request->lastname,
+                "email" => $request->email,
+                "address" => $request->address ?? null,
+                "phone" => $request->phone ?? null,
+                "instructions" => $request->instructions ?? null,
+                "total_quantite" => collect($panier)->sum('quantite'),
+                "total_prix" => collect($panier)->sum('prix_total'),      
+            ];
+        // $commande = new CommandeInvite();
+        $commande = CommandeInvite::where('invite_id', Cookie::get('invite_id'))->first();
+        // dd($commande);
+        if($commande){
+            $commande->update($elements);
+        } else {
+            CommandeInvite::create($elements);
+        }
         
+        foreach ($panier as $item) {
+            CommandeInvitePlat::create([
+                'commande_invite_id' => Cookie::get('invite_id'),
+                'plat_id' => $item['plat_id'],
+                'plat_name' => $item['name'],
+                'prix_total' => $item['prix_total'],
+                'prix_unitaire' => $item['price'],
+                'quantite' => $item['quantite'],
+            ]);
+        }
+
 
         // Supprimer le panier de session
         session()->forget('panier_invite');

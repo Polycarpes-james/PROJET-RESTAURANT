@@ -26,7 +26,7 @@ print_r($panier);
 die();
  @endphp --}}
  {{-- @php
-    dump($panier)
+    dump(Cookie::get())
  @endphp --}}
    
     <aside id="suppression_dish" class="modal" style="display: none;">
@@ -85,8 +85,12 @@ die();
     <aside id="panierModal" class="modal modal-panier" data-condition="{{ $panier_condition }}">
         <div class="modal-content-panier">
             <header class="modal-header-content-panier">
-                <div style="display: flex; justify-content:space-between">
+                <div style="display: flex; justify-content:space-between;">
                     <h1 id="modalTitle">PANIER</h1>
+                    <a href="{{ route('rettine.commandes') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                        <span class="tooltip-text">Ajout le plat</span>
+                    </a>
                     <div>
                         <button class="vider-panier">
                             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brush-cleaning-icon lucide-brush-cleaning"><path d="m16 22-1-5"/><path d="M19 14a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v1a1 1 0 0 0 1 1"/><path d="M19 14H5l-1.973 6.767A1 1 0 0 0 4 22h16a1 1 0 0 0 .973-1.233z"/><path d="m8 22 1-5"/></svg>
@@ -98,7 +102,7 @@ die();
                         </button>
                     </div>
                 </div>
-                <p style="opacity: 0.6;color:#1E3A8A">La valeur TTC minimale des plats commandés doit être de <span style="font-weight: bold">20.0€</span> pour passer une commande</p>
+                <p style="opacity: 0.6;color:#1E3A8A">La valeur TTC minimale des plats commandés doit être de <span style="font-weight: bold; color:black">20.0€</span> pour passer une commande</p>
             </header>
             @if ($panier_condition !== 0)
                 <main class="panier-main-content">

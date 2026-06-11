@@ -445,12 +445,25 @@
     box-shadow: 1px 0 20px grey; 
 }
 .modal-content-item{
-    width: max-content;
+    width: 60%;
 }
 .modal-content-item .auth-content{
     padding-top: 15px;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}  
 .modal-content-item .auth-content h3{
     font-size: 30px;
     letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--main-color);
+    background-color: #2e3a8b33;
+    padding: 10px 20px;
+    border-radius: 3px;
+}
+.modal-content-panier .auth-actions{
+    border-top: 1px solid black;
 }

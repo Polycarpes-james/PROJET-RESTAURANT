@@ -81,7 +81,7 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
 
 });
 
-Route::name('invite.')->group(function() {
+Route::name('invite.')->middleware('ensure')->group(function() {
     Route::post('/invite/panier/ajouter', [PanierController::class, 'ajouterAuPanierInvite']);
     Route::post('/invite/panier/supprimer', [PanierController::class, 'removeDishInvite']);
     Route::post('/invite/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);

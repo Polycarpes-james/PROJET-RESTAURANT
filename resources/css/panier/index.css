@@ -163,6 +163,16 @@
     margin: 20px 0;
     box-shadow: 0 0 10px #145ac230;
 }
+.modal-header-content-panier a{
+    margin-right: auto;
+    margin-left: 15px;
+    position: relative;
+    color: var(--main-color);    
+}
+
+.modal-header-content-panier a:hover .tooltip-text{
+    display: flex;
+}
 
 .modal-header-content-panier button{
     background-color: transparent;
@@ -187,17 +197,17 @@
     background-color: #ff717161;
 }
 .modal-header-content-panier button.vider-panier:hover .tooltip-text{
-    opacity: 1;
+    display: flex;
 }
 .modal-header-content-panier button.actualise:hover{
     background-color: #1a6a3565;
 }
 .modal-header-content-panier button.actualise:hover .tooltip-text{   
-    opacity: 1;
+    display: flex;
 }
 
 .tooltip-text{
-    opacity: 0;
+    display: none;
     background: white;
     padding: 5px 10px;
     box-shadow: 0 0 5px grey;

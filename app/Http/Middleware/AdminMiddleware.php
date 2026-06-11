@@ -18,13 +18,10 @@ class AdminMiddleware
     {
         
         if (!Auth::check() || Auth::user()->role !== 'admin') {
-            // dd(Auth::user());
             return to_route('.rettine');
-            // abort(403, 'Accès interdit.');
         }
 
         return $next($request);
     }
-
 
 }

@@ -149,13 +149,15 @@ document.addEventListener('DOMContentLoaded', () => {
         content.innerHTML = `
             <div class="auth-content">
                 <h3>Vous n'êtes pas connecté</h3>
-                <p>Souhaitez-vous vous connecter, ou continuer en tant qu'invité ?</p>
+                <p>Souhaitez-vous vous connecter sur votre compte la rettine, <br> ou souhaitez vous créer votre compte la rettine</p>
                 <div>
                     <button id="btnLogin" class="btn">Se connecter</button>
                     <button id="btnRegister" class="btn">S'inscrire</button>
                 </div>
-                <p>Vous pouvez continuer sans compte, mais vos données seront temporaires</p>
                 <div class="auth-actions">
+                    <h2>Continuer en tant qu'invité</h2>
+                    <p>Vous pouvez continuer sans compte, mais vos données seront temporaires</p>
+
                     <button id="btnGuest" class="btn">Continuer en invité</button>
                 </div>
             </div>

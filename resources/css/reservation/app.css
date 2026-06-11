@@ -28,7 +28,7 @@
 }
 .horaires-reservation .horaires-item{
     position: absolute;
-    top: 40%;
+    top: 43%;
     right: 10%;
     left: 10%;
     box-shadow: 0 0 5px #80808062;
@@ -37,7 +37,6 @@
     display: flex;
     flex-direction:column ;
     justify-content: center;    
-    /* height: 400px; */
 }
 .horaires-reservation .horaires-item .picture-part{
     display: flex;
@@ -87,7 +86,7 @@
     text-transform: uppercase;
     letter-spacing: 2px;
     border-bottom: 1px solid grey;
-    margin: 1em 0 10px 0;
+    margin: 0.5em 0 10px 0;
     color: var(--main-color);
 }
 .horaires-reservation .horaires-item .horaires-part .opening-horaires{
@@ -116,6 +115,7 @@
 }
 .horaires-reservation .horaires-item .horaires-part .opening-horaires small{
     font-weight: bold;
+    color: var(--main-color);
     font-size: 25px;
 }
 .reservation-containt-btn{
@@ -147,13 +147,28 @@
     letter-spacing: 2px;
     margin-bottom: 1.5em;
 }
-
-.mon-sat-hours{
-    
+.content-commandes-header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
 }
 
-
-
+.content-commandes-header h1{
+    font-size: 55px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.content-commandes-header p{
+    font-size: 20px;
+    text-align: center;
+}
+.simplice{
+    color: var(--main-color);
+    background-color: white;
+    border-radius: 10px;
+    opacity: 1!important;
+}
 
 /* .plats {
     display: flex;
@@ -168,4 +183,4 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-} */
+} */    

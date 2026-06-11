@@ -15,7 +15,7 @@ class CommandeInvite extends Model
     protected $table = 'commande_invites_info';
 
     protected $fillable = [
-        'commande_client_id',
+        'invite_id',
         'name', 
         'lastname', 
         'email',
@@ -28,14 +28,8 @@ class CommandeInvite extends Model
 
     public function plats ():BelongsToMany
     {
-        return $this->belongsToMany(Plat::class, 'commande_invite_plat')
+        return $this->belongsToMany(Plat::class, 'commande_invite_plats')
                     ->withPivot('quantite', 'prix_total')
                     ->withTimestamps();
     }
-
-    public function commmandeInvitePlats()
-    {
-        return $this->hasMany(CommandeInvitePlat::class);
-    }
-
 }

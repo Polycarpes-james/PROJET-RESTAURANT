@@ -7,7 +7,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 420px;
+    height: 350px;
     box-shadow: 0 10px 20px grey;
     color: white;
 }
@@ -84,10 +84,7 @@
     opacity: 0.5;
 }
 
-.content-commandes-header h1{
-    font-size: 70px;
-    opacity: 0.9;
-}
+
 
 /* ====================================== */
 .pass-commande .plats-items{

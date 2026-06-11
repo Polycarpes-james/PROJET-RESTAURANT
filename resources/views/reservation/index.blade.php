@@ -10,9 +10,9 @@
 
 @section('header-content')
     <div class="content-commandes-header">
-        <h1>Réservez votre table en toute simplicité</h1>
+        <h1>Réservez votre table <br>en toute <span class="simplice">simplicité</span></h1>
         <p>
-            Organisez votre prochaine visite en quelques clics. Que ce soit pour un repas en famille, un rendez-vous professionnel ou une occasion spéciale, nous vous accueillons dans un cadre chaleureux pour une expérience mémorable.
+            Organisez votre prochaine visite en quelques clics. Que ce soit pour un repas en famille, <span style="color:#ffa55cad">un rendez-vous professionnel ou une occasion spéciale</span>, nous vous accueillons dans un cadre chaleureux pour une expérience mémorable.
         </p>
     </div>
 @endsection
@@ -79,8 +79,3 @@
         </div>
     </div>
 @endsection
-
-<script>
-
-
-</script>

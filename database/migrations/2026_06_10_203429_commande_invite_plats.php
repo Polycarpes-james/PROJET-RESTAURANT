@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commande_invite_plat', function (Blueprint $table) {
+        Schema::create('commande_invite_plats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('commande_invite_id')->constrained()->onDelete('cascade');
+            $table->uuid('commande_invite_id');
             $table->foreignId('plat_id')->constrained()->onDelete('cascade');
+            $table->string('plat_name');
             $table->integer('quantite');
             $table->decimal('prix_total', 10, 2);
+            $table->decimal('prix_unitaire', 10, 2);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commande_invite_plat');
+        Schema::dropIfExists('commande_invite_plats');
     }
 };

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('commande_invites_info', function (Blueprint $table) {
             $table->id();
-            $table->integer('commande_client_id');
+            $table->uuid('invite_id');
             $table->string('name');
             $table->string('lastname');
             $table->string('email');

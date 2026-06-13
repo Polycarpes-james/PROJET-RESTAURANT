@@ -43,14 +43,13 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
     Route::post('/panier/ajouter', [PanierController::class, 'ajouterAuPanier'])->name('panier.add');
     Route::get('/panier', [PanierController::class, 'voirPanier'])->name('panier');
     Route::get('/panier/refresh', [PanierController::class, 'voirPanierReflesh']);
-    Route::post('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
 
 
     Route::post('/panier/modifier', [PanierController::class, 'modifierQuantite'])->name('panier.modifier');
     Route::post('/panier/supprimer', [PanierController::class, 'removeDish'])->name('panier.supprimer');
     Route::post('/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');
 
-    Route::get('/valider-plats-00000{panier}', [LivraisonController::class, 'index'])->name('commande_plats.index')->
+    Route::get('/valider-plats-{panier}', [LivraisonController::class, 'index'])->name('commande_plats.index')->
     where([
         'panier' => '[0-9]+'
     ]);
@@ -69,7 +68,6 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
         'plat' => '[0-9]+'
     ]);
 
-
     Route::resource('profile', ProfileController::class);
     
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.update.avatar');
@@ -81,24 +79,25 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
 
 });
 
-Route::name('invite.')->middleware('ensure')->group(function() {
-    Route::post('/invite/panier/ajouter', [PanierController::class, 'ajouterAuPanierInvite']);
-    Route::post('/invite/panier/supprimer', [PanierController::class, 'removeDishInvite']);
-    Route::post('/invite/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);
+Route::name('guest.')->prefix('guest')->middleware('ensure')->group(function() {
+    Route::post('/panier/ajouter', [PanierController::class, 'ajouterAuPanierInvite']);
+    Route::post('/panier/supprimer', [PanierController::class, 'removeDishInvite']);
+    Route::post('/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);
+    Route::post('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
 
-    Route::get('shopCartUp@/cart-{invite_id}', [PanierController::class, 'getPanierInvite'])->name('panier')->where([
+    Route::get('/shopCartUp@/cart-{invite_id}', [PanierController::class, 'getPanierInvite'])->name('panier')->where([
         'invite_id' => '[0-9a-z\-]+'
     ]);
-    Route::post('/invite/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');   
+    Route::post('/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');   
 
-    Route::get('/invite/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
-    Route::post('/invite/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');
-    Route::get('/invite/valider-plats-00000{panier}', [LivraisonController::class, 'index'])->name('commande.valider')->where([
-        'panier' => '[0-9]+',
+    Route::get('/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
+    Route::post('/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');
+    Route::get('/valide-plats-{invite_id}', [LivraisonController::class, 'index'])->name('commande.valider')->where([
+        'invite_id' => '[0-9a-z\-]+'
     ]);
 
-    Route::post('/invite/session', [PanierController::class, 'sessionInvite']);
-    Route::get('/invite/plats/{plat}', [PlatsController::class, "show_modalInvite"])->where([
+    Route::post('/session', [PanierController::class, 'sessionInvite']);
+    Route::get('/plats/{plat}', [PlatsController::class, "show_modalInvite"])->where([
         'plat' => '[0-9]+',
     ]);
 });

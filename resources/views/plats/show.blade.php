@@ -31,35 +31,9 @@
 
 @endphp
 @section('content')
+    <x-modals.show-modal panier="false" type="remove" contentId="suppression_dish" contentSecondClass="suppression-modal-item" headerClass="suppression-header-modal" mainClass="suppression-main-modal" footerClass="suppression-footer-modal"/>
+    <x-modals.show-modal panier="false" type="message" contentId="customModal" contentSecondClass="modal-content" headerClass="modal-header-content" mainClass="modal-main-content" footerClass="modal-footer-content"/>
 
-    <aside id="suppression_dish" class="modal" style="display: none;">
-        <div class="suppression-modal-item">
-            <header class="suppression-header-modal">
-                <h3 id="suppression-title-modal">Suppression du plat</h3>
-            </header>
-            <main class="suppression-main-modal">
-                <p class="suppression-message"></p>
-            </main>
-            <footer class="suppression-footer-modal">
-                <button class="btn-suppression">Ok</button>
-                <button class="btn-modal-close">×</button>
-            </footer>
-        </div>
-    </aside>
-    <aside id="customModal" class="modal" style="display: none;">
-        <div class="modal-content" id="modalContent">
-            <header class="modal-header-content">
-                <h3 id="modalTitle"></h3>
-                <button id="closeModal" class="modal-close">×</button>
-            </header>   
-            <main class="modal-main-content">
-                <p id="modalMessage"></p>
-            </main>
-            <footer class="modal-footer-content" data-invite_id="{{ Cookie::get('invite_id') }}" data-auth="{{ auth()->check() }}" >
-            </footer>
-        </div>
-    </aside>
-    
     <div class="main-container-show-plat-item">
         <div class="back-side">
             <a href="{{ route('.rettine') }}">Accueil</a>/

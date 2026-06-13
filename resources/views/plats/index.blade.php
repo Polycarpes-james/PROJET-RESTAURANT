@@ -18,15 +18,11 @@
 
 @section('content_second')
     <div class="container-plats">
-        {{-- <div class="container-plats-h2">
-            <h2>Tous les plats</h2>
-        </div> --}}
         <div class="plats-items">
             <div class="content-plats">
                 @foreach ($plats as $plat) 
                     <div class="item">
                         <div class="items">
-                            {{-- <p class="disponible {{ $plat->disponible === 'yes' ? 'valide' :  "invalide" }}">{{ $plat->disponible === 'yes' ? "Le plat est disponible" : "Le plat est indisponible" }}</p> --}}
                             <div class="disponible-plat" >
                                 <div style="display: flex; flex-direction:column;gap:1em;margin-bottom: 1em">
                                     <p style="color:#c26214; font-size:17px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;">{{ $plat->category->name }}</p>
@@ -48,18 +44,8 @@
                                 </div>
                             </div>
                             <p class="description">{{ $plat->description }}</p>
-                            {{-- <div class="ingredients">
-                                @foreach ($plat->ingredients as $ingredient)
-                                    <p>{{ $ingredient->name }},</p>
-                                @endforeach
-                            </div> --}}
                             <p class="price">{{ $plat->price }} €</p>
                             <div class="btns-panier">
-                                {{-- @if ($plat->disponible === 'yes')
-                                    <form method="POST">
-                                        <button class="add-card" type="button" data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" data-price="{{ $plat->price }}" data-picture="{{ $plat->getPicture()->getPictureUrl(100, 100) }}" data-quantite="1">🛒Ajouter à votre commande</button>
-                                    </form>                                        
-                                @endif --}}
                                 <a href="{{ route('rettine.plats.show', ['plat' => $plat, 'slug' => $plat->getSlug()]) }}">Voir plus</a>
                             </div>
                         </div>

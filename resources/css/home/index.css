@@ -68,7 +68,7 @@
     font-size: 15px;
     opacity: 0.8;
 }
-.nav-content a:hover, .inscription-users div a:hover, .modify{
+.nav-content a:hover, .modify{
     color: var(--main-color)!important;
     opacity: 1!important;
     transform: scale(1.1);

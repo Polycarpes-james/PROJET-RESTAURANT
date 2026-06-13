@@ -20,57 +20,11 @@
 @endsection
 
 @section('content_second')
-    {{-- @php
-        echo '<pre>';
-print_r($panier);
-die();
- @endphp --}}
- {{-- @php
-    dump(Cookie::get())
- @endphp --}}
-   
-    <aside id="suppression_dish" class="modal" style="display: none;">
-        <div class="suppression-modal-item">
-            <header class="suppression-header-modal">
-                <h3 id="suppression-title-modal">Suppression du plat</h3>
-            </header>
-            <main class="suppression-main-modal">
-                <p class="suppression-message"></p>
-            </main>
-            <footer class="suppression-footer-modal">
-                <button class="btn-suppression">Ok</button>
-                <button class="btn-modal-close">×</button>
-            </footer>
-        </div>
-    </aside>
 
-    <aside id="multi_tasks_modal" class="modal" style="display: none;">
-        <div class="multi_tasks_modal_container">
-            <header class="multi_tasks_header_modal">
-                <h3 id="multi_title_modal"></h3>
-            </header>
-            <main class="multi_main_modal">
-                <p class="multi_tasks_message"></p>
-            </main>
-            <footer class="multi_footer_modal">
-                <button class="multi_vide_btn">Ok</button>
-                <button class="btn-modal-close">×</button>
-            </footer>
-        </div>
-    </aside>
-    <aside id="customModal" class="modal" style="display: none;" data-panier="true">
-        <div class="modal-content" id="modalContent">
-            <header class="modal-header-content">
-                <h3 id="modalTitle"></h3>
-                <button id="closeModal" class="modal-close">×</button>
-            </header>   
-            <main class="modal-main-content">
-                <p id="modalMessage"></p>
-            </main>
-            <footer class="modal-footer-content" data-auth="{{ auth()->check() }}">
-            </footer>
-        </div>
-    </aside>
+    <x-modals.show-modal panier="true" type="message" contentId="customModal" contentSecondClass="modal-content" headerClass="modal-header-content" mainClass="modal-main-content" footerClass="modal-footer-content"/>
+    <x-modals.show-modal panier="false" type="multi" contentId="multi_tasks_modal" contentSecondClass="multi_tasks_modal_container" headerClass="multi_tasks_header_modal" mainClass="multi_main_modal" footerClass="multi_footer_modal"/>
+    <x-modals.show-modal panier="false" type="remove" contentId="suppression_dish" contentSecondClass="suppression-modal-item" headerClass="suppression-header-modal" mainClass="suppression-main-modal" footerClass="suppression-footer-modal"/>
+
     <aside id="platWindowsInfo" class="modal" style="display: none;">
         <div class="main-modal-containt" id="mainModalContaint">
             <header id="modalHead">
@@ -171,7 +125,7 @@ die();
                 </div>
                 <div class="footer-header">
                     <p id="modalPanierTotal">{{ decimal($totalPrice) }} €</p>
-                    <button id="btn-commande" data-panier="{{ $panier->id ?? ($panier === [] ? 0 : $panier) }}">valider le panier</button>
+                    <button id="btn-commande" data-panier="{{ $panier->id ?? ($panier === [] ? 0 : $panier) }}" data-auth="{{ Cookie::get('invite_id') }}" >valider le panier</button>
                 </div>
         </footer>
         </div>

@@ -19,32 +19,20 @@
 @endsection
 
 @section('content_second')
-    <aside id="suppression_dish" class="modal" style="display: none;">
-        <div class="suppression-modal-item">
-            <header class="suppression-header-modal">
-                <h3 id="suppression-title-modal">Suppression du plat</h3>
-            </header>
-            <main class="suppression-main-modal">
-                <p class="suppression-message"></p>
-            </main>
-            <footer class="suppression-footer-modal">
-                <button class="btn-suppression" data-id="">Supprimer</button>
-                <button class="btn-modal-close">Annuler</button>
-            </footer>
-        </div>
-    </aside>
+
+    <x-modals.show-modal panier="false" type="remove" contentId="suppression_dish" contentSecondClass="suppression-modal-item" headerClass="suppression-header-modal" mainClass="suppression-main-modal" footerClass="suppression-footer-modal"/>
 
     <aside class="modal modal-information-client">
         <div class="modal-content-panier">
             <header class="modal-header-content">
                 <h3 id="modalTitle">INFORMATIONS POUR LA LIVRAISON</h3>
-                <a href="{{ auth()->check() ? route('rettine.panier') : route('invite.panier') }}" class="back-panier">
+                <a href="{{ auth()->check() ? route('rettine.panier') : route('guest.panier', ['invite_id' => Cookie::get('invite_id')]) }}" class="back-panier">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-arrow-left-icon lucide-circle-arrow-left"><circle cx="12" cy="12" r="10"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
                 </a>
             </header>
             {{-- @dd($commande->id) --}}
             <main class="modal-main-content">
-                <form action="{{ auth()->check() ? route('rettine.livraison.store', $commande ?? 1) : route('invite.commande') }}" method="POST" id="information-client-form">
+                <form action="{{ auth()->check() ? route('rettine.livraison.store', $commande ?? 1) : route('guest.commande') }}" method="POST" id="information-client-form">
                     @csrf
                     @method("POST")
                     <div style="display:flex; gap:1em;">

@@ -20,19 +20,8 @@
 @endsection
 
 @section('content_second')
-    <aside id="customModal" class="modal" style="display: none;">
-        <div class="modal-content" id="modalContent">
-            <header class="modal-header-content">
-                <h3 id="modalTitle"></h3>
-                <button id="closeModal" class="modal-close">×</button>
-            </header>   
-            <main class="modal-main-content">
-                <p id="modalMessage"></p>
-            </main>
-            <footer class="modal-footer-content" data-invite_id="{{ Cookie::get('invite_id') }}" data-auth="{{ auth()->check() }}" >
-            </footer>
-        </div>
-    </aside>
+
+    <x-modals.show-modal panier="false" type="message" contentId="customModal" contentSecondClass="modal-content" headerClass="modal-header-content" mainClass="modal-main-content" footerClass="modal-footer-content"/>
 
     <div class="pass-commande-items">
         <div>

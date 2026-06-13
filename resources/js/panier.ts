@@ -21,20 +21,24 @@ document.addEventListener('DOMContentLoaded', () => {
             info: "modal-info"
         };
 
-        const url = footer.dataset.auth ? '/rettine/panier' : `/shopCartUp@/cart-${footer.dataset.invite_id}`;
+        const url = footer.dataset.auth ? '/rettine/panier' : `/guest/shopCartUp@/cart-${footer.dataset.invite_id}`;
 
         content.className = "modal-content " + (colors[type] || '');
         titleEl.textContent = title;
         messageEl.textContent = message;
         modal.style.display = "flex";
-
-        if(modal.dataset.panier){
-            footer.innerHTML = `<a href="${'/rettine/commandes'}" class="commandFromCart">
+        
+        console.log(modal.dataset.panier);
+        
+        if(modal.dataset.panier === "true"){
+            footer.innerHTML = `<a href="/rettine/commandes" class="commandFromCart">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
             Ajouter un plat
             </a>`
-        } else {
-            footer.innerHTML = `
+        }
+        
+        if(modal.dataset.panier === "false"){
+           footer.innerHTML = `
             <a href="${url}" id="ouvrirPanierBtn" class="btn btn-open-modal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
             </a>`
@@ -179,12 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function createSessionInvite (session_element: string) {
         try {
-            const res = await fetch('/invite/session', 
+            const res = await fetch('/guest/session', 
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({session_element : session_element})
@@ -227,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             data = await res.json();
             if(res.status === 403){
-                const resGuest = await fetch(`/invite/plats/${plat_id}`, {
+                const resGuest = await fetch(`/guest/plats/${plat_id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'  
@@ -273,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (data.session === 'invite') {
                 if (res.status === 403) {
-                    const guestRes = await fetch('/invite/panier/refresh', { 
+                    const guestRes = await fetch('/guest/panier/refresh', { 
                         headers: { 
                             'Content-Type': 'application/json',
                             'Accept': 'application/json' 
@@ -354,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state})
@@ -364,11 +368,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if(data.session === 'invite'){
                 if (res.status === 403) {
-                    const resGuest = await fetch('/invite/panier/ajouter', {
+                    const resGuest = await fetch('/guest/panier/ajouter', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                            'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                             'Accept': 'application/json'
                         },
                         body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state })
@@ -376,6 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     data = await resGuest.json()
                 }
+                console.log(data);
                 
             } else {
                 if(res.status === 403) {
@@ -385,7 +390,8 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
             
             if(data.success){  
-                complet_actions(data, condition)                
+                complet_actions(data, condition)   
+                                             
                 const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
                 if (totalBtn) {
                     totalBtn.textContent = `${data.platTotal}`                
@@ -401,12 +407,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function viderPanier() {
 
-        const response = await fetch('/rettine/panier/vider', {
+        const response = await fetch('/guest/panier/vider', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN':
-                    (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
+                'X-CSRF-TOKEN':(document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                 'Accept': 'application/json'
             },
             credentials: 'same-origin',
@@ -493,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if(data.session === 'invite'){
                 if(res.status === 403){
-                    const resGuest = await fetch('/invite/panier/modifier', {
+                    const resGuest = await fetch('/guest/panier/modifier', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -545,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // console.log(data);
             
             if (data.session === 'invite') {
-                const resGuest = await fetch('/invite/panier/supprimer', {
+                const resGuest = await fetch('/guest/panier/supprimer', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -602,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // ======================= VALIDATION DU PANIER =========================
-    async function validerPanier(formData: Record<string, any> = {}): Promise<void> {
+    async function validerPanier(auth:any): Promise<void> {
         try {
             let data
             let res = await fetch('/rettine/panier/commander', {
@@ -617,26 +622,27 @@ document.addEventListener('DOMContentLoaded', () => {
             data = await res.json();      
 
             if (res.status === 403) {  
-                let resGuest = await fetch('/invite/panier/commander', {
+                let resGuest = await fetch('/guest/panier/commander', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN':
-                    (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
+                        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
                         'Accept': 'application/json'
                     },
                 });
                 data = await resGuest.json();      
-                if (data.session){
-                    window.location.href = `/invite/valider-plats-00000${data.panier}`
+                if (data.session){                    
+                    window.location.href = `/guest/valide-plats-${auth}`
                 }
             }            
 
             if (data.success) {
-                window.location.href = `/rettine/valider-plats-00000${data.panier.id}`
+                window.location.href = `/rettine/valider-plats-${data.panier.id}`
             } 
             
             if (data.error === 'vide') {
+                // console.log(data);
+                
                 showModal("Panier vide !", data.message, "error");
             }
         } catch (e){
@@ -647,7 +653,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Boutons de validation
-    document.getElementById('btn-commande')?.addEventListener('click', () => validerPanier());
+    document.getElementById('btn-commande')?.addEventListener('click', (e:any) => {validerPanier(e.target.dataset.auth)});
 
 });
  

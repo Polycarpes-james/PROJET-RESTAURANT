@@ -26,7 +26,7 @@ class EnsureIntiteId
         if (!$inviteId) {
             $inviteId = (string) Str::uuid();
 
-            Cookie::queue('invite_id',$inviteId, 60 * 24 * 1);
+            Cookie::queue('invite_id',$inviteId, 60 * 24 * 365);
         }
         // rendre disponible dans la requête
         $request->attributes->set('invite_id', $inviteId);

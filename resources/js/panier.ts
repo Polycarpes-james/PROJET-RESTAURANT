@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Interface de configuration globale
 
+    document.querySelector('.my-profile')?.addEventListener('click', (e)=>{
+        console.log(e);
+        document.querySelector('.connexion_box')?.classList.remove('tY')
+        
+    })
 
     // ======================= MODAL GÉNÉRIQUE =========================
     function showModal(title: string, message: string, type: "success" | "error" | "info" = "info"): void {

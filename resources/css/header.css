@@ -2,7 +2,6 @@
     width: 100%;
     margin: 1em auto 0 auto;
     padding-bottom: 2.5em;
-    backdrop-filter: blur(2px);
     display: flex;
     align-items: center;
     position: relative;

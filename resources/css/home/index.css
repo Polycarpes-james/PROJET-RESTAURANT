@@ -62,7 +62,7 @@
     gap: 20px;
 }
 
-.nav-content a, .inscription-users a, .action-container a{
+.nav-content a, .action-container a{
     text-transform: uppercase;
     transition: 0.3s;
     font-size: 15px;
@@ -80,11 +80,11 @@
 
 .inscription-users .inscription-simple a:first-child{
     border: 1px solid var(--main-color);
-    color: white!important; 
+    color: white; 
     padding: 10px 20px;
     border-radius: 5px;
 }
-.inscription-users div, .inscription-users .inscription-simple{
+.inscription-users .inscription-simple{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -99,7 +99,6 @@
     border: none;
 }
 .inscription-users button:hover{
-    transform: scale(1.1);
     opacity: 1;
 }
 
@@ -127,7 +126,7 @@
     gap: 0;
 }
 .action-container a{
-    color: var(--white-color)!important;
+    color: var(--white-color);
     opacity: 1;
     padding: 15px 35px;
     border: 1px solid var(--main-color);
@@ -140,7 +139,7 @@
     border-top-left-radius: 10px;
 }
 .action-container a:last-child{
-    color: var(--main-color)!important;
+    color: var(--main-color);
     background-color: var(--white-color);
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
@@ -148,3 +147,40 @@
 }
 /* ================================================================ */
 
+.connexion_box{
+    position: absolute;
+    right: -10%;
+    top: 100%;
+    transform: translateY(10%);
+    flex-direction: column;
+    z-index: 99999999999999;
+    background-color: white;
+    color: #000000!important;
+    border-radius: 3px;
+    white-space: nowrap;
+    transition: transform 0.1s ease-in-out;
+}
+
+.tY{
+    top: -100%;   
+    transform: translateY(-100%);
+}
+.connexion_box a, .connexion_box button{
+    color: black;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 3px;
+    opacity: 1;
+}
+.connexion_box a:hover, .connexion_box button:hover{
+    background-color: #1438763a;
+    color: #042c65;
+}
+.connexion_box button.deconnexion, .connexion_box a.profile-link{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.connexion_box .my-profile:hover .connexion_box{
+    display: flex;
+}

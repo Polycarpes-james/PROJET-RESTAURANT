@@ -2,9 +2,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    backdrop-filter: blur(20px);
+    position: relative;
     padding: 15px 30px;
-    
+    z-index: 999999;  
 }
 
 .main-header-content a, .body-header-others .main-header-content a{
@@ -26,6 +26,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    z-index: -24;
     height: 105vh;
     color: white;
 }
@@ -150,27 +151,29 @@
 .connexion_box{
     position: absolute;
     right: -10%;
-    top: 100%;
-    transform: translateY(10%);
-    flex-direction: column;
-    z-index: 99999999999999;
+    width: max-content;
+    top: 90%;
+    transform: translateY(20%);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
     background-color: white;
     color: #000000!important;
     border-radius: 3px;
-    white-space: nowrap;
-    transition: transform 0.1s ease-in-out;
+    box-shadow: 0 0 5px grey;
+}
+.connexion_box.active-menu{
+    max-height: 300px;
 }
 
-.tY{
-    top: -100%;   
-    transform: translateY(-100%);
-}
 .connexion_box a, .connexion_box button{
     color: black;
     font-size: 15px;
     padding: 10px;
     border-radius: 3px;
     opacity: 1;
+    width: 180px;
+    max-width: 100%;
 }
 .connexion_box a:hover, .connexion_box button:hover{
     background-color: #1438763a;

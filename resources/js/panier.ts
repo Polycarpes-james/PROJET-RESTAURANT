@@ -4,12 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Interface de configuration globale
 
-    document.querySelector('.my-profile')?.addEventListener('click', (e)=>{
-        console.log(e);
-        document.querySelector('.connexion_box')?.classList.remove('tY')
-        
-    })
+    const menuBtn = document.querySelector<HTMLButtonElement>('.my-profile')
+    const menu = document.querySelector<HTMLDivElement>('.connexion_box')
 
+    document.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        if (!menu?.contains(target) && !menuBtn?.contains(target)) {            
+            menu?.classList.remove("active-menu");
+        }
+    });
+
+    menuBtn?.addEventListener("click", () => {
+        menu?.classList.toggle("active-menu");
+    });
     // ======================= MODAL GÉNÉRIQUE =========================
     function showModal(title: string, message: string, type: "success" | "error" | "info" = "info"): void {
         const modal = document.getElementById('customModal') as HTMLElement | null;

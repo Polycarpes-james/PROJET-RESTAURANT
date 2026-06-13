@@ -156,6 +156,8 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('ingredient', IngredientController::class);
     Route::resource('avis', AdminAvisController::class);
 
+    Route::resource('commandeGuest', CommandeController::class);
+
     Route::get('/{slug}-{menu}/plat/create', [PlatController::class, 'createPlatMenu'])->name('menu.plat.create')->
     where([
         'menu' => '[0-9]+',

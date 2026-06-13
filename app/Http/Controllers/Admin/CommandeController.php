@@ -6,6 +6,8 @@ use App\Models\Panier;
 use App\Models\Commande;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\CommandeInvite;
+use App\Models\CommandeInvitePlat;
 
 class CommandeController extends Controller
 {
@@ -14,8 +16,14 @@ class CommandeController extends Controller
      */
     public function index()
     {
+        
+        $commandesGuests = CommandeInvite::all();
         $commandes = Commande::with('user')->latest()->paginate(10);
-        return view('admin.commandes.index', compact('commandes'));
+        
+        return view('admin.commandes.index', [
+            'commandesGuests' => $commandesGuests,
+            'commandes' => $commandes
+        ]);
     }
 
 
@@ -25,10 +33,15 @@ class CommandeController extends Controller
     public function show(Commande $commande)
     {
         $panier = Panier::with('plats')->where('user_id', $commande->id)->first();
+
+        $panierGuest = CommandeInvitePlat::with('commandeInvite')->where('commande_invite_id', $commande->invite_id)->first();
         
+    // dd($commande);
+
         return view('admin.commandes.show', [
             'commande' => $commande, 
-            'panier' => $panier
+            'panier' => $panier, 
+            'panierGuest' => $panierGuest
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\View\Components;
 use App\Models\Category;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\View\Component;
 
 class ItemsActions extends Component
@@ -12,7 +13,7 @@ class ItemsActions extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $contentId, public ?Category $category = null, public string $contentSecondClass, public string $headerClass, public string $mainClass, public string $footerClass)
+    public function __construct(public string $type, public string $contentId, public ?Model $category = null, public string $contentSecondClass, public string $headerClass, public string $mainClass, public string $footerClass)
     {
         
     }

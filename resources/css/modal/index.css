@@ -29,6 +29,12 @@
     height: 100%;
     margin: 0 auto;
 }
+.category_modal_item{
+    background: white;
+    width: 550px;
+    padding: 10px;
+    border-radius: 3px;
+}
 
 .multi_footer_modal, .suppression-footer-modal{
     border-bottom-right-radius: 10px;
@@ -99,7 +105,7 @@
     animation: fadeIn 0.3s ease-in-out;
     padding: 10px 0 0 0;
 }
-.modal-header-content{
+.modal-header-content, .category_modal_item{
     position: relative;
 }
 /* 

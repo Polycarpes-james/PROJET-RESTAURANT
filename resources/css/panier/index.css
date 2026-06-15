@@ -206,6 +206,13 @@
     display: flex;
 }
 
+.open-ingredient-modal:hover .tooltip-text{   
+    display: flex;
+}
+.open-category-modal{
+    display: inline-block;
+  
+}
 .tooltip-text{
     display: none;
     background: white;

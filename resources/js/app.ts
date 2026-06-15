@@ -1,6 +1,7 @@
 import './bootstrap';
 import './reservation';
 import './panier';
+import './search';
 import './avis';
 import './carousel';
 import './platUpdate';

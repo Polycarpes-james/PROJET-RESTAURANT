@@ -25,7 +25,7 @@
                         <div class="items">
                             <div class="disponible-plat" >
                                 <div style="display: flex; flex-direction:column;gap:1em;margin-bottom: 1em">
-                                    <p style="color:#c26214; font-size:17px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;">{{ $plat->category->name }}</p>
+                                    <p style="color:#c26214; font-size:17px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;">{{ $plat->category ? $plat->category->name : "MULTITASK"}}</p>
                                     <h3>{{ $plat->name }}</h3>
                                 </div>
                                 <div class="comments-side">

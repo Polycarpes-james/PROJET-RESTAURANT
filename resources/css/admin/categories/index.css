@@ -1,6 +1,6 @@
 .presentation-categories{
     display: flex;
-    align-items: end;
+    align-items: center;
     margin-bottom: 2em;
     justify-content: space-between;
     padding: 10px 0;
@@ -18,6 +18,21 @@
     transition: 0.4s;
     border-radius: 5px;
 }
+.actions-item-categories{
+    display: flex;
+    gap: 10px;
+}
+.presentation-categories button{
+    background-color: var(--second-color);
+    color: var(--white-color);
+    border-radius: 3px;
+    display: flex;
+    margin-right: auto;
+    padding: 0 2px;
+    margin-left: 20px;
+    align-items: center;
+}
+
 .presentation-categories a:hover{
     background: linear-gradient(to right, #1E3A8A, #2258ea);
     transform: scale(1.05);
@@ -58,3 +73,17 @@
     color: #ff5b5b;
 }
 
+.category_modal_item .modal-close{
+    top: -7%!important;
+    right: -3%!important;
+}
+
+.category_modal_item h1{
+    text-align: center;
+}
+.open-category-modal, .open-ingredient-modal{
+    border: none;
+}
+.open-category-modal{
+    position: relative;
+}

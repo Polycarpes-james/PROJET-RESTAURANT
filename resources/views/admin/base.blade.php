@@ -25,7 +25,7 @@
                 <a href="{{ route('admin.reservation.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.reservation')])>Les Reservations</a>
                 <a href="{{ route('admin.commande.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.commande')])>Les Commandes</a>
                 <a href="{{ route('admin.avis.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.avis')])>Les Avis</a>
-                <a href="{{ route('admin.commandeGuest.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.commandeGuest')])>Les commandes des invités</a>
+                {{-- <a href="{{ route('admin.commandeGuest.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.commandeGuest')])>Les commandes des invités</a> --}}
             </nav>
         </aside>
         <div class="all-content-admin">

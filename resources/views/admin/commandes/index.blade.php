@@ -9,7 +9,7 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Id</th>
                     <th>Client</th>
                     <th>Total</th>
                     <th>Statut</th>
@@ -42,7 +42,7 @@
             </tbody>
         </table>
 
-        {{ $commandes->links() }}            
+        {{-- {{ $commandes->links() }}             --}}
     </div>
     <div class="commandes-guests">
         <h1>Gestion des commandes invités</h1>
@@ -50,7 +50,7 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Id</th>
                     <th>Client</th>
                     <th>Total</th>
                     <th>Statut</th>
@@ -63,6 +63,7 @@
                         <td>{{ $commande->id }}</td>
                         <td>{{ $commande->name }}</td>
                         <td>{{ $commande->total_prix }} €</td>
+                        <td>{{ $commande->status }} </td>
                         <td>
                             <form action="{{ route('admin.commande.update', $commande) }}" method="POST">
                                 @csrf
@@ -75,10 +76,7 @@
                                 </select>
                                 <button type="submit">Changer</button>
                             </form>
-                            {{-- @php
-                                dd($commande)
-                            @endphp --}}
-                            <a href="{{ route('admin.commande.show', $commande) }}">Voir la commande</a>
+                            <a href="{{ route('admin.commande.showGuest', ['invite_id' => $commande->invite_id, 'commande' => $commande]) }}">Voir la commande</a>
                         </td>
                     </tr>
                 @endforeach

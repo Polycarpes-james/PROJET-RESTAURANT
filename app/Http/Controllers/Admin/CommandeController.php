@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Panier;
-use App\Models\Commande;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Commande;
 use App\Models\CommandeInvite;
 use App\Models\CommandeInvitePlat;
+use App\Models\Panier;
+use Illuminate\Http\Request;
 
 class CommandeController extends Controller
 {
@@ -30,18 +30,24 @@ class CommandeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Commande $commande)
+   public function show(Commande $commande)
     {
         $panier = Panier::with('plats')->where('user_id', $commande->id)->first();
-
-        $panierGuest = CommandeInvitePlat::with('commandeInvite')->where('commande_invite_id', $commande->invite_id)->first();
-        
-    // dd($commande);
 
         return view('admin.commandes.show', [
             'commande' => $commande, 
             'panier' => $panier, 
-            'panierGuest' => $panierGuest
+        ]);
+    }
+
+    public function showGuest (CommandeInvite $commandeGuest){
+        $panierGuest = CommandeInvitePlat::with('commandeInvite')->where('commande_invite_id', $commandeGuest->invite_id)->first();
+        
+        dd($commandeGuest);
+
+        return view('admin.commandes.show', [
+            'commande' => $commandeGuest, 
+            'panier' => $panierGuest
         ]);
     }
 

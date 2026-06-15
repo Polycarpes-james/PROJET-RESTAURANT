@@ -7,15 +7,16 @@
 
     <div class="">
         <h2>{{ $commande->status }}</h2>
-        {{-- <div>
-            @foreach ($panier as $plat)
+        {{-- @dump($commande) --}}
+        <div>
+            @foreach ($panier->plats as $plat)
                 <p>{{ $plat->name }}</p>
                 <p>{{ $plat->pivot->quantite }}</p>
                 <p>{{ $plat->price * $plat->pivot->quantite}}</p>
                 @foreach ($plat->pictures as $picture)
                     <img src="{{ $picture->getPictureUrl(350, 300) }}" alt="">
                 @endforeach
-            @endforeach --}}
+            @endforeach
         </div>
     </div>
     

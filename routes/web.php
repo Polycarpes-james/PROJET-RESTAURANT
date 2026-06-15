@@ -49,24 +49,27 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
     Route::post('/panier/supprimer', [PanierController::class, 'removeDish'])->name('panier.supprimer');
     Route::post('/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');
 
-    Route::get('/valider-plats-{panier}', [LivraisonController::class, 'index'])->name('commande_plats.index')->
-    where([
-        'panier' => '[0-9]+'
-    ]);
+    Route::get('/valider-plats-{panier}', [LivraisonController::class, 'index'])
+        ->name('commande_plats.index')
+        ->where([
+            'panier' => '[0-9]+'
+        ]);
     
-    Route::post('/livraison/{commande}', [LivraisonController::class, 'store'])->name('livraison.store')->
-    where([
-        'commande' => '[0-9]+'
-    ]);
-    Route::post('/plats/{plat}/avis', [AvisController::class, 'store'])->name('avis.store')->
-     where([
-        'plat' => '[0-9]+'
-    ]);
-    Route::delete('/plats/{plat}/avis', [AvisController::class, 'destroy'])->name('plats.avis.destroy')
-    ->
-     where([
-        'plat' => '[0-9]+'
-    ]);
+    Route::post('/livraison/{commande}', [LivraisonController::class, 'store'])
+        ->name('livraison.store')
+        ->where([
+            'commande' => '[0-9]+'
+        ]);
+    Route::post('/plats/{plat}/avis', [AvisController::class, 'store'])
+        ->name('avis.store')
+        ->where([
+            'plat' => '[0-9]+'
+        ]);
+    Route::delete('/plats/{plat}/avis', [AvisController::class, 'destroy'])
+        ->name('plats.avis.destroy')
+        ->where([
+            'plat' => '[0-9]+'
+        ]);
 
     Route::resource('profile', ProfileController::class);
     
@@ -85,14 +88,18 @@ Route::name('guest.')->prefix('guest')->middleware('ensure')->group(function() {
     Route::post('/panier/modifier', [PanierController::class, 'modifierQuantiteInvite']);
     Route::post('/panier/vider', [PanierController::class, 'viderPanier'])->name('panier.vider');
 
-    Route::get('/shopCartUp@/cart-{invite_id}', [PanierController::class, 'getPanierInvite'])->name('panier')->where([
+    Route::get('/shopCartUp@/cart-{invite_id}', [PanierController::class, 'getPanierInvite'])
+        ->name('panier')
+        ->where([
         'invite_id' => '[0-9a-z\-]+'
     ]);
     Route::post('/panier/commander', [PanierController::class, 'validerPanier'])->name('panier.commander');   
 
     Route::get('/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
     Route::post('/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');
-    Route::get('/valide-plats-{invite_id}', [LivraisonController::class, 'index'])->name('commande.valider')->where([
+    Route::get('/valide-plats-{invite_id}', [LivraisonController::class, 'index'])
+        ->name('commande.valider')
+        ->where([
         'invite_id' => '[0-9a-z\-]+'
     ]);
 
@@ -104,7 +111,7 @@ Route::name('guest.')->prefix('guest')->middleware('ensure')->group(function() {
 
 
 
-Route::get('/rettine', [HomeController::class, "index"])->name('.rettine');
+Route::get('/rettine', [HomeController::class, "index"])->name('rettine');
 
 Route::get('/rettine/commandes', [UserCommandeController::class, "index"])->name('rettine.commandes');
 
@@ -114,11 +121,15 @@ Route::post('/rettine/reservation/store', [ReservationController::class, 'store'
 
 Route::get('/rettine/plats', [PlatsController::class, "plats"])->name('rettine.plats');
 
-Route::get('/rettine/plats/{plat}', [PlatsController::class, "show_modal"])->name('rettine.plat.show.modal')->where([
+Route::get('/rettine/plats/{plat}', [PlatsController::class, "show_modal"])
+    ->name('rettine.plat.show.modal')
+    ->where([
         'plat' => '[0-9]+',
     ]);;
 
-Route::get('/rettine/plats/{slug}-{plat}', [PlatsController::class, "show"])->name('rettine.plats.show')->where([
+Route::get('/rettine/plats/{slug}-{plat}', [PlatsController::class, "show"])
+    ->name('rettine.plats.show')
+    ->where([
         'plat' => '[0-9]+',
         'slug' => '[0-9a-z\-]+'
     ]);
@@ -156,13 +167,17 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('ingredient', IngredientController::class);
     Route::resource('avis', AdminAvisController::class);
 
-    Route::resource('commandeGuest', CommandeController::class);
+    Route::get('/commande/{commande}/{invite_id}', [CommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
+        'invite_id' => '[0-9a-z\-]+',
+        'commande' => '[0-9]+'
+    ]);
 
     Route::get('/{slug}-{menu}/plat/create', [PlatController::class, 'createPlatMenu'])->name('menu.plat.create')->
     where([
         'menu' => '[0-9]+',
         'slug' => '[0-9a-z\-]+'
     ]);
+    
     Route::post('menu/{menu}', [PlatController::class, "store_"])->name('plat.store_')->
     where([
         'menu' => '[0-9]+',

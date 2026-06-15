@@ -1,0 +1,137 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* LAYOUT GLOBAL */
+.container-admin {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.header-container-admin {
+    width: 240px;
+    background: var(--white-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    padding: 20px;
+    font-size: 23px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--second-color);
+}
+
+.hover, .container-admin .header-container-admin a.nav-link-admin:hover{
+    background-color: var(--second-color);
+    color: white!important;
+    padding-left: 50px!important;
+    opacity: 1!important;
+}
+
+.nav-admin-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-admin-container a {
+    color: var(--second-color);
+    text-decoration: none;
+    padding: 15px 20px;
+    border-radius: 2px;
+    opacity: 0.8;
+    transition: 0.2s;
+}
+
+
+/* MAIN */
+.all-content-admin {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f5f5f5;
+}
+
+/* TOPBAR */
+.authentification-topbar {
+    background: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #ccc;
+}
+
+/* CONTENT */
+.content {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #0000001a;
+}
+
+.card h3 {
+    color: #777;
+    font-size: 14px;
+}
+
+.card p {
+    font-size: 22px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* TABLE */
+
+/* BADGES */
+.badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.badge.orange {
+    background: #ffe5b4;
+    color: #d97706;
+}
+
+.badge.green {
+    background: #c7f9cc;
+    color: #1b7f3a;
+}
+
+.badge.red {
+    background: #ffc9c9;
+    color: #b00020;
+}

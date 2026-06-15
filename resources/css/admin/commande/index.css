@@ -1,38 +1,37 @@
 .styled-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.styled-table thead tr {
-  background-color: #2563eb; /* bleu */
-  color: #fff;
-  text-align: left;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    margin-top: 20px;
+    overflow: hidden;
 }
 
 .styled-table th,
 .styled-table td {
-  padding: 5px 10px;
-  border-bottom: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: left;
 }
-.styled-table th:first-child{
-  border-bottom-left-radius: 5px!important;
-  border-top-left-radius: 5px!important;
+.styled-table th{
+  background: #92410e10;
+  color: var(--second-color);
 }
-.styled-table th:last-child{
-  border-bottom-right-radius: 5px!important;
-  border-top-right-radius: 5px!important;
-}
+
 .styled-table td{
   opacity: 0.5;
+  padding: 8px;
 }
 
+.styled-table .options{
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+.styled-table .options a{
+  color: #b44500;
+}
 
 .styled-table tbody tr:hover {
-  background-color: #f3f4f6;
+  background-color: #c7c7c73b;
 }
 
 /* Badges statut */
@@ -43,13 +42,7 @@
   font-weight: bold;
   text-transform: capitalize;
 }
-.styled-table tbody tr:nth-child(odd) {
-  background-color: #ffffff; /* blanc */
-}
 
-.styled-table tbody tr:nth-child(even) {
-  background-color: #0b509637; /* gris clair */
-}
 
 .badge.warning { background: #fef08a; color: #92400e; }
 .badge.success { background: #bbf7d0; color: #166534; }

@@ -111,7 +111,7 @@ Route::name('guest.')->prefix('guest')->middleware('ensure')->group(function() {
 
 
 
-Route::get('/rettine', [HomeController::class, "index"])->name('rettine');
+Route::get('/rettine', [HomeController::class, "index"])->name('.rettine');
 
 Route::get('/rettine/commandes', [UserCommandeController::class, "index"])->name('rettine.commandes');
 

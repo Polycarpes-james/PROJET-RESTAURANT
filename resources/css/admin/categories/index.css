@@ -47,26 +47,14 @@
     justify-content: end;
     align-items: center;
 }
-.all-categories .action-category a, .all-categories .action-category button{
-    padding: 10px 15px;
-    color: var(--white-color);
-    border-radius: 5px;
-}
-.all-categories .action-category button{
-    border: none;
-    background-color: #800020;
-}
-.all-ingredients button{
+
+
+.all-ingredients button, .all-categories .action-category button{
     border: none;
     background: transparent;
 }
-.lucide-square-pen-icon{
-    color: var(--main-color);
-}
+
 .lucide-trash2-icon{
     color: #ff5b5b;
-}
-.all-categories .action-category a{
-    background-color: var(--main-color);
 }
 

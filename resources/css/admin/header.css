@@ -1,4 +1,4 @@
-
+/* 
 .container-admin{
     padding-top: 1em;
 }
@@ -52,7 +52,6 @@
     padding: 10px;
     display: flex;
     align-items: center;
-    /* justify-content: space-between; */
 }
 
 .all-content-admin .authentification form{
@@ -84,4 +83,4 @@
     background-color: #ff8989;
     border-radius: 5px;
     color: #da3232;
-}
+} */

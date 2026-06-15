@@ -10,6 +10,8 @@
 
 
 @import "admin/header.css";
+@import "admin/admin.css";
+
 
 @import "components/form/input.css";
 @import "components/form/select.css";
@@ -27,4 +29,4 @@
 @import "./modal/index.css";
 
 @import "reservation/app.css";
-@import './convert.css'
+@import './convert.css';

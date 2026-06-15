@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function index()
     {
         return view('admin.categories.index', [
-            'categories' => Category::orderBy('created_at', 'desc')->paginate(15)
+            'categories' => Category::orderBy('created_at', 'desc')->paginate(15), 
+            'category' => new Category()
         ]);
     }
 

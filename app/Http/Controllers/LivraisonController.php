@@ -77,7 +77,6 @@ class LivraisonController extends Controller
         }
         $panier = Panier::where('user_id', Auth::id())->first();
 
-        $panier->plats()->detach();
 
         return to_route('rettine.commandes')->with('success', 'Votre livraison a été enregistrée avec succès.');
     }

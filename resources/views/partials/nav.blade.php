@@ -1,9 +1,9 @@
 <header class="main-header-content {{ $background_header ?? null }}">
     <div class="main-logo">
-        <h1><a href="{{ route('rettine') }}"><span class="logo_R">R</span>ettine</a></h1>
+        <h1><a href="{{ route('.rettine') }}"><span class="logo_R">R</span>ettine</a></h1>
     </div>
     <nav class="nav-content">
-        <a href="{{ route('rettine') }}" @class(['nav-link', 'modify' => str_contains($route, 'rettine')])>Acceuil</a>
+        <a href="{{ route('.rettine') }}" @class(['nav-link', 'modify' => str_contains($route, '.rettine')])>Acceuil</a>
         <a href="{{ route('rettine.plats') }}" @class(['nav-link', 'modify' => str_contains($route, '.plats')])>Plats</a>
         <a href="#">menus</a>
         <a href="{{ route('rettine.commandes') }}" @class(['nav-link', 'modify' => str_contains($route, '.commandes')])>commander</a>

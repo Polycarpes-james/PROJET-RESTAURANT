@@ -3,6 +3,7 @@ import './reservation';
 import './panier';
 import './avis';
 import './carousel';
+import './platUpdate';
 import './model';
 import './upload-picture';
 import './toggleRadio';

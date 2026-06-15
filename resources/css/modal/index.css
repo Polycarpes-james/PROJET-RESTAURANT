@@ -1,7 +1,7 @@
 
 
 /* Modale */
-#customModal, #platWindowsInfo, #customModalShow, #modal-connect, #multi_tasks_modal, #suppression_dish{
+#customModal, #platWindowsInfo, #customModalShow, #category_modal, #modal-connect, #multi_tasks_modal, #suppression_dish{
     position: fixed;
     top:0; 
     left:0;
@@ -14,7 +14,7 @@
 }
 
 
-#customModal, #platWindowsInfo{
+#customModal, #platWindowsInfo, #category_modal{
     align-items:center;
     z-index: 90000399;
 }
@@ -22,7 +22,7 @@
 #customModalShow{
     z-index: 90000399;
 }
-#multi_tasks_modal, #suppression_dish{
+#multi_tasks_modal, #suppression_dish, #category_modal{
     z-index: 99999999;
     align-items: center;
     width: 100%;

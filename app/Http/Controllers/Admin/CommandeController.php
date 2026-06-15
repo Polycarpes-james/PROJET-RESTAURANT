@@ -32,9 +32,9 @@ class CommandeController extends Controller
      */
    public function show(Commande $commande)
     {
-        $panier = Panier::with('plats')->where('user_id', $commande->id)->first();
+        $panier = Panier::with('plats')->where('user_id', $commande->user_id)->first();
 
-        // dd($commande);
+        // dd($panier);
 
         return view('admin.commandes.show', [
             'commande' => $commande, 

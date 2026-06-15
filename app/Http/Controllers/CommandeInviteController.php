@@ -45,16 +45,18 @@ class CommandeInviteController extends Controller
             ];
         // $commande = new CommandeInvite();
         $commande = CommandeInvite::where('invite_id', Cookie::get('invite_id'))->first();
-        // dd($commande);
-        if($commande){
+
+        if ($commande) {
             $commande->update($elements);
+
+            CommandeInvitePlat::where('commande_invite_id', $commande->id)->delete();
         } else {
-            CommandeInvite::create($elements);
+            $commande = CommandeInvite::create($elements);
         }
-        
+
         foreach ($panier as $item) {
             CommandeInvitePlat::create([
-                'commande_invite_id' => Cookie::get('invite_id'),
+                'commande_invite_id' => $commande->invite_id,
                 'plat_id' => $item['plat_id'],
                 'plat_name' => $item['name'],
                 'prix_total' => $item['prix_total'],
@@ -62,7 +64,6 @@ class CommandeInviteController extends Controller
                 'quantite' => $item['quantite'],
             ]);
         }
-
 
         // Supprimer le panier de session
         session()->forget('panier_invite');

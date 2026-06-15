@@ -9,13 +9,11 @@
         <h2>{{ $commande->status }}</h2>
         {{-- @dump($commande) --}}
         <div>
-            @foreach ($panier->plats as $plat)
-                <p>{{ $plat->name }}</p>
-                <p>{{ $plat->pivot->quantite }}</p>
-                <p>{{ $plat->price * $plat->pivot->quantite}}</p>
-                @foreach ($plat->pictures as $picture)
-                    <img src="{{ $picture->getPictureUrl(350, 300) }}" alt="">
-                @endforeach
+            @foreach (($commande->invite_id ? $panierGuest : $panier->plats) as $plat)
+                <p>{{ $plat->name ?? $plat->plat_name }}</p>
+                <p>{{ $commande->invite_id ? $plat->quantite : $plat->pivot->quantite }}</p>
+                <p>{{ $commande->invite_id ? $plat->prix_total : ($plat->price * $plat->pivot->quantite)}}</p>
+                <img src="{{ $commande->invite_id ? $plat->plat->getPicture()->getPictureUrl(100, 90) : $plat->getPicture()->getPictureUrl(100, 90) }}" alt="">
             @endforeach
         </div>
     </div>

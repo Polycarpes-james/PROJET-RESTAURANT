@@ -167,9 +167,9 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('ingredient', IngredientController::class);
     Route::resource('avis', AdminAvisController::class);
 
-    Route::get('/commande/{commande}/{invite_id}', [CommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
-        'invite_id' => '[0-9a-z\-]+',
-        'commande' => '[0-9]+'
+    Route::get('/commande/{invite_id}/{commande}', [CommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
+        'commande' => '[0-9]+',
+        'invite_id' => '[0-9a-z\-]+'
     ]);
 
     Route::get('/{slug}-{menu}/plat/create', [PlatController::class, 'createPlatMenu'])->name('menu.plat.create')->

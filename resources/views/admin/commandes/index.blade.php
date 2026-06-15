@@ -58,25 +58,25 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($commandesGuests as $commande)
+                @foreach($commandesGuests as $item)
                     <tr>
-                        <td>{{ $commande->id }}</td>
-                        <td>{{ $commande->name }}</td>
-                        <td>{{ $commande->total_prix }} €</td>
-                        <td>{{ $commande->status }} </td>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->total_prix }} €</td>
+                        <td>{{ $item->status }} </td>
                         <td>
-                            <form action="{{ route('admin.commande.update', $commande) }}" method="POST">
+                            <form action="{{ route('admin.commande.update', $item) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <select name="status">
-                                    <option value="en_attente" @selected($commande->status == 'en_attente')>En attente</option>
-                                    <option value="en_preparation" @selected($commande->status == 'en_preparation')>En préparation</option>
-                                    <option value="livree" @selected($commande->status == 'livree')>Livrée</option>
-                                    <option value="annulee" @selected($commande->status == 'annulee')>Annulée</option>
+                                    <option value="en_attente" @selected($item->status == 'en_attente')>En attente</option>
+                                    <option value="en_preparation" @selected($item->status == 'en_preparation')>En préparation</option>
+                                    <option value="livree" @selected($item->status == 'livree')>Livrée</option>
+                                    <option value="annulee" @selected($item->status == 'annulee')>Annulée</option>
                                 </select>
                                 <button type="submit">Changer</button>
                             </form>
-                            <a href="{{ route('admin.commande.showGuest', ['invite_id' => $commande->invite_id, 'commande' => $commande]) }}">Voir la commande</a>
+                            <a href="{{ route('admin.commande.showGuest', ['commande' => $item, 'invite_id' => $item->invite_id]) }}">Voir la commande</a>
                         </td>
                     </tr>
                 @endforeach

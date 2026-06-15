@@ -34,20 +34,29 @@ class CommandeController extends Controller
     {
         $panier = Panier::with('plats')->where('user_id', $commande->id)->first();
 
+        // dd($commande);
+
         return view('admin.commandes.show', [
             'commande' => $commande, 
             'panier' => $panier, 
         ]);
     }
 
-    public function showGuest (CommandeInvite $commandeGuest){
-        $panierGuest = CommandeInvitePlat::with('commandeInvite')->where('commande_invite_id', $commandeGuest->invite_id)->first();
-        
-        dd($commandeGuest);
+    public function showGuest (string $invite_id, string $commande){
+
+        $commandeGuest = CommandeInvite::where('id', $commande)
+            ->where('invite_id', $invite_id)
+            ->firstOrFail();
+
+        $panierGuest = CommandeInvitePlat::with('commandeInvite')
+            ->where('commande_invite_id', $commandeGuest->invite_id)
+            ->get();
+
+            // dd($panierGuest);
 
         return view('admin.commandes.show', [
             'commande' => $commandeGuest, 
-            'panier' => $panierGuest
+            'panierGuest' => $panierGuest
         ]);
     }
 

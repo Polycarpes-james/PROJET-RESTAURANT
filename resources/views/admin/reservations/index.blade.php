@@ -3,9 +3,13 @@
 @section('title', 'RESERVATIONS')
 
 @section('content')
-    <div id="container-user-reservation" style="display: none">
-
+    <div id="container-user-reservation" class="modal" style="display: none">
+        <div class="reservation-user-main">
+            <h1 id="containerUser">Reservation de </h1>
+            <button id="closeModal" class="modal-close">×</button>
+        </div>
     </div>
+
     <div class="presentation-categories">
         <h1>La liste des reservations</h1>
         <div class="actions-item-categories">

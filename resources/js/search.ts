@@ -1,192 +1,88 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    function searchTable(firstClass: string, secondClass: string) {
 
+        const searchInput =
+            document.querySelector<HTMLInputElement>(firstClass);
 
-function searchTable(
-    inputSelector:string,
-    rowSelector:string
-){
+        const rows =
+            document.querySelectorAll<HTMLTableRowElement>(secondClass);
 
+        const noResults =
+            document.querySelector<HTMLTableRowElement>("#no-results");
 
-    const searchInput =
-    document.querySelector<HTMLInputElement>(
-        inputSelector
-    );
-
-
-    const rows =
-    document.querySelectorAll<HTMLTableRowElement>(
-        rowSelector
-    );
-
-
-    const noResults =
-    document.querySelector<HTMLTableRowElement>(
-        ".no-results"
-    );
-
-
-
-    searchInput?.addEventListener(
-    "input",
-    ()=>{
-
-
-        const search =
-        searchInput.value.trim();
-
-
-
-        let visibleCount = 0;
-
-
-
-        rows.forEach(row=>{
-
-
-            const name =
-            row.dataset.name ?? "";
-
-
-            const price =
-            row.dataset.price ?? "";
-
-
-
-            // texte complet à rechercher
-            const searchableText =
-            [
-                name,
-                price
-            ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
-
-
-
-            const match =
-            searchableText.includes(
-                search.toLowerCase()
-            );
-
-
+        // Sauvegarde du texte original une seule fois
+        rows.forEach(row => {
 
             const cell =
-            row.querySelector<HTMLTableCellElement>(
-                ".item-name"
-            );
+                row.querySelector<HTMLTableCellElement>(".ingredient-name");
 
-
-
-            if(match){
-
-
-                row.style.display="";
-
-                visibleCount++;
-
-
-
-                if(cell){
-
-                    cell.innerHTML =
-                    highlightText(
-                        name,
-                        search
-                    );
-
-                }
-
-
-            }else{
-
-
-                row.style.display="none";
-
-
+            if (cell && !row.dataset.originalName) {
+                row.dataset.originalName = cell.textContent ?? "";
             }
-
-
 
         });
 
+        searchInput?.addEventListener("input", () => {
 
+            const search = searchInput.value.trim().toLowerCase();
 
-        if(noResults){
+            let visibleCount = 0;
 
-            noResults.style.display =
-            visibleCount === 0
-            ? ""
-            : "none";
+            rows.forEach(row => {
 
-        }
+                const originalName =
+                    row.dataset.originalName ?? "";
 
+                const price =
+                    row.dataset.price ?? "";
 
+                const match =
+                    originalName.toLowerCase().includes(search) ||
+                    price.includes(search);
 
-    });
+                const nameCell =
+                    row.querySelector<HTMLTableCellElement>(".ingredient-name");
 
+                if (match) {
 
+                    row.style.display = "";
 
-}
+                    visibleCount++;
 
+                   const originalName = row.dataset.originalName ?? "";
 
+                    if (nameCell) {
+                        nameCell.innerHTML = highlightText(originalName, search);
+                    }
 
-function highlightText(
-    text:string,
-    search:string
-){
+                } else {
+                    row.style.display = "none";
+                }
 
+            });
 
-    if(!search){
+            if (noResults) {
+                noResults.style.display =
+                    visibleCount === 0 ? "" : "none";
+            }
 
-        return text;
+        });
 
     }
 
+    function highlightText(text: string, search: string) {
 
+          if (!search) return text;
 
-    const escaped =
-    search.replace(
-        /[.*+?^${}()|[\]\\]/g,
-        '\\$&'
-    );
+        const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escaped})`, "gi");
 
+        return text.replace(regex, (match) => `<mark>${match}</mark>`);
 
+    }
 
-    const regex =
-    new RegExp(
-        `(${escaped})`,
-        "gi"
-    );
-
-
-
-    return text.replace(
-        regex,
-        "<mark>$1</mark>"
-    );
-
-
-}
-
-
-
-
-// Catégorie
-searchTable(
-    "#search-category",
-    ".category-row"
-);
-
-
-
-// Ingredient
-searchTable(
-    "#search-ingredient",
-    ".ingredient-row"
-);
-
-
+    searchTable("#search-category", ".category-row");
+    searchTable("#search-ingredient", ".ingredient-row");
 
 });

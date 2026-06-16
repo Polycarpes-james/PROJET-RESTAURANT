@@ -95,7 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll<HTMLElement>('#closeModal').forEach(btn => {
         btn.addEventListener('click', () => {
             const modal = document.getElementById('customModal');
+            const modal3 = document.getElementById('container-user-reservation');
+
             if (modal) modal.style.display = "none";
+            if (modal3) modal3.style.display = "none" 
         });
     });
 
@@ -103,11 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const modal = document.getElementById('multi_tasks_modal');
             const modal2 = document.getElementById('suppression_dish');
+
             if (modal) modal.style.display = "none"
             if (modal2) modal2.style.display = "none"
         })
     })
-
+    
+    
    document.querySelectorAll<HTMLElement>('#closeModal').forEach(btn => {
         btn.addEventListener('click', () => {
             const modal = document.getElementById('customModalShow');

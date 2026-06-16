@@ -29,7 +29,7 @@
                 @foreach ($ingredients as $ingredient)
                     <tr class="ingredient-row" data-name="{{ $ingredient->name }}" data-price="{{ $ingredient->price }}">
                         <td>{{$ingredient->id}}</td>
-                        <td style="text-transform:capitalize" class="item-name">{{$ingredient->name}}</td>
+                        <td style="text-transform:capitalize" class="ingredient-name">{{$ingredient->name}}</td>
                         <td>{{$ingredient->price}} €</td>
                         <td class="action-item">
                             <div class="action-category">

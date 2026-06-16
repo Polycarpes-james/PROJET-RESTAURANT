@@ -1,7 +1,8 @@
 
 
 /* Modale */
-#customModal, #platWindowsInfo, #customModalShow, #category_modal, #modal-connect, #multi_tasks_modal, #suppression_dish{
+#customModal, #platWindowsInfo, #customModalShow, #category_modal, #modal-connect, 
+#multi_tasks_modal, #suppression_dish, #container-user-reservation{
     position: fixed;
     top:0; 
     left:0;
@@ -9,12 +10,13 @@
     height:100%;
     display:flex;
     justify-content:center;
+    align-items: center;
     background: #00000080;
     z-index:9999;
 }
 
 
-#customModal, #platWindowsInfo, #category_modal{
+#customModal, #platWindowsInfo, #category_modal, #reservation-user-reservation{
     align-items:center;
     z-index: 90000399;
 }
@@ -22,7 +24,7 @@
 #customModalShow{
     z-index: 90000399;
 }
-#multi_tasks_modal, #suppression_dish, #category_modal{
+#multi_tasks_modal, #suppression_dish, #category_modal, #reservation-user-reservation{
     z-index: 99999999;
     align-items: center;
     width: 100%;
@@ -51,7 +53,6 @@
     padding: 10px;
     width: 30%;
 }
-
 
 /* =============================================================================================== */
 .multi_footer_modal button, .suppression-footer-modal button{
@@ -96,7 +97,7 @@
     margin: 0 auto;
 }
 
-.multi_tasks_modal_container, .suppression-modal-item{
+.multi_tasks_modal_container, .suppression-modal-item, .reservation-user-main{
     margin: 0 auto;
     background-color: white;
     max-width: 500px;

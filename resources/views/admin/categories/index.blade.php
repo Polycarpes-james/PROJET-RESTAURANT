@@ -29,7 +29,7 @@
                 @foreach($categories as $category)
                     <tr class="category-row" data-price="{{ $category->price }}" data-name="{{ $category->name }}">
                         <td>{{ $category->id }}</td>
-                        <td  class="item-name">{{ $category->name }}</td>
+                        <td  class="category-name">{{ $category->name }}</td>
                         <td class="action-item">
                             <div class="action-category">
                                 <button class="edit-category" type="submit" data-name="{{ $category->name }}" data-id="{{ $category->id }}" data-price="{{ $category->price }}">

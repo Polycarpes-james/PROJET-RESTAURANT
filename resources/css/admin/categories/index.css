@@ -45,7 +45,9 @@
 .presentation-categories a:hover{
     transform: scale(1.05);
 }
-
+mark {
+    background: #ffd54a;
+}
 .categories-items{
     display: flex;
     flex-direction: column;

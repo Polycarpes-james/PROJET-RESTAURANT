@@ -1,0 +1,5 @@
+.action-item .reservation_show{
+    color: var(--second-color);
+    background-color: transparent;
+    border: none;
+}

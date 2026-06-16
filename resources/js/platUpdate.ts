@@ -17,14 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.open-category-modal').forEach(element => {
         element.addEventListener('click', (e:any) => {
-            const element = e.target
             showModalAdmin('Creation de la categorie')
         })
     })
 
     document.querySelectorAll('.open-ingredient-modal').forEach(element => {
         element.addEventListener('click', (e:any) => {
-            const element = e.target
             showModalAdmin("Creation de l'ingredient")
         })
     })
@@ -50,32 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const price = button.dataset.price;
 
 
-        const form =
-        document.querySelector<HTMLFormElement>(
-            "#ingredient-form"
-        );
+        const form = document.querySelector<HTMLFormElement>("#ingredient-form");
 
 
-        const inputName =
-        document.querySelector<HTMLInputElement>(
-            "#name"
-        );
+        const inputName = document.querySelector<HTMLInputElement>("#name");
 
+        const inputPrice = document.querySelector<HTMLInputElement>("#price");
 
-        const inputPrice =
-        document.querySelector<HTMLInputElement>(
-            "#price"
-        );
-
-
-        const idInput =
-        document.querySelector<HTMLInputElement>(
-            "#ingredient-id"
-        );
-
-
-
-        // remplir les champs
+        const idInput = document.querySelector<HTMLInputElement>("#ingredient-id");
 
         if(inputName){
             inputName.value = name ?? "";
@@ -163,12 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.appendChild(method);
 
             }
-
-
-            // ICI il manquait ça
             showModalAdmin("Modifier la catégorie");
-
-
         });
 
     });

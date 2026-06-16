@@ -36,3 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+const btnReservationShow = document.querySelectorAll('.reservation_show')
+
+
+btnReservationShow.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+        const target = e.currentTarget as HTMLElement;
+
+        const user = JSON.parse(target.dataset.user as string);
+
+        console.log(user);
+
+        showReservationModal(user);
+    });
+});
+
+
+function showReservationModal (user:any) {
+    const content = document.querySelector('#container-user-reservation') as HTMLDivElement
+    // console.log(items);
+    
+    content.innerHTML =  `
+            <div class="reservation-user-main">
+                <h1>Reservation de ${user.name}</h1>
+            </div>
+        ` 
+
+
+    content.style.display = "flex"
+}

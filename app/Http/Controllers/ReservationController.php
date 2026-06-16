@@ -15,9 +15,9 @@ class ReservationController extends Controller
     {
         $total_number = 0;
         $reservation = null;
-
+        $panier = Panier::where('user_id', Auth::id())->first();
         if(Auth::user()){
-            $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
+            $total_number = $panier ? $panier->panierPlats()->sum('quantite') : 0;
             $reservation = Reservation::where('user_id', Auth::id())->first();
         } else {
             $panier = session()->get('panier_invite');          

@@ -139,9 +139,6 @@ class PlatController extends Controller
         $disponible = null;
         $style_disponible = null;
         $target = $plat->disponible;
-        // dd();
-
-        // dd($plat->getPicture());
 
         if ($target === "yes") {
             $disponible = "Le plat est disponible";

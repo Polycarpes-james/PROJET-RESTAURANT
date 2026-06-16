@@ -46,14 +46,20 @@
     border-radius: 15px;
     padding: 10px;
     width: max-content;
-    /* margin-left: auto; */
 }
-.valide{
-    background-color: #caffca;
+.valide-plat, .invalide-plat{
+    width: max-content; 
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #80808042;
+    text-align: center;
+}
+.valide, .valide-plat{
+    background-color: #caffca7b;
     color: #2f902f;
 }
-.invalide {
-    background-color: #ffbab7;
+.invalide, .invalide-plat {
+    background-color: #ffb9b762;
     color: #ff655d;
 }
 .plat-item .status{

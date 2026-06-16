@@ -4,24 +4,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rows = document.querySelectorAll<HTMLTableRowElement>(secondClass);
 
+    const noResults = document.querySelector<HTMLTableRowElement>("#no-results");
+
     searchInput?.addEventListener("input", () => {
 
-        const search =
-        searchInput.value.toLowerCase();
+        const search = searchInput.value.toLowerCase();
 
-        rows.forEach(row => {
+            let visibleCount = 0;
 
-            const name =
-            row.dataset.name?.toLowerCase() ?? "";
 
-            row.style.display = name.includes(search) ? "" : "none";
+    rows.forEach(row => {
 
-        });
+        const name = row.dataset.name?.toLowerCase() ?? "";
+
+        const price = row.dataset.price?.toLowerCase() ?? "";
+
+        const match = name.includes(search) || price.includes(search);
+
+        row.style.display = match ? "" : "none";
+
+        if (match) {
+            visibleCount++;
+        }
+
+    });
+
+
+    // 👇 afficher ou cacher le message
+    if (noResults) {
+
+        noResults.style.display =
+        visibleCount === 0
+            ? ""
+            : "none";
+
+    }
+
 
     });
 } 
 
-searchTable(".search-category", ".category-row")
-// searchTable(".search-ingredient", ".ingredient-row")
+searchTable("#search-category", ".category-row")
+searchTable("#search-ingredient", ".ingredient-row")
 
 })

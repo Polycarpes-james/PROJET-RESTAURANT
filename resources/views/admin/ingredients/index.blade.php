@@ -8,11 +8,11 @@
     <div class="presentation-categories">
         <h1>La liste les ingredients</h1>
         <button class="open-category-modal" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" viewBox="2 1 20 22" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
             <span class="tooltip-text">Nettoyer</span>
         </button>
         <div class="actions-item-categories">
-            <input type="search" name="search-ingredient" id="search-ingredient" placeholder="Rechercher une categorie...">
+            <input type="search" name="search-ingredient" id="search-ingredient" placeholder="Rechercher un ingredient...">
         </div>
     </div>
     <div class="categories-items all-ingredients">
@@ -27,9 +27,9 @@
             </thead>
             <tbody>
                 @foreach ($ingredients as $ingredient)
-                    <tr class="ingredient-row" data-name="{{ $ingredient->name }}">
+                    <tr class="ingredient-row" data-name="{{ $ingredient->name }}" data-price="{{ $ingredient->price }}">
                         <td>{{$ingredient->id}}</td>
-                        <td>{{$ingredient->name}}</td>
+                        <td style="text-transform:capitalize">{{$ingredient->name}}</td>
                         <td>{{$ingredient->price}} €</td>
                         <td class="action-item">
                             <div class="action-category">
@@ -47,6 +47,12 @@
                         </td>
                     </tr>
                 @endforeach
+                <tr id="no-results" style="display:none;">
+                    <td colspan="3" style="text-align:center">
+                        <p>Aucun ingrédient trouvé</p> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-angry-icon lucide-angry"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><path d="M7.5 8 10 9"/><path d="m14 9 2.5-1"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Avis;
 use App\Models\Panier;
 use App\Models\Commande;
 use App\Models\Livraison;

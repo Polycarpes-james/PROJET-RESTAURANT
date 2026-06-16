@@ -17,17 +17,18 @@
         <aside class="header-container-admin">
             <div class="logo">
                 <a href="{{ route('admin.dashboard') }}">
-                    Dashboard
+                    La Rettine Admin
                 </a>
             </div>
             <nav class="nav-admin-container">
-                <a href="{{ route('admin.plat.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, 'admin.plat')])>Les Plats</a>
-                <a href="{{ route('admin.category.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.category')])>Les Categories</a>
-                <a href="{{ route('admin.ingredient.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.ingredient')])>Les Ingredients</a>
-                <a href="{{ route('admin.menu.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.menu')])>Les Menus</a>
-                <a href="{{ route('admin.reservation.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.reservation')])>Les Reservations</a>
-                <a href="{{ route('admin.commande.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.commande')])>Les Commandes</a>
-                <a href="{{ route('admin.avis.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.avis')])>Les Avis</a>
+                <a href="{{ route('admin.user.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.user')])>Utilisateurs</a>
+                <a href="{{ route('admin.plat.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, 'admin.plat')])>Plats</a>
+                <a href="{{ route('admin.category.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.category')])>Categories</a>
+                <a href="{{ route('admin.ingredient.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.ingredient')])>Ingredients</a>
+                <a href="{{ route('admin.menu.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.menu')])>Menus</a>
+                <a href="{{ route('admin.reservation.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.reservation')])>Reservations</a>
+                <a href="{{ route('admin.commande.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.commande')])>Commandes</a>
+                <a href="{{ route('admin.avis.index') }}" @class(['nav-link-admin', 'hover' => str_contains($route, '.avis')])>Avis</a>
             </nav>
         </aside>
         <div class="all-content-admin">

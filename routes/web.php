@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\IngredientController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PlatController;
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvisController;
 use App\Http\Controllers\CommandeController as UserCommandeController;
@@ -166,6 +167,8 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('commande', CommandeController::class);
     Route::resource('ingredient', IngredientController::class);
     Route::resource('avis', AdminAvisController::class);
+
+    Route::get('/user', [UsersController::class, 'index'])->name('user.index');
 
     Route::get('/commande/{invite_id}/{commande}', [CommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
         'commande' => '[0-9]+',

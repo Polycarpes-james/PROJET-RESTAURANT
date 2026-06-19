@@ -35,10 +35,16 @@
             <header class="authentification-topbar">
                 <h1>@yield('page-title', 'Dashboard')</h1>
                 @if (session('success'))
-                    <p class="success">{{ session('success') }}</p>
+                    <p class="success btn-item-session">
+                        {{ session('success') }}
+                        <button class="btn-session">×</button>
+                    </p>
                 @endif
                 @if (session('delete'))
-                    <p class="delete">{{ session('delete') }}</p>
+                    <p class="delete btn-item-session">
+                        {{ session('delete') }}
+                        <button class="btn-session">×</button>
+                    </p>
                 @endif
                 <div class="user">
                     Admin

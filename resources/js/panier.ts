@@ -484,19 +484,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     all()
-    function delete_containt (id_name:string){
-        const contentSuppression = document.getElementById(id_name) as HTMLElement;
-        contentSuppression.style.display = "none" 
+    function delete_containt (id_name:string, what:boolean){
+        const contentSuppression = (what ? document.getElementById(id_name) : document.querySelector(id_name)) as HTMLElement;
+        if (contentSuppression) contentSuppression.style.display = "none" 
     }
+
+    const btns = document.querySelectorAll(".btn-session")
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            delete_containt('.btn-item-session', false)
+        })
+    })
+
 
     document.querySelectorAll<HTMLButtonElement>('.btn-suppression').forEach(btn => btn.addEventListener('click', () => {
         supprimerPlat(btn.dataset.id!)  
-        delete_containt('suppression_dish')
+        delete_containt('suppression_dish', true)
     }))
 
     document.querySelector('.multi_vide_btn')?.addEventListener('click', () => {
         viderPanier()
-        delete_containt('multi_tasks_modal')
+        delete_containt('multi_tasks_modal', true)
     })
     // ======================= MODIFIER QUANTITÉ =========================
     async function modifierQuantite(platId: string, delta: number): Promise<void> {

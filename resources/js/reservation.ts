@@ -56,7 +56,10 @@ btnReservationShow.forEach((btn) => {
 
 function showReservationModal (user:any) {
     const content = document.querySelector('#container-user-reservation') as HTMLDivElement
+    const h1 = content.querySelector('#containerUser') as HTMLParagraphElement
 
+    h1.innerText = user.name
+    
 
     content.style.display = "flex"
 }

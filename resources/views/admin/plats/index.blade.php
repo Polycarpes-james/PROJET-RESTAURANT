@@ -4,13 +4,30 @@
     
 @section('content')
     <div class="container-items-admin">
-        <div class="presentation-categories presentation-plats">
-            <h1>La liste les plats</h1>
-            <a href="{{ route('admin.plat.create') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" viewBox="2 1 20 22" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
-            </a>
+        <div class="presentation-categories">
+            <div class="item">
+                <h1>La liste les plats</h1>    
+                <a href="{{ route('admin.plat.create') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="35" viewBox="2 1 20 22" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-plus-icon lucide-square-plus"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                </a>
+            </div>
             <div class="actions-item-categories">
-                <input type="search" name="search-plat" id="search-plat" placeholder="Rechercher un plat...">
+                <div class="item item-1">
+                    <label for="search-reservation">Rechercher par ID</label>
+                    <input type="number" name="search-reservation-id" class="input-search" id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
+                </div>
+                <div class="item item-2">
+                    <label for="search-plat-name">Rechercher par nom</label>
+                    <input type="search" name="search-plat-name" class="input-search" id="search-plat-name" placeholder="Poulet Yassa">
+                </div>
+                <div class="item item-2">
+                    <label for="search-reservation-name">Rechercher par prix</label>
+                    <input type="number" name="search-category-name" class="input-search" id="search-category-name" placeholder="Dessert">
+                </div>
+                <div class="item item-2">
+                    <label for="search-reservation-name">Rechercher par disponibilité</label>
+                    <input type="search" name="search-category-name" class="input-search" id="search-category-name" placeholder="Dessert">
+                </div>
             </div>
         </div>
         <div class="plats-items">
@@ -27,12 +44,14 @@
                 </thead>
                 <tbody>
                     @foreach ($plats as $plat)
-                        <tr class="plat-item">     
-                            <td>{{ $plat->id }}</td>           
+                        <tr class="plat-row" 
+                            data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" 
+                            data-price="{{ $plat->price }}" data-disponilble="{{ $plat->disponible }}">     
+                            <td class="item-id">{{ $plat->id }}</td>           
                             <td><img src="{{ $plat->getPicture()->getPictureUrl(70, 60) }}" alt=""></td>           
-                            <td>{{ $plat->truncateText($plat->name, 30) }}</td>           
-                            <td>{{ $plat->price }} €</td>           
-                            <td><p class="{{ $plat->disponible === "yes" ? "valide-plat" : "invalide-plat" }}">{{ $plat->disponible }}</p></td>           
+                            <td class="item-name">{{ $plat->truncateText($plat->name, 30) }}</td>           
+                            <td class="item-price">{{ $plat->price }} €</td>           
+                            <td class="item-disponible"><p class="{{ $plat->disponible === "yes" ? "valide-plat" : "invalide-plat" }}">{{ $plat->disponible }}</p></td>           
                             <td class="action-item">
                                 <div class="action-category">
                                     <a href="{{ route('admin.plat.show', $plat) }}" id="show">
@@ -54,6 +73,12 @@
                     @endforeach
                 </tbody>
             </table>
+            <div id="no-results" style="display:none;">
+                <div style="text-align:center; margin-top:1em">
+                    <p>Aucun element trouvé</p> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-angry-icon lucide-angry"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><path d="M7.5 8 10 9"/><path d="m14 9 2.5-1"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

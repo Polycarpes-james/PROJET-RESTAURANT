@@ -2,78 +2,120 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function searchTable(firstClass: string, secondClass: string) {
 
-        const searchInput =
-            document.querySelector<HTMLInputElement>(firstClass);
+        const searchInputs = document.querySelectorAll<HTMLInputElement>(firstClass);
 
-        const rows =
-            document.querySelectorAll<HTMLTableRowElement>(secondClass);
+        const rows = document.querySelectorAll<HTMLTableRowElement>(secondClass);
 
-        const noResults =
-            document.querySelector<HTMLTableRowElement>("#no-results");
+        const noResults = document.querySelector<HTMLElement>("#no-results");
 
         // Sauvegarde du texte original une seule fois
         rows.forEach(row => {
 
-            const cell =
-                row.querySelector<HTMLTableCellElement>(".ingredient-name");
+            const cellId = row.querySelector<HTMLTableCellElement>(".item-id");
+            const cellName = row.querySelector<HTMLTableCellElement>(".item-name");
+            const cellEmail = row.querySelector<HTMLTableCellElement>(".item-email");
+            const cellRole = row.querySelector<HTMLTableCellElement>(".item-role");
+            const cellPrice = row.querySelector<HTMLTableCellElement>(".item-price");
+            const cellPhone = row.querySelector<HTMLTableCellElement>(".item-phone");
 
-            if (cell && !row.dataset.originalName) {
-                row.dataset.originalName = cell.textContent ?? "";
+            if (cellId && !row.dataset.id) {
+                row.dataset.id = cellId.textContent ?? "";
             }
-
+            if (cellName && !row.dataset.name) {
+                row.dataset.name = cellName.textContent ?? "";
+            }
+            if (cellEmail && !row.dataset.email) {
+                row.dataset.email = cellEmail.textContent ?? "";
+            }
+            if (cellRole && !row.dataset.role) {
+                row.dataset.role = cellRole.textContent ?? "";
+            }
+            if (cellPrice && !row.dataset.proce) {
+                row.dataset.price = cellPrice.textContent ?? "";
+            }
+            if (cellPhone && !row.dataset.phone) {
+                row.dataset.phone = cellPhone.textContent ?? "";
+            }
         });
 
-        searchInput?.addEventListener("input", () => {
+        searchInputs.forEach((searchInput:any) => {
 
-            const search = searchInput.value.trim().toLowerCase();
+                searchInput.addEventListener("input", () => {
 
-            let visibleCount = 0;
+                const search = searchInput.value.trim().toLowerCase();
+                // console.log(search);
+                
+                let visibleCount = 0;
 
-            rows.forEach(row => {
+                rows.forEach(row => {
 
-                const originalName =
-                    row.dataset.originalName ?? "";
+                    const originalID = row.dataset.id ?? "";
+                    const originalName = row.dataset.name ?? "";
+                    const originalEmail = row.dataset.email ?? "";
+                    const originalRole = row.dataset.role ?? "";
+                    const originalPhone = row.dataset.phone ?? "";
+                    const originalPrice = row.dataset.price ?? "";
 
-                const price =
-                    row.dataset.price ?? "";
+                    const match = originalID.toLowerCase().includes(search) ||
+                    originalName.toLowerCase().includes(search) || originalPrice.includes(search) 
+                    || originalEmail.toLowerCase().includes(search) || originalRole.includes(search) || originalPhone.toLowerCase().includes(search);
 
-                const match =
-                    originalName.toLowerCase().includes(search) ||
-                    price.includes(search);
+                    const idCell = row.querySelector<HTMLTableCellElement>(".item-id");
+                    const nameCell = row.querySelector<HTMLTableCellElement>(".item-name");
+                    const emailCell = row.querySelector<HTMLTableCellElement>(".item-email");
+                    const roleCell = row.querySelector<HTMLTableCellElement>(".item-role");
+                    const phoneCell = row.querySelector<HTMLTableCellElement>(".item-phone");
+                    const priceCell = row.querySelector<HTMLTableCellElement>(".item-price");
 
-                const nameCell =
-                    row.querySelector<HTMLTableCellElement>(".ingredient-name");
+                    if (match) {
 
-                if (match) {
+                        row.style.display = "";
 
-                    row.style.display = "";
+                        visibleCount++;
 
-                    visibleCount++;
-
-                   const originalName = row.dataset.originalName ?? "";
-
-                    if (nameCell) {
-                        nameCell.innerHTML = highlightText(originalName, search);
+                        const originalID = row.dataset.id ?? "";
+                        const originalName = row.dataset.name ?? "";
+                        const originalEmail = row.dataset.email ?? "";
+                        const originalRole = row.dataset.role ?? "";
+                        const originalPhone = row.dataset.phone ?? "";
+                        const originalPrice = row.dataset.price ?? "";
+                        
+                        if (idCell) {
+                            idCell.innerHTML = highlightText(originalID, search);
+                        }
+                        if (nameCell) {
+                            nameCell.innerHTML = highlightText(originalName, search);
+                        }
+                        if (emailCell) {
+                            emailCell.innerHTML = highlightText(originalEmail, search);
+                        }
+                        if (roleCell) {
+                            roleCell.innerHTML = highlightText(originalRole, search);
+                        }
+                        if (phoneCell) {
+                            phoneCell.innerHTML = highlightText(originalPhone, search);
+                        }
+                        if (priceCell) {
+                            priceCell.innerHTML = highlightText(originalPrice, search);
+                        }
+                    } else {
+                        row.style.display = "none";
                     }
 
-                } else {
-                    row.style.display = "none";
+                });
+
+                if (noResults) {
+                    noResults.style.display = visibleCount === 0 ? "" : "none";
                 }
 
             });
-
-            if (noResults) {
-                noResults.style.display =
-                    visibleCount === 0 ? "" : "none";
-            }
-
-        });
+        })
 
     }
 
     function highlightText(text: string, search: string) {
 
-          if (!search) return text;
+        if (!search) return text;
 
         const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const regex = new RegExp(`(${escaped})`, "gi");
@@ -82,7 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    searchTable("#search-category", ".category-row");
-    searchTable("#search-ingredient", ".ingredient-row");
+    searchTable("#search-category-name", ".category-row");
+    searchTable("#search-ingredient-name", ".ingredient-row");
+    searchTable("#search-reservation-name", ".reservation-row");
+    searchTable(".input-search", ".plat-row");
+    searchTable(".input-search",  ".user-row")
 
 });

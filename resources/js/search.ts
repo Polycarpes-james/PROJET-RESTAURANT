@@ -1,133 +1,323 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    function searchTable(firstClass: string, secondClass: string) {
 
-        const searchInputs = document.querySelectorAll<HTMLInputElement>(firstClass);
+function searchTable(
+    firstClass:string,
+    secondClass:string
+){
 
-        const rows = document.querySelectorAll<HTMLTableRowElement>(secondClass);
 
-        const noResults = document.querySelector<HTMLElement>("#no-results");
+const inputs =
+document.querySelectorAll<HTMLInputElement>(firstClass);
 
-        // Sauvegarde du texte original une seule fois
-        rows.forEach(row => {
 
-            const cellId = row.querySelector<HTMLTableCellElement>(".item-id");
-            const cellName = row.querySelector<HTMLTableCellElement>(".item-name");
-            const cellEmail = row.querySelector<HTMLTableCellElement>(".item-email");
-            const cellRole = row.querySelector<HTMLTableCellElement>(".item-role");
-            const cellPrice = row.querySelector<HTMLTableCellElement>(".item-price");
-            const cellPhone = row.querySelector<HTMLTableCellElement>(".item-phone");
+const rows =
+document.querySelectorAll<HTMLTableRowElement>(secondClass);
 
-            if (cellId && !row.dataset.id) {
-                row.dataset.id = cellId.textContent ?? "";
+
+const noResults =
+document.querySelector<HTMLElement>("#no-results");
+
+
+
+const filters:{[key:string]:string} = {};
+
+
+
+
+
+rows.forEach(row=>{
+
+
+    row.dataset.id =
+    row.querySelector(".item-id")?.textContent?.trim() ?? "";
+
+
+    row.dataset.name =
+    row.querySelector(".item-name")?.textContent?.trim() ?? "";
+
+
+    row.dataset.price =
+    row.querySelector(".item-price")?.textContent?.trim() ?? "";
+
+
+
+});
+
+
+
+
+
+
+inputs.forEach(input=>{
+
+
+input.addEventListener("input",()=>{
+
+
+    const target =
+    input.dataset.target as string;
+
+
+
+    filters[target] =
+    input.value.trim().toLowerCase();
+
+
+
+
+
+    let visibleCount = 0;
+
+
+
+
+
+    rows.forEach(row=>{
+
+
+
+        let match = true;
+
+
+
+
+        for(const key in filters){
+
+
+
+            const search =
+            filters[key];
+
+
+
+            if(search === "") continue;
+
+
+
+
+            const value =
+            row.dataset[key] ?? "";
+
+
+
+
+            // Prix uniquement
+            if(key === "price"){
+
+
+
+    const price =
+    value
+    .replace(",", ".")
+    .split(".")[0]
+    .trim();
+
+
+
+    if(!price.includes(search)){
+
+
+        match = false;
+
+
+    }
+                // const rowPrice =
+                // parseFloat(
+                //     value.replace(/[^\d.,]/g,"")
+                //     .replace(",",".")
+                // );
+
+
+
+                // const searchPrice =
+                // parseFloat(
+                //     search.replace(",",".")
+                // );
+
+
+
+                // if(rowPrice !== searchPrice){
+
+                //     match = false;
+
+                // }
+
+
+
             }
-            if (cellName && !row.dataset.name) {
-                row.dataset.name = cellName.textContent ?? "";
+
+            // Tous les autres champs
+            else{
+
+
+
+              if(
+    !String(value)
+    .toLowerCase()
+    .includes(String(search))
+){
+    match = false;
+}
+
+
             }
-            if (cellEmail && !row.dataset.email) {
-                row.dataset.email = cellEmail.textContent ?? "";
-            }
-            if (cellRole && !row.dataset.role) {
-                row.dataset.role = cellRole.textContent ?? "";
-            }
-            if (cellPrice && !row.dataset.proce) {
-                row.dataset.price = cellPrice.textContent ?? "";
-            }
-            if (cellPhone && !row.dataset.phone) {
-                row.dataset.phone = cellPhone.textContent ?? "";
-            }
-        });
 
-        searchInputs.forEach((searchInput:any) => {
 
-                searchInput.addEventListener("input", () => {
 
-                const search = searchInput.value.trim().toLowerCase();
-                // console.log(search);
-                
-                let visibleCount = 0;
+        }
 
-                rows.forEach(row => {
 
-                    const originalID = row.dataset.id ?? "";
-                    const originalName = row.dataset.name ?? "";
-                    const originalEmail = row.dataset.email ?? "";
-                    const originalRole = row.dataset.role ?? "";
-                    const originalPhone = row.dataset.phone ?? "";
-                    const originalPrice = row.dataset.price ?? "";
 
-                    const match = originalID.toLowerCase().includes(search) ||
-                    originalName.toLowerCase().includes(search) || originalPrice.includes(search) 
-                    || originalEmail.toLowerCase().includes(search) || originalRole.includes(search) || originalPhone.toLowerCase().includes(search);
 
-                    const idCell = row.querySelector<HTMLTableCellElement>(".item-id");
-                    const nameCell = row.querySelector<HTMLTableCellElement>(".item-name");
-                    const emailCell = row.querySelector<HTMLTableCellElement>(".item-email");
-                    const roleCell = row.querySelector<HTMLTableCellElement>(".item-role");
-                    const phoneCell = row.querySelector<HTMLTableCellElement>(".item-phone");
-                    const priceCell = row.querySelector<HTMLTableCellElement>(".item-price");
 
-                    if (match) {
 
-                        row.style.display = "";
 
-                        visibleCount++;
+        const cell =
+        row.querySelector(
+            `.item-${target}`
+        ) as HTMLElement;
 
-                        const originalID = row.dataset.id ?? "";
-                        const originalName = row.dataset.name ?? "";
-                        const originalEmail = row.dataset.email ?? "";
-                        const originalRole = row.dataset.role ?? "";
-                        const originalPhone = row.dataset.phone ?? "";
-                        const originalPrice = row.dataset.price ?? "";
-                        
-                        if (idCell) {
-                            idCell.innerHTML = highlightText(originalID, search);
-                        }
-                        if (nameCell) {
-                            nameCell.innerHTML = highlightText(originalName, search);
-                        }
-                        if (emailCell) {
-                            emailCell.innerHTML = highlightText(originalEmail, search);
-                        }
-                        if (roleCell) {
-                            roleCell.innerHTML = highlightText(originalRole, search);
-                        }
-                        if (phoneCell) {
-                            phoneCell.innerHTML = highlightText(originalPhone, search);
-                        }
-                        if (priceCell) {
-                            priceCell.innerHTML = highlightText(originalPrice, search);
-                        }
-                    } else {
-                        row.style.display = "none";
-                    }
 
-                });
 
-                if (noResults) {
-                    noResults.style.display = visibleCount === 0 ? "" : "none";
+
+
+
+        if(match){
+
+
+            row.style.display = "";
+
+            visibleCount++;
+
+
+
+
+            if(cell){
+
+
+                if(target !== "price"){
+
+
+                    cell.innerHTML =
+                    highlightText(
+                        row.dataset[target] ?? "",
+                        filters[target]
+                    );
+
+
+                }else{
+
+
+                    cell.textContent =
+                    row.dataset[target] ?? "";
+
+
                 }
 
-            });
-        })
+
+
+            }
+
+
+
+
+
+        }else{
+
+
+            row.style.display = "none";
+
+
+        }
+
+
+
+
+
+    });
+
+
+
+
+
+
+    if(noResults){
+
+
+        noResults.style.display =
+        visibleCount === 0
+        ? ""
+        : "none";
+
 
     }
 
-    function highlightText(text: string, search: string) {
 
-        if (!search) return text;
 
-        const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(`(${escaped})`, "gi");
 
-        return text.replace(regex, (match) => `<mark>${match}</mark>`);
 
-    }
+});
 
-    searchTable("#search-category-name", ".category-row");
-    searchTable("#search-ingredient-name", ".ingredient-row");
-    searchTable("#search-reservation-name", ".reservation-row");
-    searchTable(".input-search", ".plat-row");
-    searchTable(".input-search",  ".user-row")
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+function highlightText(
+text:string,
+search:string
+){
+
+
+if(!search) return text;
+
+
+
+const escaped =
+search.replace(
+/[.*+?^${}()|[\]\\]/g,
+'\\$&'
+);
+
+
+
+const regex =
+new RegExp(
+`(${escaped})`,
+"gi"
+);
+
+
+
+return text.replace(
+regex,
+"<mark>$1</mark>"
+);
+
+
+
+}
+
+
+
+
+
+
+searchTable(
+".input-search",
+".ingredient-row"
+);
+
+
 
 });

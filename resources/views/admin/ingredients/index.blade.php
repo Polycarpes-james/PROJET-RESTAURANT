@@ -15,16 +15,16 @@
         </div>
         <div class="actions-item-categories">
             <div class="item item-1">
-                <label for="search-reservation">Rechercher par ID</label>
-                <input type="number" name="search-reservation-id" class="input-search"id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
+                <label for="search-ingredient-id">Rechercher par ID</label>
+                <input type="number" name="search-ingredient-id" data-target="id" class="input-search"id="search-ingredient-id" placeholder="1, 89, 299, 100 ...">
             </div>
             <div class="item item-2">
                 <label for="search-ingredient-name">Rechercher par nom</label>
-                <input type="search" name="search-ingredient-name" class="input-search"id="search-ingredient-name" placeholder="Tomate, Pomme, Poivron ...">
+                <input type="search" name="search-ingredient-name" data-target="name" class="input-search"id="search-ingredient-name" placeholder="Tomate, Pomme, Poivron ...">
             </div>
             <div class="item item-3">
-                <label for="search-reservation-email">Rechercher par prix</label>
-                <input type="email" name="search-reservation-email" class="input-search"id="search-reservation-email" placeholder="80.00, 92.23">
+                <label for="search-ingredient-price">Rechercher par prix</label>
+                <input type="number" name="search-ingredient-price" data-target="price" class="input-search"id="search-ingredient-price" placeholder="80.00, 92.23">
             </div>
         </div>
     </div>

@@ -34,16 +34,15 @@
         <div class="all-content-admin">
             <header class="authentification-topbar">
                 <h1>@yield('page-title', 'Dashboard')</h1>
-                @if (session('success'))
+                @if (session('success') || session('delete'))
                     <p class="success btn-item-session">
-                        {{ session('success') }}
-                        <button class="btn-session">×</button>
-                    </p>
-                @endif
-                @if (session('delete'))
-                    <p class="delete btn-item-session">
-                        {{ session('delete') }}
-                        <button class="btn-session">×</button>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" height="20" width="20" class="flex-none">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>{{ session('success') ?? session('delete')}}</span>
+                        <button class="btn-session">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        </button>
                     </p>
                 @endif
                 <div class="user">

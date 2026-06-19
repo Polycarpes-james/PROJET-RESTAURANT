@@ -81,24 +81,37 @@
     position: fixed;
     left: 50%;
     top: 3%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.btn-item-session span{
+    opacity: 0.7;
 }
 .success{
-    background-color: #a8dfa8;
+    background-color: #ecfdf3;
     color: #1d731d;
-    border: 1px solid #1d731d;
-    box-shadow: 0 0 5px #808080d5;
+    border: 1px solid #bffcd9;
+    box-shadow: 0 0 10px #8080802e;
 }
 .btn-session{
     position: absolute;
     top: -20%;
     left:-2%;
     border-radius: 100%;
-    padding: 0 4px;
-    color: black;
+    padding: 2px 1.5px;
+    color: #1d731d;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+.size-3{
+    width: calc(var(--spacing) * 3);
+    height: calc(var(--spacing) * 3)
 }
 .success button{
-    background-color: #a8dfa8;
-    border: 1px solid #1d731d;
+    background-color: #ecfdf3;
+    border: 1px solid #bffcd9;
 }
 .delete button{
     background-color: #ff8989;
@@ -108,3 +121,54 @@
     background-color: #ff8989;
     border: 1px solid #da3232;
 } 
+
+.role-select {
+    width:250px;
+    position:relative;
+}
+
+
+.role-button {
+
+    width:100%;
+    padding:10px;
+
+    border-radius:5px;
+
+    cursor:pointer;
+    border: 1px solid #1e3b8a67;
+
+}
+
+
+.role-options {
+
+    position:absolute;
+
+    width:100%;
+
+    background:white;
+
+    display:none;
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+
+.role-options li {
+
+    padding:10px;
+
+    cursor:pointer;
+
+}
+
+
+.role-options li:hover {
+
+    background:#eee;
+}
+

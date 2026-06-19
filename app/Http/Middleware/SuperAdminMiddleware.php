@@ -4,10 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class SuperAdminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,12 +15,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
-        if (!Auth::check() || !in_array(auth()->user()->role, ['admin','super_admin'])) {
-            return to_route('.rettine');
+        if(!auth()->check() || auth()->user()->role !== 'super_admin'){
+            abort(403);
         }
-
         return $next($request);
     }
-
 }

@@ -25,8 +25,35 @@
                 </div>
                 <div class="item item-2">
                     <label for="search-reservation-name">Rechercher par role</label>
-                    <input type="search" name="search-category-name" class="input-search" id="search-category-name" placeholder="Dessert">
-                </div>
+                   <div class="role-select">
+
+<button 
+class="role-button user-filter"
+data-target="role"
+data-value="">
+Choisir un rôle
+</button>
+
+
+<ul class="role-options">
+
+<li data-value="user">
+👤 User
+</li>
+
+
+<li data-value="admin">
+🛠 Admin
+</li>
+
+
+<li data-value="super_admin">
+👑 Super Admin
+</li>
+
+</ul>
+
+</div>
             </div>
         </div>
     <div class="all-users">

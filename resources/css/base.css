@@ -19,6 +19,7 @@ input, textarea{
     --main-color:#1E3A8A;
     --white-color:white;
     --second-color:#bc6620;
+    --spacing: .25rem;
 }
 
 /* body{

@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('multi_tasks_modal') as HTMLElement
         const contentMain = document.querySelector('.multi_tasks_message') as HTMLElement;
         const titleContent = document.getElementById('multi_title_modal') as HTMLElement
-    
+
         contentMain.innerHTML = `${content}`
         titleContent.textContent = `${title}`
         modal.style.display = 'flex';

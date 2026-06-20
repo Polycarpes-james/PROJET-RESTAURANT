@@ -24,6 +24,8 @@ return new class extends Migration
                 'admin',
                 'super_admin'
             ])->default('user');
+            $table->boolean('is_online')->default(false);
+            $table->timestamp('last_activity')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

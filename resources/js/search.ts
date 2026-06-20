@@ -1,352 +1,122 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-
-function searchTable(
-    firstClass:string,
-    secondClass:string
-){
-
-
-const inputs =
-document.querySelectorAll<HTMLElement>(firstClass);
-
-
-
-const rows =
-document.querySelectorAll<HTMLTableRowElement>(secondClass);
-
-
-
-const noResults =
-document.querySelector<HTMLElement>("#no-results");
-
+document.addEventListener('DOMContentLoaded',()=>{
 
 
 const filters:{[key:string]:string} = {};
 
 
+const rows = document.querySelectorAll<HTMLTableRowElement>(".user-row, .plat-row, .category-row, .ingredient-row, .reservation-row");
 
-
-
-// Préparer les données des lignes
-
-rows.forEach(row=>{
-
-
-    row.dataset.id =
-    row.querySelector(".item-id")?.textContent?.trim() ?? "";
-
-
-    row.dataset.name =
-    row.querySelector(".item-name")?.textContent?.trim() ?? "";
-
-
-    row.dataset.price =
-    row.querySelector(".item-price")?.textContent?.trim() ?? "";
-
-
-    row.dataset.role =
-    row.querySelector(".item-role")?.textContent?.trim() ?? "";
-
-
-});
-
-
+const noResults = document.querySelector<HTMLElement>("#no-results");
 
 
 
 function filterRows(){
 
-
-let visibleCount = 0;
-
+    let count = 0;
 
 
+    rows.forEach(row=>{
 
-rows.forEach(row=>{
+        let match = true;
 
+        const cells = row.querySelectorAll<HTMLElement>("[class^='item-']");
 
-let match = true;
+        cells.forEach(cell=>{
+            const key = cell.className.replace("item-", "");
+            if(row.dataset[key]){
+                cell.textContent = row.dataset[key];
+            }
+        }); 
 
+        for(const key in filters){
 
+            const search = filters[key];
 
-for(const key in filters){
+            if(search === "") continue;
 
+            const value = (row.dataset[key] ?? "").toLowerCase();
 
-    const search =
-    filters[key];
-
-
-    if(search === "") continue;
-
-
-
-    const value =
-    (row.dataset[key] ?? "")
-    .toLowerCase();
-
-
-
-    // Recherche prix
-
-    if(key === "price"){
-
-
-        const price =
-        value
-        .replace(",", ".")
-        .split(".")[0]
-        .trim();
-
-
-
-        if(!price.includes(search)){
-
-            match = false;
-
+            if(!value.includes(search)){
+                match = false;
+            }
         }
 
-
-
-    }
-
-
-
-    // Autres recherches
-
-    else{
-
-
-        if(!value.includes(search)){
-
-            match = false;
-
+        if(match){
+            row.style.display = "";
+            count++;
+            // appliquer coloration
+            for(const key in filters){
+                const search = filters[key];
+                if(search === "") continue;
+                const cell = row.querySelector(`.item-${key}`) as HTMLElement;
+                if(cell){
+                    cell.innerHTML = highlightText(row.dataset[key] ?? "", search);
+                }
+            }
+        } else{
+            row.style.display = "none";
         }
+    });
 
-
+    if(noResults){
+        noResults.style.display = count === 0 ? "" : "none";
     }
-
-
-
 }
 
 
 
-
-if(match){
-
-
-    row.style.display = "";
-
-    visibleCount++;
-
-
-}
-
-else{
-
-
-    row.style.display = "none";
-
-
-}
-
-
-
+document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
+    input.addEventListener("input",()=>{
+        const target = input.dataset.target!;
+        filters[target] = input.value.trim().toLowerCase();        
+        filterRows();
+    });
 });
 
 
 
+function highlightText(text:string, search:string){
 
+    if(!search) return text;
+    
+    const escaped = search.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
-if(noResults){
+    const regex = new RegExp(`(${escaped})`, "gi");
 
-
-    noResults.style.display =
-    visibleCount === 0
-    ? ""
-    : "none";
-
-
+    return text.replace(regex,"<mark>$1</mark>");
 }
 
 
+const roleButton = document.querySelector<HTMLButtonElement>(".item-btn-select");
 
-}
-
-
-
-
-
-
-
-
-
-// Recherche input
-
-inputs.forEach(input=>{
-
-
-input.addEventListener("input",()=>{
-
-
-const target =
-input.dataset.target as string;
-
-
-
-filters[target] =
-(input as HTMLInputElement)
-.value
-.trim()
-.toLowerCase();
-
-
-
-filterRows();
-
-
-
+const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
+ 
+roleButton?.addEventListener("click",()=>{
+    if(roleOptions){
+        roleOptions.style.display = roleOptions.style.display === "block" ? "none" : "block";
+    }
 });
 
+document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
 
+    option.addEventListener("click",()=>{
+        const role = option.dataset.value ?? "";
+        
+        if(roleButton){
+            roleButton.textContent = option.textContent ?? "";
+        }
+        const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
 
+        const el = `${roleOptions?.dataset.target}`
+
+        filters[el] = role.toLowerCase();    
+        filterRows();
+
+        if(roleOptions){
+            roleOptions.style.display="none";
+        }
+    });
 });
-
-
-
-
-
-
-
-
-
-// ===========================
-// SELECT ROLE PERSONNALISE
-// ===========================
-
-
-const roleButton =
-document.querySelector<HTMLButtonElement>(
-".role-button"
-);
-
-
-
-const roleOptions =
-document.querySelector<HTMLElement>(
-".role-options"
-);
-
-
-
-const options =
-document.querySelectorAll<HTMLLIElement>(
-".role-options li"
-);
-
-
-
-
-
-// ouvrir / fermer
-
-roleButton?.addEventListener(
-"click",
-()=>{
-
-
-if(roleOptions){
-
-
-    roleOptions.style.display =
-    roleOptions.style.display === "block"
-    ? "none"
-    : "block";
-
-
-}
-
-
-});
-
-
-
-
-
-
-// choisir un rôle
-
-options.forEach(option=>{
-
-
-option.addEventListener(
-"click",
-()=>{
-
-
-const role =
-option.dataset.value ?? "";
-
-
-
-if(roleButton){
-
-
-    roleButton.textContent =
-    option.textContent ?? "";
-
-
-    roleButton.dataset.value =
-    role;
-
-
-}
-
-
-
-
-
-filters["role"] =
-role.toLowerCase();
-
-
-
-filterRows();
-
-
-
-
-
-if(roleOptions){
-
-    roleOptions.style.display =
-    "none";
-
-}
-
-
-
-});
-
-
-
-});
-
-
-
-
-
-}
-
-
-
-
-
-searchTable(
-".input-search",
-".user-row"
-);
 
 
 

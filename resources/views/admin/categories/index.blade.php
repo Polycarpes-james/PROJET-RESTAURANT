@@ -16,12 +16,12 @@
         </div>
         <div class="actions-item-categories">
             <div class="item item-1">
-                <label for="search-reservation">Rechercher par ID</label>
-                <input type="number" name="search-reservation-id" class="input-search" id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
+                <label for="search-category-id">Rechercher par ID</label>
+                <input type="number" name="search-category-id" class="input-search" data-target="id" id="search-category-id" placeholder="1, 89, 299, 100 ...">
             </div>
             <div class="item item-2">
-                <label for="search-reservation-name">Rechercher par nom</label>
-                <input type="search" name="search-category-name" class="input-search" id="search-category-name" placeholder="Dessert">
+                <label for="search-category-name">Rechercher par nom</label>
+                <input type="search" name="search-category-name" class="input-search" data-target="name" id="search-category-name" placeholder="Dessert">
             </div>
         </div>
     </div>
@@ -36,9 +36,9 @@
             </thead>
             <tbody>
                 @foreach($categories as $category)
-                    <tr class="category-row" data-price="{{ $category->price }}" data-name="{{ $category->name }}">
-                        <td>{{ $category->id }}</td>
-                        <td  class="item-name">{{ $category->name }}</td>
+                    <tr class="category-row" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
+                        <td class="item-id">{{ $category->id }}</td>
+                        <td class="item-name">{{ $category->name }}</td>
                         <td class="action-item">
                             <div class="action-category">
                                 <button class="edit-category" type="submit" data-name="{{ $category->name }}" data-id="{{ $category->id }}" data-price="{{ $category->price }}">

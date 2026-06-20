@@ -23,19 +23,19 @@
         <div class="actions-item-categories">
             <div class="item item-1">
                 <label for="search-reservation">Rechercher par ID</label>
-                <input type="number" name="search-reservation-id" class="input-search"id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
+                <input type="number" name="search-reservation-id" data-target="id" class="input-search"id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
             </div>
             <div class="item item-2">
                 <label for="search-reservation-name">Rechercher par nom</label>
-                <input type="search" name="search-reservation-name" class="input-search"id="search-reservation-name" placeholder="Jean Pierre">
+                <input type="search" name="search-reservation-name" data-target="name" class="input-search"id="search-reservation-name" placeholder="Jean Pierre">
             </div>
             <div class="item item-3">
                 <label for="search-reservation-email">Rechercher par email</label>
-                <input type="email" name="search-reservation-email" class="input-search"id="search-reservation-email" placeholder="example@john.map">
+                <input type="email" name="search-reservation-email" data-target="email" class="input-search"id="search-reservation-email" placeholder="example@john.map">
             </div>
             <div class="item item-4">
                 <label for="search-reservation-phone">Rechercher par téléphone</label>
-                <input type="phone" name="search-reservation-phone" class="input-search"id="search-reservation-phone" placeholder="06 900 60 06">
+                <input type="phone" name="search-reservation-phone" data-target="phone" class="input-search"id="search-reservation-phone" placeholder="06 900 60 06">
             </div>
         </div>
     </div>
@@ -56,11 +56,14 @@
             </thead>
             <tbody>
                 @foreach ($reservations as $reservation)
-                    <tr class="reservation-row" data-name="{{ $reservation->name }}">
-                        <td class="reservation-id">{{ $reservation->id }}</td>
+                    <tr class="reservation-row" data-id="{{ $reservation->id }}" 
+                        data-name="{{ $reservation->name }}" data-email="{{ $reservation->email }}"
+                        data-phone="{{ $reservation->phone }}"
+                        >
+                        <td class="item-id">{{ $reservation->id }}</td>
                         <td class="item-name">{{ $reservation->name }}</td>
-                        <td>{{ $reservation->phone }}</td>
-                        <td>{{ $reservation->email }}</td>
+                        <td class="item-phone">{{ $reservation->phone }}</td>
+                        <td class="item-email">{{ $reservation->email }}</td>
                         <td>{{ $reservation->guests }}</td>
                         <td>{{ $reservation->reservation_date }}</td>
                         <td>{{ $reservation->reservation_time }}</td>

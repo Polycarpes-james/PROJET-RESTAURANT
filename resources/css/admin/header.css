@@ -122,53 +122,45 @@
     border: 1px solid #da3232;
 } 
 
-.role-select {
+.item-select {
     width:250px;
     position:relative;
 }
 
 
-.role-button {
-
+.item-btn-select {
     width:100%;
     padding:10px;
-
     border-radius:5px;
-
     cursor:pointer;
     border: 1px solid #1e3b8a67;
-
+    background-color: white;
 }
 
 
-.role-options {
-
+.item-options {
     position:absolute;
-
     width:100%;
-
     background:white;
-
     display:none;
-
     list-style:none;
-
-    padding:0;
+    box-shadow: 0 0 10px #8080802f;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 0;
 
 }
 
 
-.role-options li {
-
+.item-options li {
     padding:10px;
-
     cursor:pointer;
-
+    opacity: 0.8;
+    color: var(--main-color);
 }
 
 
-.role-options li:hover {
-
-    background:#eee;
+.item-options li:hover {
+    background:#1e3b8a2c;
 }
 

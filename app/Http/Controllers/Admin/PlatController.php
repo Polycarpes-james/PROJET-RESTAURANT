@@ -6,14 +6,16 @@ use App\Models\Menu;
 use App\Models\Plat;
 use App\Models\Category;
 use App\Models\Ingredient;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\PlatsRequest;
-use App\Models\Picture;
 
 class PlatController extends Controller
 {
+    public function __construct()
+    {
+        return $this->authorizeResource(Plat::class, 'plat');
+    }
     /**
      * Display a listing of the resource.
      */

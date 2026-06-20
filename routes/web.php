@@ -157,7 +157,7 @@ Route::delete('rettine/logout', [AuthController::class, 'logout'])
 
 
 Route::
-middleware(['auth', 'admin'])->
+middleware(['auth', 'admin', 'super_admin'])->
 prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard');
     Route::resource('plat', PlatController::class);
@@ -169,6 +169,10 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('avis', AdminAvisController::class);
 
     Route::get('/user', [UsersController::class, 'index'])->name('user.index');
+
+    Route::delete('/user/delete/{user}', [UsersController::class, 'destroy'])->name('user.delete')->where([
+        'user' => '[0-9]+'
+    ]);
 
     Route::get('/commande/{invite_id}/{commande}', [CommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
         'commande' => '[0-9]+',

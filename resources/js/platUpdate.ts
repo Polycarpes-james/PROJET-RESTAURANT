@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
             showModalAdmin("Creation de l'ingredient")
         })
     })
+    
+    
+
 
 
     document.querySelectorAll('.modal-close').forEach(btn => {

@@ -11,9 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         btnSubmt.textContent = title;
         titleEl.textContent = title;
-        modal.style.display = "flex";
-
+        modal.style.display = "flex"
     }
+
+    function showModal(kindOperate:string, content:string, messageContent:string, message:string) {
+        const modal = document.getElementById(content);
+        const contentMessage = document.querySelector(messageContent) 
+        const title = modal?.querySelector('#item-font')
+    
+        console.log(contentMessage);
+        
+        if(!modal || !contentMessage || !title) return;
+
+        contentMessage.innerHTML = `${message}`
+        title.textContent = kindOperate
+        modal.style.display = "flex"
+    }
+    
 
     document.querySelectorAll('.open-category-modal').forEach(element => {
         element.addEventListener('click', (e:any) => {
@@ -27,16 +41,23 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
     
-    
-
-
-
-    document.querySelectorAll('.modal-close').forEach(btn => {
-        btn.addEventListener('click', ()=>{
-            const modal = document.getElementById('category_modal');
-            if (modal) modal.style.display = "none"
+    document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
+        btn.addEventListener('click', (e:any) =>{            
+            showModal("Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
         })
     })
+    
+    function hideBox (button:string, content:string) {
+        document.querySelectorAll(button).forEach(btn => {
+            btn.addEventListener('click', ()=>{
+                const modal = document.getElementById(content);
+                if (modal) modal.style.display = "none"
+            })
+        })
+    }
+
+    hideBox(".modal-close", "category_modal")
+    hideBox(".modal-close-admin", "admin_plat_delete")
 
     const buttonsCategory = document.querySelectorAll<HTMLButtonElement>(".edit-category");
     const buttonsingredient = document.querySelectorAll<HTMLButtonElement>(".edit-ingredient");
@@ -44,65 +65,34 @@ document.addEventListener('DOMContentLoaded', () => {
    buttonsingredient.forEach(button => {
 
     button.addEventListener("click",()=>{
-
-
         const id = button.dataset.id;
         const name = button.dataset.name;
         const price = button.dataset.price;
-
-
         const form = document.querySelector<HTMLFormElement>("#ingredient-form");
-
-
         const inputName = document.querySelector<HTMLInputElement>("#name");
-
         const inputPrice = document.querySelector<HTMLInputElement>("#price");
-
         const idInput = document.querySelector<HTMLInputElement>("#ingredient-id");
 
         if(inputName){
             inputName.value = name ?? "";
         }
-
-
         if(inputPrice){
             inputPrice.value = price ?? "";
         }
-
-
         if(idInput){
             idInput.value = id ?? "";
         }
-
-
 
         // changer vers update
 
         if(form){
 
             form.action =`/admin/ingredient/${id}`;
-
-            // éviter plusieurs _method PUT
-
-            // const oldMethod =
-            // form.querySelector(
-            //     'input[name="_method"]'
-            // );
-
-
-            // oldMethod?.remove();
-
-            const method =
-            document.createElement("input");
-
-
+            const method = document.createElement("input");
             method.type = "hidden";
             method.name = "_method";
             method.value = "PUT";
-
-
             form.appendChild(method);
-
         }
 
 

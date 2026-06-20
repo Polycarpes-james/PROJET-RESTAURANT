@@ -23,23 +23,21 @@ class UsersController extends Controller
         ]);
     }
 
-    public function destroy (Request $request, User $user)
-    { 
+    public function destroy(User $user)
+    {
+        abort_unless(
+            auth()->user()->role === 'super_admin',
+            response()->json([
+                'message'=>'Vous ne pouvez pas supprimer un utilisateur'
+            ],403)
+        );
 
-        dd($request);
-
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
-
-
-        Auth::logout();
 
         $user->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        // return Redirect::to_route('.rettine');
+        return response()->json([
+            'success' => true,
+            'message' => 'Utilisateur supprimé avec succès'
+        ]);
     }
 }

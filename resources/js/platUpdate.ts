@@ -13,22 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         titleEl.textContent = title;
         modal.style.display = "flex"
     }
-
-    function showModal(plat_id:string, kindOperate:string, content:string, messageContent:string, message:string) {
-        const modal = document.getElementById(content);
-        const contentMessage = document.querySelector(messageContent) 
-        const title = modal?.querySelector('#item-font')
-        const btnSuppression = document.querySelector(".btn-delete-admin") 
-    
-        console.log(contentMessage);
-        
-        if(!modal || !contentMessage || !title || !btnSuppression) return;
-
-        contentMessage.innerHTML = `${message}`
-        btnSuppression.setAttribute('data-id', plat_id)
-        title.textContent = kindOperate
-        modal.style.display = "flex"
-    }
     
 
     document.querySelectorAll('.open-category-modal').forEach(element => {
@@ -45,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
         btn.addEventListener('click', (e:any) =>{            
-            showModal(btn.dataset.id, "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+            showModal(btn.dataset.id, ".btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
         })
     })
     
@@ -134,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = document.querySelector<HTMLInputElement>("#name");
             const idInput = document.querySelector<HTMLInputElement>("#category-id");
 
-
             if(input){
                 input.value = name ?? "";
             }
@@ -160,5 +143,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+
+
     
 })
+
+    /**
+     * 
+     * @param element_id l'id de l'element
+     * @param btnDelete l'id du boutton pour la suppression de l'element
+     * @param kindOperate je genre d'operation: soit la suppression, simple message...
+     * @param content l'id de la div principale
+     * @param messageContent l'id du message dans le contenu
+     * @param message le message du contenu
+     * @returns 
+     */
+    export function showModal(element_id:string, btnDelete:string, kindOperate:string, content:string, messageContent:string, message:string) {
+        const modal = document.getElementById(content);
+        const contentMessage = document.querySelector(messageContent) 
+        const title = modal?.querySelector('#item-font')
+        const btnSuppression = document.querySelector(btnDelete) 
+    
+        // console.log(contentMessage);
+        
+        if(!modal || !contentMessage || !title || !btnSuppression) return;
+
+        contentMessage.innerHTML = `${message}`
+        btnSuppression.setAttribute('data-id', element_id)
+        title.textContent = kindOperate
+        modal.style.display = "flex"
+    }

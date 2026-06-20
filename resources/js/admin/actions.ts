@@ -1,0 +1,29 @@
+import { showModal } from "@/platUpdate";
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    async function supprimerUser(userId:string){
+
+        const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
+
+        const response = await fetch(`/admin/user/${userId}`,{
+            method:"DELETE",
+            headers:{
+                "X-CSRF-TOKEN": token,
+                "Accept":"application/json"
+            }
+        });
+        const data = await response.json()
+
+        if(data.success){
+            location.reload();
+        }
+
+    }
+
+    document.querySelectorAll('.btn-delete-user-admin').forEach((btn:any) => {    
+        btn.addEventListener('click', () => {        
+            showModal(btn.dataset.id, '.btn-delete-user', "Suppression d'un utilisation", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+        })
+    })
+})

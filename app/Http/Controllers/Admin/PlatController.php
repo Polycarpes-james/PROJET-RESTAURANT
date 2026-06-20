@@ -225,10 +225,7 @@ class PlatController extends Controller
      */
     public function destroy(Plat $plat)
     {
-        // dd(Picture::destroy($plat->pictures()->pluck('id')));
-        
         $plat->delete();
         return to_route('admin.plat.index')->with('delete', 'Le Plat '. $plat->name .' a été supprimé !');
-
     }
 }

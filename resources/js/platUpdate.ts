@@ -14,16 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = "flex"
     }
 
-    function showModal(kindOperate:string, content:string, messageContent:string, message:string) {
+    function showModal(plat_id:string, kindOperate:string, content:string, messageContent:string, message:string) {
         const modal = document.getElementById(content);
         const contentMessage = document.querySelector(messageContent) 
         const title = modal?.querySelector('#item-font')
+        const btnSuppression = document.querySelector(".btn-delete-admin") 
     
         console.log(contentMessage);
         
-        if(!modal || !contentMessage || !title) return;
+        if(!modal || !contentMessage || !title || !btnSuppression) return;
 
         contentMessage.innerHTML = `${message}`
+        btnSuppression.setAttribute('data-id', plat_id)
         title.textContent = kindOperate
         modal.style.display = "flex"
     }
@@ -43,21 +45,44 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
         btn.addEventListener('click', (e:any) =>{            
-            showModal("Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+            showModal(btn.dataset.id, "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
         })
     })
     
     function hideBox (button:string, content:string) {
         document.querySelectorAll(button).forEach(btn => {
             btn.addEventListener('click', ()=>{
-                const modal = document.getElementById(content);
-                if (modal) modal.style.display = "none"
+                hide(content)
             })
         })
     }
 
+    function hide(content:string) {
+        const modal = document.getElementById(content);
+        if (modal) modal.style.display = "none"
+    }
+
     hideBox(".modal-close", "category_modal")
     hideBox(".modal-close-admin", "admin_plat_delete")
+    
+    document.querySelectorAll(".btn-delete-admin").forEach((btn:any) => {
+        btn.addEventListener('click', () => {
+            supprimerPlat(btn.dataset.id)
+        })
+    })
+
+   async function supprimerPlat(platId:string):Promise<void>{
+        const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
+        const res = await fetch(`/admin/plat/${platId}`,{
+            method:"DELETE",
+
+            headers:{
+                "X-CSRF-TOKEN": token,
+                "Accept":"application/json"
+            }
+        });
+        location.reload();
+    }
 
     const buttonsCategory = document.querySelectorAll<HTMLButtonElement>(".edit-category");
     const buttonsingredient = document.querySelectorAll<HTMLButtonElement>(".edit-ingredient");
@@ -86,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // changer vers update
 
         if(form){
-
             form.action =`/admin/ingredient/${id}`;
             const method = document.createElement("input");
             method.type = "hidden";
@@ -94,12 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             method.value = "PUT";
             form.appendChild(method);
         }
-
-
-
         showModalAdmin("Modifier l'ingredient");
-
-
     });
 
 });

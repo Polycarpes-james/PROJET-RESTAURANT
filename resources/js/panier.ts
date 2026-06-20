@@ -615,6 +615,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    
     // Attache l'événement d’ajout
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
         btn.addEventListener('click', () => {

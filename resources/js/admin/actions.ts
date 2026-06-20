@@ -1,7 +1,6 @@
 import { showModal } from "@/platUpdate";
 
 document.addEventListener('DOMContentLoaded', () => {
-
     async function supprimerUser(userId:string){
 
         const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
@@ -22,8 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.querySelectorAll('.btn-delete-user-admin').forEach((btn:any) => {    
-        btn.addEventListener('click', () => {        
-            showModal(btn.dataset.id, '.btn-delete-user', "Suppression d'un utilisation", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+        btn.addEventListener('click', () => {                         
+            showModal(btn.dataset.id, 'btn-delete-user', "Suppression d'un utilisateur", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment supprimer le user ${btn.dataset.name} définitivement ? `)
         })
     })
+     
 })

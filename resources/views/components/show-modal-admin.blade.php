@@ -8,7 +8,7 @@
             <p class="paragraphe_message"></p>
         </main>
         <footer class="{{ $footerClass }}">
-            <button class="btn-delete-admin">Ok</button>
+            <button id="btn-valide">Ok</button>
         </footer>
     </div>
 </aside>

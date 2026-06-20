@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
         btn.addEventListener('click', (e:any) =>{            
-            showModal(btn.dataset.id, ".btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+            showModal(btn.dataset.id, "btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
         })
     })
     
@@ -73,39 +73,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
    buttonsingredient.forEach(button => {
 
-    button.addEventListener("click",()=>{
-        const id = button.dataset.id;
-        const name = button.dataset.name;
-        const price = button.dataset.price;
-        const form = document.querySelector<HTMLFormElement>("#ingredient-form");
-        const inputName = document.querySelector<HTMLInputElement>("#name");
-        const inputPrice = document.querySelector<HTMLInputElement>("#price");
-        const idInput = document.querySelector<HTMLInputElement>("#ingredient-id");
+        button.addEventListener("click",()=>{
+            const id = button.dataset.id;
+            const name = button.dataset.name;
+            const price = button.dataset.price;
+            const form = document.querySelector<HTMLFormElement>("#ingredient-form");
+            const inputName = document.querySelector<HTMLInputElement>("#name");
+            const inputPrice = document.querySelector<HTMLInputElement>("#price");
+            const idInput = document.querySelector<HTMLInputElement>("#ingredient-id");
 
-        if(inputName){
-            inputName.value = name ?? "";
-        }
-        if(inputPrice){
-            inputPrice.value = price ?? "";
-        }
-        if(idInput){
-            idInput.value = id ?? "";
-        }
+            if(inputName){
+                inputName.value = name ?? "";
+            }
+            if(inputPrice){
+                inputPrice.value = price ?? "";
+            }
+            if(idInput){
+                idInput.value = id ?? "";
+            }
 
-        // changer vers update
+            // changer vers update
 
-        if(form){
-            form.action =`/admin/ingredient/${id}`;
-            const method = document.createElement("input");
-            method.type = "hidden";
-            method.name = "_method";
-            method.value = "PUT";
-            form.appendChild(method);
-        }
-        showModalAdmin("Modifier l'ingredient");
+            if(form){
+                form.action =`/admin/ingredient/${id}`;
+                const method = document.createElement("input");
+                method.type = "hidden";
+                method.name = "_method";
+                method.value = "PUT";
+                form.appendChild(method);
+            }
+            showModalAdmin("Modifier l'ingredient");
+        });
+
     });
-
-});
 
     buttonsCategory.forEach(button => {
 
@@ -143,33 +143,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    
+  
 
 
     
 })
+/**
+ * 
+ * @param element_id l'id de l'element
+ * @param btnDelete l'id du boutton pour la suppression de l'element
+ * @param kindOperate je genre d'operation: soit la suppression, simple message...
+ * @param content l'id de la div principale
+ * @param messageContent l'id du message dans le contenu
+ * @param message le message du contenu
+ * @returns 
+ */
+export function showModal(element_id:string, btnDelete:string, kindOperate:string, content:string, messageContent:string, message:string) {
+    const modal = document.getElementById(content);
+    const contentMessage = document.querySelector(messageContent) 
+    const title = modal?.querySelector('#item-font')
+    const btnSuppression = document.querySelector("#btn-valide")
 
-    /**
-     * 
-     * @param element_id l'id de l'element
-     * @param btnDelete l'id du boutton pour la suppression de l'element
-     * @param kindOperate je genre d'operation: soit la suppression, simple message...
-     * @param content l'id de la div principale
-     * @param messageContent l'id du message dans le contenu
-     * @param message le message du contenu
-     * @returns 
-     */
-    export function showModal(element_id:string, btnDelete:string, kindOperate:string, content:string, messageContent:string, message:string) {
-        const modal = document.getElementById(content);
-        const contentMessage = document.querySelector(messageContent) 
-        const title = modal?.querySelector('#item-font')
-        const btnSuppression = document.querySelector(btnDelete) 
+    console.log(btnSuppression);
     
-        // console.log(contentMessage);
-        
-        if(!modal || !contentMessage || !title || !btnSuppression) return;
+    if(!modal || !contentMessage || !title || !btnSuppression) return;
 
-        contentMessage.innerHTML = `${message}`
-        btnSuppression.setAttribute('data-id', element_id)
-        title.textContent = kindOperate
-        modal.style.display = "flex"
-    }
+    contentMessage.innerHTML = `${message}`
+    btnSuppression.setAttribute('data-id', element_id)
+    btnSuppression.setAttribute('class', btnDelete)
+    title.textContent = kindOperate
+    modal.style.display = "flex"
+}

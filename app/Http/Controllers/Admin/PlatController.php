@@ -216,7 +216,12 @@ class PlatController extends Controller
      */
     public function destroy(Plat $plat)
     {
+        if(Storage::disk('public')->exists('plats/'.$plat->id)){
+            Storage::disk('public')->deleteDirectory('plats/'.$plat->id);
+        }
+
         Picture::destroy($plat->pictures()->pluck('id'));
+
         $plat->delete();
         return to_route('admin.plat.index')->with('delete', 'Le Plat '. $plat->name .' a été supprimé !');
     }

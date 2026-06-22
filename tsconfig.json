@@ -6,7 +6,6 @@
     "strict": true,
     "types": [
       "jquery",
-      "select2"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true,

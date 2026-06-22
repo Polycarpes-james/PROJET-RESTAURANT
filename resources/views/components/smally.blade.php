@@ -35,6 +35,6 @@
                 </button>
             </form>
         @endif
-        {{-- {{ $scot }} --}}
+        {{ $slot }}
     </div>
 </td>

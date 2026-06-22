@@ -1,13 +1,15 @@
-.user-row{
-    position: relative;
-}
+/* .user-row{
+} */
 .change-role{
     position: absolute;
-    /* top: 0; */
+    top: -50%;
     opacity: 1;
     right: 2%;
 }
 
 .none{
     opacity: 0;
+}
+.user-row .action-item{
+    position: relative;
 }

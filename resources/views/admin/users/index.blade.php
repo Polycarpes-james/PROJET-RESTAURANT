@@ -21,7 +21,7 @@
                 <label for="search-user-email">Rechercher par email</label>
                 <input type="search" name="search-category-name" data-target="email" class="input-search" id="search-user-email" placeholder="example@no.fr">
             </div>
-            <div class="item item-2">
+            {{-- <div class="item item-2">
                 <label for="search-user-name">Rechercher par role</label>
                 <div class="item-select">
                     <button class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</button>
@@ -31,7 +31,46 @@
                         <li data-value="super_admin">Super Admin</li>
                     </ul>
                 </div>
-            </div>
+
+
+            </div> --}}
+            <div class="item item-2">
+
+<label>
+Rechercher par rôle
+</label>
+
+
+<select 
+    id="role-select"
+    class="input-search"
+    data-target="role"
+>
+
+    <option value="">
+        Tous les rôles
+    </option>
+
+
+    <option value="user">
+        👤 User
+    </option>
+
+
+    <option value="admin">
+        🛠 Admin
+    </option>
+
+
+    <option value="super_admin">
+        👑 Super Admin
+    </option>
+
+
+</select>
+
+
+</div>
         </div>
     </div>
     <div class="all-users">
@@ -68,7 +107,7 @@
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <select name="role">
+                                        <select id="role-select" name="role">
                                             <option value="user" @selected($user->role == 'user')>User</option>
                                             <option value="admin" @selected($user->role == 'admin')>Admin</option>
                                             <option value="super_admin" @selected($user->role == 'super_admin')>Super Admin</option>

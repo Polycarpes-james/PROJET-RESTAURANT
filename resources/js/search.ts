@@ -1,123 +1,156 @@
+import $ from "jquery";
+
+import select2 from "select2";
+
+select2($);
+
+import "select2/dist/css/select2.css";
+
+import "../css/admin/header.css";
+
+
+
+
+
 document.addEventListener('DOMContentLoaded',()=>{
 
+    $("#role-select").select2({
 
-const filters:{[key:string]:string} = {};
+        placeholder:"Choisir un rôle",
 
+        width:"100%",
 
-const rows = document.querySelectorAll<HTMLTableRowElement>(".user-row, .plat-row, .category-row, .ingredient-row, .reservation-row");
+        allowClear:true
 
-const noResults = document.querySelector<HTMLElement>("#no-results");
+    });
 
-
-
-function filterRows(){
-
-    let count = 0;
+    const filters:{[key:string]:string} = {};
 
 
-    rows.forEach(row=>{
+    const rows = document.querySelectorAll<HTMLTableRowElement>(".user-row, .plat-row, .category-row, .ingredient-row, .reservation-row");
 
-        let match = true;
+    const noResults = document.querySelector<HTMLElement>("#no-results");
 
-        const cells = row.querySelectorAll<HTMLElement>("[class^='item-']");
 
-        cells.forEach(cell=>{
-            const key = cell.className.replace("item-", "");
-            if(row.dataset[key]){
-                cell.textContent = row.dataset[key];
-            }
-        }); 
 
-        for(const key in filters){
+    function filterRows(){
 
-            const search = filters[key];
+        let count = 0;
 
-            if(search === "") continue;
 
-            const value = (row.dataset[key] ?? "").toLowerCase();
+        rows.forEach(row=>{
 
-            if(!value.includes(search)){
-                match = false;
-            }
-        }
+            let match = true;
 
-        if(match){
-            row.style.display = "";
-            count++;
-            // appliquer coloration
+            const cells = row.querySelectorAll<HTMLElement>("[class^='item-']");
+
+            cells.forEach(cell=>{
+                const key = cell.className.replace("item-", "");
+                if(row.dataset[key]){
+                    cell.textContent = row.dataset[key];
+                }
+            }); 
+
             for(const key in filters){
+
                 const search = filters[key];
+
                 if(search === "") continue;
-                const cell = row.querySelector(`.item-${key}`) as HTMLElement;
-                if(cell){
-                    cell.innerHTML = highlightText(row.dataset[key] ?? "", search);
+
+                const value = (row.dataset[key] ?? "").toLowerCase();
+
+                if(!value.includes(search)){
+                    match = false;
                 }
             }
-        } else{
-            row.style.display = "none";
+
+            if(match){
+                row.style.display = "";
+                count++;
+                // appliquer coloration
+                for(const key in filters){
+                    const search = filters[key];
+                    if(search === "") continue;
+                    const cell = row.querySelector(`.item-${key}`) as HTMLElement;
+                    if(cell){
+                        cell.innerHTML = highlightText(row.dataset[key] ?? "", search);
+                    }
+                }
+            } else{
+                row.style.display = "none";
+            }
+        });
+
+        if(noResults){
+            noResults.style.display = count === 0 ? "" : "none";
         }
+    }
+
+
+
+    document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
+        input.addEventListener("input",()=>{
+            const target = input.dataset.target!;
+            filters[target] = input.value.trim().toLowerCase();        
+            filterRows();
+        });
     });
 
-    if(noResults){
-        noResults.style.display = count === 0 ? "" : "none";
-    }
-}
 
 
+    function highlightText(text:string, search:string){
 
-document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
-    input.addEventListener("input",()=>{
-        const target = input.dataset.target!;
-        filters[target] = input.value.trim().toLowerCase();        
-        filterRows();
-    });
-});
-
-
-
-function highlightText(text:string, search:string){
-
-    if(!search) return text;
-    
-    const escaped = search.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-
-    const regex = new RegExp(`(${escaped})`, "gi");
-
-    return text.replace(regex,"<mark>$1</mark>");
-}
-
-
-const roleButton = document.querySelector<HTMLButtonElement>(".item-btn-select");
-
-const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
- 
-roleButton?.addEventListener("click",()=>{
-    if(roleOptions){
-        roleOptions.style.display = roleOptions.style.display === "block" ? "none" : "block";
-    }
-});
-
-document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
-
-    option.addEventListener("click",()=>{
-        const role = option.dataset.value ?? "";
+        if(!search) return text;
         
-        if(roleButton){
-            roleButton.textContent = option.textContent ?? "";
-        }
-        const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
+        const escaped = search.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
-        const el = `${roleOptions?.dataset.target}`
+        const regex = new RegExp(`(${escaped})`, "gi");
 
-        filters[el] = role.toLowerCase();    
+        return text.replace(regex,"<mark>$1</mark>");
+    }
+
+
+    // const roleButton = document.querySelector<HTMLButtonElement>(".item-btn-select");
+
+    // const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
+    
+    // roleButton?.addEventListener("click",()=>{
+    //     if(roleOptions){
+    //         roleOptions.style.display = roleOptions.style.display === "block" ? "none" : "block";
+    //     }
+    // });
+
+    // document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
+
+    //     option.addEventListener("click",()=>{
+    //         const role = option.dataset.value ?? "";
+            
+    //         if(roleButton){
+    //             roleButton.textContent = option.textContent ?? "";
+    //         }
+    //         const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
+
+    //         const el = `${roleOptions?.dataset.target}`
+
+    //         filters[el] = role.toLowerCase();    
+    //         filterRows();
+
+    //         if(roleOptions){
+    //             roleOptions.style.display="none";
+    //         }
+    //     });
+    // });
+
+
+    $("#role-select").on("change", function(){
+        const role = String($(this).val()).toLowerCase();
+        filters["role"] = role;
         filterRows();
-
-        if(roleOptions){
-            roleOptions.style.display="none";
-        }
     });
-});
 
 
 
 });
+
+
+

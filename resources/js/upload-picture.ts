@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
         reader.readAsDataURL(file);
-
         // Envoie direct du formulaire
         avatarForm.submit();
     });

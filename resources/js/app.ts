@@ -18,7 +18,7 @@ window.addEventListener('error', (ev) => {
 });
 // ==============================================================
 
-console.log('✅ app.ts chargé');
+// console.log('✅ app.ts chargé');
 
 // Protection globale pour window.appConfig
 if (!window.appConfig) {

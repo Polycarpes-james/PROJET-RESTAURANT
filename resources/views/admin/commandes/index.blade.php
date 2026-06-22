@@ -27,7 +27,6 @@
     </div>
     <div class="commandes-users">
         <h1>Gestion des commandes users</h1>
-
         <table class="styled-table">
             <thead>
                 <tr>
@@ -90,7 +89,7 @@
                         <td>{{ $item->total_prix }} €</td>
                         <td>{{ $item->status }} </td>
                         <td class="options">
-                            <form action="{{ route('admin.commande.update', $item) }}" method="POST">
+                            <form action="{{ route('admin.invite.commande.update', $item) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <select name="status">

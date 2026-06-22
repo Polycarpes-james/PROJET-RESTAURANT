@@ -71,3 +71,34 @@
 .plat-item .status p:first-child{
     opacity: 0.6;
 }
+
+.item-picture{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.item-picture .delete-picture{
+    padding: 4px 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #ff655d69;
+    position: absolute;
+    box-shadow: 0 0 5px grey;
+    top: 0;
+    transition: 0.3s;
+    left: 0;
+    background-color: white;
+}
+.hiddenNone{
+    opacity: 0;
+}
+.item-picture .picture-items{
+    position: relative;
+    flex: 0 0 200px;
+}
+
+.item-picture .picture-items img{
+    border: 1px solid #ff655d69;
+    box-shadow: 0 0 10px #80808028;
+    border-radius: 5px;
+}

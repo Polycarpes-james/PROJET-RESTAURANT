@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->text('instructions')->nullable();
+            $table->enum('status', ['en_attente', 'en_preparation', 'livree', 'annulee'])->default('en_attente');
             $table->integer('total_quantite');
             $table->integer('total_prix');
             $table->timestamps();

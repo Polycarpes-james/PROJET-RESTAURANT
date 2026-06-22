@@ -2,16 +2,17 @@
 
 use App\Http\Controllers\Admin\AvisController as AdminAvisController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\CommandeController;
+use App\Http\Controllers\Admin\CommandeController as AdminCommandeController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\IngredientController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PlatController;
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvisController;
-use App\Http\Controllers\CommandeController as UserCommandeController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CommandeInviteController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LivraisonController;
@@ -98,6 +99,7 @@ Route::name('guest.')->prefix('guest')->middleware('ensure')->group(function() {
 
     Route::get('/panier/refresh', [PanierController::class, 'voirPanierRefleshInvite']);
     Route::post('/commande', [CommandeInviteController::class, 'commanderInvite'])->name('commande');
+    
     Route::get('/valide-plats-{invite_id}', [LivraisonController::class, 'index'])
         ->name('commande.valider')
         ->where([
@@ -114,7 +116,7 @@ Route::name('guest.')->prefix('guest')->middleware('ensure')->group(function() {
 
 Route::get('/rettine', [HomeController::class, "index"])->name('.rettine');
 
-Route::get('/rettine/commandes', [UserCommandeController::class, "index"])->name('rettine.commandes');
+Route::get('/rettine/commandes', [CommandeController::class, "index"])->name('rettine.commandes');
 
 Route::get('/rettine/reservation', [ReservationController::class, 'index'])->name('rettine.reservations');
 
@@ -164,19 +166,22 @@ prefix('admin')->name('admin.')->group(function () {
     Route::resource('category', CategoryController::class);
     Route::resource('menu', MenuController::class);
     Route::resource('reservation', AdminReservationController::class);
-    Route::resource('commande', CommandeController::class);
+    Route::resource('commande', AdminCommandeController::class);
     Route::resource('ingredient', IngredientController::class);
     Route::resource('avis', AdminAvisController::class);
-
-    Route::get('/user', [UsersController::class, 'index'])->name('user.index');
-
-    Route::delete('/user/delete/{user}', [UsersController::class, 'destroy'])->name('user.delete')->where([
-        'user' => '[0-9]+'
+    Route::resource('user', UserController::class);
+  
+    Route::delete('/picture/delete/{picture}', [PictureController::class, 'destroy'])->name('picture.destroy')->where([
+        'picture' => '[0-9]+'
     ]);
 
-    Route::get('/commande/{invite_id}/{commande}', [CommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
+    Route::get('/commande/{invite_id}/{commande}', [AdminCommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
         'commande' => '[0-9]+',
         'invite_id' => '[0-9a-z\-]+'
+    ]);
+
+    Route::post('/invite/commande/{commande}', [CommandeInviteController::class, 'update'])->name('invite.commande.update')->where([
+        'commande' => '[0-9]+'
     ]);
 
     Route::get('/{slug}-{menu}/plat/create', [PlatController::class, 'createPlatMenu'])->name('menu.plat.create')->

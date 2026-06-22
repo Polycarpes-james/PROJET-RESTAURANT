@@ -1,0 +1,13 @@
+.user-row{
+    position: relative;
+}
+.change-role{
+    position: absolute;
+    /* top: 0; */
+    opacity: 1;
+    right: 2%;
+}
+
+.none{
+    opacity: 0;
+}

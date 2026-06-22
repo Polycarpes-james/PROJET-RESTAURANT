@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use League\Glide\Responses\LaravelResponseFactory;
@@ -23,5 +24,17 @@ class PictureController extends Controller
         ]);
 
         return $server->getImageResponse($path, $request->all());
+    }
+
+
+    public function destroy(Picture $picture)
+    {
+
+        $picture->delete();
+
+        return response()->json([
+            'success'=>true
+        ]);
+
     }
 }

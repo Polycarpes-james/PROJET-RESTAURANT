@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function supprimerUser(userId:string){
 
         const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
-
-        const response = await fetch(`/admin/user/delete/${userId}`,{
+        const response = await fetch(`/admin/user/${userId}`,{
             method:"DELETE",
             headers:{
                 "X-CSRF-TOKEN": token,
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.querySelectorAll('.btn-delete-user-admin').forEach((btn:any) => {    
-        btn.addEventListener('click', () => {                         
+        btn.addEventListener('click', () => {   
             showModal(btn.dataset.id, '.btn-delete-user', "Suppression d'un utilisateur", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment supprimer le user ${btn.dataset.name} définitivement ? `)
         })
     })
@@ -37,5 +36,49 @@ document.addEventListener('DOMContentLoaded', () => {
             supprimerUser(btn.dataset.id)
         })
     })
-     
+  
+    
+    document.querySelectorAll('.picture-items').forEach((btn:any) => {
+        btn.addEventListener('mousemove', () => {
+            const botton =  document.querySelector(`.delete-picture[data-target="${btn.dataset.picture}"]`) as HTMLButtonElement
+            botton.classList.remove('hiddenNone')
+        })
+
+        btn.addEventListener('mouseleave', () => {
+            const botton =  document.querySelector(`.delete-picture[data-target="${btn.dataset.picture}"]`) as HTMLButtonElement
+            botton.classList.add('hiddenNone')
+        })
+    })
+
+
+    document.querySelectorAll<HTMLButtonElement>(".delete-picture").forEach(button=>{
+
+        button.addEventListener("click", async()=>{
+            const id = button.dataset.target;
+
+            const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
+            const response = await fetch(`/admin/picture/delete/${id}`, {
+                method:"DELETE",
+                headers:{
+                    "X-CSRF-TOKEN":token,
+                    "Accept":"application/json"
+                }
+            });
+
+            const data = await response.json();
+
+            if(data.success){
+                button.parentElement?.remove();
+            }
+        });
+
+
+    });     
+
+    document.querySelectorAll('.user-row #edit').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const content = document.querySelector('.change-role') as HTMLElement
+            content.classList.toggle('none')
+        })
+    })
 })

@@ -44,7 +44,9 @@
                     <th>Prenom</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Action</th>
+                    @if (Auth::user()->role !== 'admin')
+                        <th>Action</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -60,15 +62,22 @@
                         <td>{{ $user->firstname }}</td>
                         <td class="item-email">{{ $user->email }}</td>
                         <td class="item-role">{{ $user->role }}</td>
-                        <td class="action-item">
-                            <div class="action-category">
-                                {{-- @can('delete', $user) --}}
-                                    <button type="submit" data-id="{{ $user->id }}" data-name="{{ $user->name }}" class="btn-delete-user-admin">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                    </button>
-                                {{-- @endcan --}}
-                            </div>
-                        </td>
+                        @can('update', $user)
+                            <x-smally :element="$user" class="btn-delete-user-admin" route="user" kind="link">
+                                <div class="change-role">
+                                    <form action="{{ route('admin.user.update', $user) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <select name="role">
+                                            <option value="user" @selected($user->role == 'user')>User</option>
+                                            <option value="admin" @selected($user->role == 'admin')>Admin</option>
+                                            <option value="super_admin" @selected($user->role == 'super_admin')>Super Admin</option>
+                                        </select>
+                                        <button type="submit">Changer</button>
+                                    </form>
+                                </div>                                
+                            </x-smally> 
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

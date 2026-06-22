@@ -71,4 +71,13 @@ class CommandeInviteController extends Controller
         return to_route('rettine.commandes')->with('success', 'Votre livraison a été enregistrée avec succès.');
     }
 
+    public function update (Request $request, CommandeInvite $commande)
+    {
+        $validated = $request->validate([
+            'status' => 'required|in:en_attente,en_preparation,livree,annulee',
+        ]);
+        $commande->status = $validated['status'];
+        $commande->save();
+        return redirect()->back()->with('success', 'Statut de la commande mis à jour.');
+    }
 }

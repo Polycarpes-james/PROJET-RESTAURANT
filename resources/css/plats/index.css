@@ -90,7 +90,19 @@
     opacity: 0.9;
 }
 
+.timePreparation-convertisseur{
+    display: flex;
+    gap: 2em;
+}
+.timePreparation-convertisseur .items{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
+.timePreparation-convertisseur .items .item-input:last-child{
+    margin: 0!important;
+}
 .container-plats form .categories-items-commandes{
     display: flex;
     gap: 1em;

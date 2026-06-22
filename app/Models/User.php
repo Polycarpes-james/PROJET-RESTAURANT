@@ -62,24 +62,6 @@ class User extends Authenticatable
     //     return $this->avatar ?? null;        
     // }
 
-    public function isSuperAdmin()
-    {
-        return $this->role === 'super_admin';
-    }
-
-
-    public function isAdmin()
-    {
-        return in_array(
-            $this->role,
-            [
-                'admin',
-                'super_admin'
-            ]
-        );
-    }
-
-    
     public function getPictureUrl(?int $width = null, ?int $height = null): string
     {
         if ($width === null) {

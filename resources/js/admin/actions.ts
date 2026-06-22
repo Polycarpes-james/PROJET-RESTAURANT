@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const token = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content;
 
-        const response = await fetch(`/admin/user/${userId}`,{
+        const response = await fetch(`/admin/user/delete/${userId}`,{
             method:"DELETE",
             headers:{
                 "X-CSRF-TOKEN": token,
@@ -13,6 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         const data = await response.json()
+        
+
+        if(response.status === 403){
+            console.log(response);
+            return;
+        }
 
         if(data.success){
             location.reload();
@@ -22,7 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.btn-delete-user-admin').forEach((btn:any) => {    
         btn.addEventListener('click', () => {                         
-            showModal(btn.dataset.id, 'btn-delete-user', "Suppression d'un utilisateur", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment supprimer le user ${btn.dataset.name} définitivement ? `)
+            showModal(btn.dataset.id, '.btn-delete-user', "Suppression d'un utilisateur", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment supprimer le user ${btn.dataset.name} définitivement ? `)
+        })
+    })
+
+    document.querySelectorAll('.btn-delete-user').forEach((btn:any) => {
+        btn.addEventListener('click', () => {
+            supprimerUser(btn.dataset.id)
         })
     })
      

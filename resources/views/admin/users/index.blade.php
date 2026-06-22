@@ -3,7 +3,7 @@
 @section('title', 'UTILISATEURS')
 
 @section('content')
-    <x-show-modal-admin contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
+    <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
         <div class="item">
             <h1>La liste les utilisateurs</h1>   
@@ -61,13 +61,13 @@
                         <td class="item-email">{{ $user->email }}</td>
                         <td class="item-role">{{ $user->role }}</td>
                         <td class="action-item">
-                            {{-- <form action="{{ route('admin.user.delete', $user) }}" method="post">
-                                @csrf
-                                @method("delete") --}}
-                                <button type="submit" data-id="{{ $user->id }}" data-name="{{ $user->name }}" class="btn-delete-user-admin">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                </button>
-                            {{-- </form> --}}
+                            <div class="action-category">
+                                {{-- @can('delete', $user) --}}
+                                    <button type="submit" data-id="{{ $user->id }}" data-name="{{ $user->name }}" class="btn-delete-user-admin">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                    </button>
+                                {{-- @endcan --}}
+                            </div>
                         </td>
                     </tr>
                 @endforeach

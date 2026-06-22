@@ -251,7 +251,8 @@ class PanierController extends Controller
     public function panierPlats (Panier $panier) {
 
         $panierDetails = $panier->panierPlats()->with('plat')->get()->map(function ($item) {
-            return [
+            if($item->plat) {
+                return [
                 'plat_id' => $item->plat->id,
                 'name' => $item->plat->name,
                 'category_id' => $item->plat->category->id,
@@ -261,6 +262,7 @@ class PanierController extends Controller
                 'link_view' => route('rettine.plats.show', ['plat' => $item->plat, 'slug' => $item->plat->getSlug()]),
                 'prix_total' => $item->prix_total
             ];
+            }
         });
         return $panierDetails;
     }

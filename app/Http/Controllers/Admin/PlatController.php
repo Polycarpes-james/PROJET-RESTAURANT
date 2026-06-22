@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Menu;
-use App\Models\Plat;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PlatsRequest;
 use App\Models\Category;
 use App\Models\Ingredient;
-use App\Http\Controllers\Controller;
+use App\Models\Menu;
+use App\Models\Picture;
+use App\Models\Plat;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\Admin\PlatsRequest;
 
 class PlatController extends Controller
 {
@@ -90,9 +91,6 @@ class PlatController extends Controller
 
         $plat->menus()->sync($request->validated('menus'));
 
-
-        // dd($plat->ingredients()->sync($request->validated('ingredients')));
-
         $plat->save();
 
         return to_route('admin.plat.index')->with('success', "Le plat à bien été crée");
@@ -162,9 +160,7 @@ class PlatController extends Controller
      */
     public function edit(Plat $plat)
     {
-        // dd($plat->menus->pluck('id'));
-        // dd($plat->disponibilite );
-
+        // dd($plat->pictures()->pluck('id'));
         return view('admin.plats.form', [
             'plat' => $plat,
             'categories' => Category::pluck('name', 'id'),
@@ -206,15 +202,10 @@ class PlatController extends Controller
                     Storage::disk('public')->delete($picture->filename);
                 }
             }
-
             $plat->attachFiles($request->validated('pictures'));
-
         }   
 
-
         $plat->menus()->sync($request->validated('menus'));
-        // dd($plat->ingredients()->sync($request->validated('ingredients')));
-        // dd($plat);
         $plat->save();
 
         return to_route('admin.plat.index')->with('success', 'Le Plat '. $plat->name .' a été modifié !');
@@ -225,6 +216,7 @@ class PlatController extends Controller
      */
     public function destroy(Plat $plat)
     {
+        Picture::destroy($plat->pictures()->pluck('id'));
         $plat->delete();
         return to_route('admin.plat.index')->with('delete', 'Le Plat '. $plat->name .' a été supprimé !');
     }

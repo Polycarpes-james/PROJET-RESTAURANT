@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Closure;
+use Hamcrest\Type\IsBoolean;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Ramsey\Collection\Collection;
@@ -12,7 +13,7 @@ class ShowModalAdmin extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $contentId, public string $contentSecondClass, public string $headerClass, public string $mainClass, public string $footerClass)
+    public function __construct(public string $kind, public string $contentId, public string $contentSecondClass, public string $headerClass, public string $mainClass, public string $footerClass)
     {
         
     }

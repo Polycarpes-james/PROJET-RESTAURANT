@@ -62,7 +62,7 @@
     border-radius: 2px;
     cursor: pointer;
 }
-.multi_footer_modal button:first-child, .suppression-footer-modal button:first-child, .btn-delete-admin{
+.multi_footer_modal button:first-child, .suppression-footer-modal button:first-child, .btn-delete-admin, .btn-delete-user{
     background-color: transparent;
     padding: 8px 40px;
     font-size: 18px;

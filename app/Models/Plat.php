@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Menu;
-use App\Models\Picture;
 use App\Models\Category;
 use App\Models\Commande;
 use App\Models\Ingredient;
-use Illuminate\Support\Str;
-
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Menu;
+use App\Models\Picture;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class Plat extends Model
 {
@@ -135,6 +135,7 @@ class Plat extends Model
         return rtrim($truncated) . '...';
     }
 
+
     
 
     public function convertSecondsToText()
@@ -172,6 +173,7 @@ class Plat extends Model
     
         return implode('', $parts);
     }
+    
     /**
      * @param UploadedFile[] $files
      */

@@ -29,22 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
         btn.addEventListener('click', (e:any) =>{            
-            showModal(btn.dataset.id, "btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+            showModal(btn.dataset.id, ".btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
         })
     })
     
-    function hideBox (button:string, content:string) {
-        document.querySelectorAll(button).forEach(btn => {
-            btn.addEventListener('click', ()=>{
-                hide(content)
-            })
-        })
-    }
-
-    function hide(content:string) {
-        const modal = document.getElementById(content);
-        if (modal) modal.style.display = "none"
-    }
 
     hideBox(".modal-close", "category_modal")
     hideBox(".modal-close-admin", "admin_plat_delete")
@@ -141,13 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showModalAdmin("Modifier la catégorie");
         });
 
-    });
-
-    
-  
-
-
-    
+    });    
 })
 /**
  * 
@@ -159,19 +141,38 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param message le message du contenu
  * @returns 
  */
-export function showModal(element_id:string, btnDelete:string, kindOperate:string, content:string, messageContent:string, message:string) {
+function showModal(element_id:string, btnDelete:string, kindOperate:string, content:string, messageContent:string, message:string) {
     const modal = document.getElementById(content);
     const contentMessage = document.querySelector(messageContent) 
     const title = modal?.querySelector('#item-font')
-    const btnSuppression = document.querySelector("#btn-valide")
+    const btnSuppression = document.querySelector(btnDelete)
 
-    console.log(btnSuppression);
+    // console.log(btnSuppression);
     
     if(!modal || !contentMessage || !title || !btnSuppression) return;
 
     contentMessage.innerHTML = `${message}`
     btnSuppression.setAttribute('data-id', element_id)
-    btnSuppression.setAttribute('class', btnDelete)
+    // btnSuppression.setAttribute('class', btnDelete)
     title.textContent = kindOperate
     modal.style.display = "flex"
+}
+
+function hideBox (button:string, content:string) {
+        document.querySelectorAll(button).forEach(btn => {
+            btn.addEventListener('click', ()=>{
+                hide(content)
+            })
+        })
+    }
+
+function hide(content:string) {
+    const modal = document.getElementById(content);
+    if (modal) modal.style.display = "none"
+}
+
+export {
+    hide, 
+    showModal,
+    hideBox
 }

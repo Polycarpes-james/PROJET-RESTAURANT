@@ -25,12 +25,12 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        abort_unless(
-            auth()->user()->role === 'super_admin',
-            response()->json([
-                'message'=>'Vous ne pouvez pas supprimer un utilisateur'
-            ],403)
-        );
+        if(auth()->user()->role !== 'super_admin'){
+            return response()->json([
+                'success' => false,
+                'message' => "Cette action est reservée au super Administrateur"
+            ], 403);
+        }
 
 
         $user->delete();

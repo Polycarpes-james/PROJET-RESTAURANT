@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded',()=>{
-
+document.addEventListener('DOMContentLoaded', () => {
+    
 
 const filters:{[key:string]:string} = {};
 
@@ -100,9 +100,8 @@ roleButton?.addEventListener("click",()=>{
 
 function closeBox () {
     if(roleOptions){
-        roleOptions.classList.toggle("hidden_options")
         
-// roleOptions.style.display = roleOptions.style.display === "block" ? "none" : "block";
+    roleOptions?.classList.toggle("active");
     }
 }
 
@@ -137,21 +136,45 @@ document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
 
 
         
-        dropBtn?.addEventListener('click', () => {
-            if (roleButton) {
-                roleButton.innerHTML = "Choisir un rôle"     
-                roleOptions?.classList.add("hidden_options");
-            }
+    document.addEventListener("click", (e)=>{
 
-        })
+    const target = e.target as HTMLElement;
+
+
+    if(target.classList.contains("drop-role")){
+
+
+        if(roleButton){
+
+            roleButton.innerHTML = "Choisir un rôle";
+
+            // enlève le focus
+            roleButton.blur();
+        }
+
 
         if(roleOptions){
-            roleOptions.classList.add("hidden_options");
+
+            const el = roleOptions.dataset.target ?? "";
+
+            filters[el] = "";
+
+            filterRows();
+
+    roleOptions.classList.remove("active");
+        }
+
+    }
+
+});
+        if(roleOptions){
+    roleOptions.classList.remove("active");
         }
     });
 });
 
 
 
-});
 
+
+});

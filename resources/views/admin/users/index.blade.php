@@ -25,7 +25,7 @@
                 <label for="search-user-name">Rechercher par role</label>
                 <div class="item-select">
                     <button class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</button>
-                    <ul class="item-options hidden_options" data-target="role">
+                    <ul class="item-options" data-target="role">
                         <li data-value="user">User</li>
                         <li data-value="admin">Admin</li>
                         <li data-value="super_admin">Super Admin</li>

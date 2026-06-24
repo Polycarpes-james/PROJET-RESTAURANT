@@ -20,6 +20,8 @@ input, textarea{
     --white-color:white;
     --second-color:#bc6620;
     --spacing: .25rem;
+    --red-color: #ff5b5b;
+    --red-pall:#ff5b5b33;
 }
 
 /* body{

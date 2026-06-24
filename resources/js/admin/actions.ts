@@ -37,20 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
   
-    
-    document.querySelectorAll('.picture-items').forEach((btn:any) => {
-        btn.addEventListener('mousemove', () => {
-            const botton =  document.querySelector(`.delete-picture[data-target="${btn.dataset.picture}"]`) as HTMLButtonElement
-            botton.classList.remove('hiddenNone')
-        })
-
-        btn.addEventListener('mouseleave', () => {
-            const botton =  document.querySelector(`.delete-picture[data-target="${btn.dataset.picture}"]`) as HTMLButtonElement
-            botton.classList.add('hiddenNone')
-        })
-    })
-
-
     document.querySelectorAll<HTMLButtonElement>(".delete-picture").forEach(button=>{
 
         button.addEventListener("click", async()=>{
@@ -75,9 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });     
 
-    document.querySelectorAll('.user-row #edit').forEach(btn => {
+    document.querySelectorAll('.user-row #edit').forEach((btn:any) => {
         btn.addEventListener('click', () => {
-            const content = document.querySelector('.change-role') as HTMLElement
+            const content = document.querySelector(`.change-role[data-target="${btn.dataset.id}"]`) as HTMLElement
             content.classList.toggle('none')
         })
     })

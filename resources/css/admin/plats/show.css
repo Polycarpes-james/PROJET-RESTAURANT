@@ -89,9 +89,7 @@
     left: 0;
     background-color: white;
 }
-.hiddenNone{
-    opacity: 0;
-}
+
 .item-picture .picture-items{
     position: relative;
     flex: 0 0 200px;

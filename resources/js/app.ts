@@ -13,9 +13,6 @@ import './validator';
 import './convert';
 import './validatorJunior';
 
-import $ from "jquery";
-(window as any).$ = $;
-(window as any).jQuery = $;
 
 window.addEventListener('error', (ev) => {
   console.error('Global error caught:', ev);

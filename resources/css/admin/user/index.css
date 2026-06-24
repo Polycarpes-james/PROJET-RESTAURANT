@@ -2,14 +2,23 @@
 } */
 .change-role{
     position: absolute;
-    top: -50%;
+    top: -100%;
     opacity: 1;
-    right: 2%;
+    right: 0;
+    z-index: 333;
 }
-
+.change-role form{
+    background-color: white;
+    z-index: 333;
+    padding:10px;
+    display: flex;
+    box-shadow: 0 0 3px #8080807a;
+}
 .none{
     opacity: 0;
+    z-index: -333;
 }
 .user-row .action-item{
     position: relative;
 }
+

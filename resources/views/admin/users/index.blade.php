@@ -23,9 +23,9 @@
             </div>
             <div class="item item-2">
                 <label for="search-user-name">Rechercher par role</label>
-                <div class="item-select">
-                    <button class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</button>
-                    <ul class="item-options" data-target="role">
+                <div class="item-select" data-target="first">
+                    <span class="item-btn-select user-filter" data-focus="first" data-target="state" data-value="">Choisir un rôle</span>
+                    <ul class="item-options" data-focus="first" data-target="role">
                         <li data-value="user">User</li>
                         <li data-value="admin">Admin</li>
                         <li data-value="super_admin">Super Admin</li>
@@ -64,18 +64,27 @@
                         <td class="item-role">{{ $user->role }}</td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" kind="link">
-                                <div class="change-role none" data-target="{{ $user->id }}">
+                                <div class="change-role" data-target="{{ $user->id }}">
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <select id="role-select" name="role">
+                                        <div class="item-select">
+                                            <span class="item-btn-select user-filter" data-focus="{{ $user->id }}" data-target="state" data-value="">Choisir un rôle</span>
+                                            <ul class="item-options" data-focus="{{ $user->id }}" data-target="role">
+                                                <li data-value="user">User</li>
+                                                <li data-value="admin">Admin</li>
+                                                <li data-value="super_admin">Super Admin</li>
+                                            </ul>
+                                        </div>  
+                                        {{-- <select id="role-select" name="role">
                                             <option value="user" @selected($user->role == 'user')>User</option>
                                             <option value="admin" @selected($user->role == 'admin')>Admin</option>
                                             <option value="super_admin" @selected($user->role == 'super_admin')>Super Admin</option>
-                                        </select>
+                                        </select> --}}
                                         <button type="submit">Changer</button>
                                     </form>
-                                </div>                                
+                                </div>      
+                                           
                             </x-smally> 
                         @endcan
                     </tr>

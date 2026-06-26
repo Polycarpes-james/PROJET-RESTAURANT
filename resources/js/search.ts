@@ -79,97 +79,74 @@ document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
 
 
 function highlightText(text:string, search:string){
-
     if(!search) return text;
-    
     const escaped = search.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-
     const regex = new RegExp(`(${escaped})`, "gi");
-
     return text.replace(regex,"<mark>$1</mark>");
 }
 
-
-const roleButton = document.querySelector<HTMLButtonElement>(".item-btn-select");
-
-const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
+const roleButton = document.querySelectorAll<HTMLButtonElement>(".item-btn-select");
  
-roleButton?.addEventListener("click",()=>{
-   closeBox()
+
+roleButton.forEach((btn) => {
+    btn.addEventListener("click", ()=>{
+        const roleOptions = document.querySelectorAll<HTMLElement>(`.item-options[data-focus="${btn.dataset.focus}"]`)
+        roleOptions.forEach(opt => {
+            closeBox(opt)
+        })
+    })
 });
 
-function closeBox () {
-    if(roleOptions){
-        
-    roleOptions?.classList.toggle("active");
-    }
+function closeBox (opt:any) {
+    if(opt) opt?.classList.toggle("active");
 }
 
-// if (roleOptions?.style.display === "block") {
-//     // roleOptions.style.display = "none"; 
-//     document.addEventListener('click', () => {
-//         roleOptions.style.display = "none"      
-//     })
-// }
 
 document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
 
     option.addEventListener("click",()=>{
         const role = option.dataset.value ?? "";
         
-        if(roleButton){
-            roleButton.innerHTML = `
-                <p>${option.textContent}</p>
-                <button type="button" class="drop-role">×</button>
-            `;
-        }
+        roleButton.forEach((btn) => {
+            if(btn){
+                btn.innerHTML = `
+                    <p>${option.textContent}</p>
+                    <button type="button" class="drop-role">×</button>
+                `;
+            }
+        })
 
+        const roleOptions = document.querySelectorAll<HTMLUListElement>(".item-options");
 
-        const dropBtn = document.querySelector<HTMLButtonElement>('.drop-role')
-
-        const roleOptions = document.querySelector<HTMLUListElement>(".item-options");
-
-        const el = `${roleOptions?.dataset.target}`
-
-        filters[el] = role.toLowerCase();  
-        filterRows();
-
-
-        
-    document.addEventListener("click", (e)=>{
-
-    const target = e.target as HTMLElement;
-
-
-    if(target.classList.contains("drop-role")){
-
-
-        if(roleButton){
-
-            roleButton.innerHTML = "Choisir un rôle";
-
-            // enlève le focus
-            roleButton.blur();
-        }
-
-
-        if(roleOptions){
-
-            const el = roleOptions.dataset.target ?? "";
-
-            filters[el] = "";
-
+        roleOptions.forEach((opt) => {
+            const el = `${opt.dataset.target}`
+            filters[el] = role.toLowerCase();  
             filterRows();
+        })
+         
+        document.addEventListener("click", (e)=>{
+            const target = e.target as HTMLElement;
+            if(target.classList.contains("drop-role")){
 
-    roleOptions.classList.remove("active");
-        }
-
-    }
-
-});
-        if(roleOptions){
-    roleOptions.classList.remove("active");
-        }
+                roleButton.forEach(btn => {
+                    if(btn){
+                        btn.innerHTML = "Choisir un rôle";
+                        btn.blur();
+                    }
+                })
+                roleOptions.forEach(opt => {
+                    if(opt){
+                        const el = opt.dataset.target ?? "";
+                        filters[el] = "";
+                        filterRows();
+                        opt.classList.remove("active");
+                    }
+                })
+            }
+        });
+        roleOptions.forEach(opt => {
+            if(opt) opt.classList.remove("active");
+        })
     });
 });
 

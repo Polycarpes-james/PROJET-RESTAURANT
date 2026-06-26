@@ -185,6 +185,7 @@
     opacity: 1;
 
     visibility: visible;
+    z-index: 999999999;
 
     transform: translateY(0) scale(1);
 

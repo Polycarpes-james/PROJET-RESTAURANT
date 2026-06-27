@@ -22,9 +22,99 @@
     flex-direction: column;
 }
 
+.dashboard-charts{
+    display:grid;
+    grid-template-columns: repeat(2,1fr);
+    gap:20px;
+}
+
+
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.5);
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+
+}
+
+
+
+.modal-content{
+
+
+    background:white;
+
+    width:400px;
+
+    max-height:80vh;
+
+    overflow:auto;
+
+    padding:25px;
+
+    border-radius:15px;
+
+
+}
+
+
+
+#close-modal{
+
+
+    float:right;
+
+    cursor:pointer;
+
+    border:none;
+
+    background:none;
+
+    font-size:20px;
+
+}
+
+
+
+.plat-detail{
+
+
+    padding:15px;
+
+    margin-top:10px;
+
+    border-radius:10px;
+
+    background:#f4f4f4;
+
+
+}
+
+
+
+.plat-detail h4{
+
+
+    margin:0;
+
+}
 #salesChartCommandes, #salesChartReservations{
-    width: 100px;
-    height: 100px;
+    width: 400px;
+    height: 400px;
+    /* margin: auto; */
+
 }
 .logo {
     padding: 20px;
@@ -90,6 +180,7 @@
 /* CONTENT */
 .content {
     padding: 20px;
+     overflow-y: auto;
 }
 
 /* CARDS */

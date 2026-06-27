@@ -11,6 +11,9 @@
     flex-direction: column;
     z-index: 99999999999;
 }
+.injected-part .item-select{
+    width: 100%;
+}
 .change-role form{
     background-color: white;
     z-index: 9999999;

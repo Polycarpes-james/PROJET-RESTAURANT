@@ -1,4 +1,6 @@
+import { hideContainer } from "@/panier";
 import { showModal } from "@/platUpdate";
+import { changeOptimize } from "@/search";
 
 document.addEventListener('DOMContentLoaded', () => {
     async function supprimerUser(userId:string){
@@ -60,11 +62,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     });     
+    const contents = document.querySelectorAll('.user-row')
 
-    document.querySelectorAll('.user-row #edit').forEach((btn:any) => {
-        btn.addEventListener('click', () => {
-            const content = document.querySelector(`.injected-part[data-target="${btn.dataset.id}"]`) as HTMLElement
-            content.classList.toggle('none')
+    contents.forEach(content => {
+        const button = content.querySelector('#edit')
+        const options = content.querySelector<HTMLElement>(".injected-part");
+
+        if (!button || !options) return;
+        
+        button.addEventListener('click', (e) => {
+            e.stopPropagation()
+            document.querySelectorAll<HTMLElement>(".injected-part").forEach(option => {
+                if(option !== options) {
+                    option.classList.add('none')
+                }
+            }) 
+            options.classList.toggle('none')
         })
     })
+   
+    document.addEventListener("click", (e)=>{
+        document.querySelectorAll<HTMLElement>(".injected-part").forEach((content:any)=> {
+            const button = content.querySelector(".item-btn-select")
+            const inputs = document.querySelectorAll('#hidden-input');
+            content.classList.add('none');
+            setTimeout(() => {
+                changeOptimize(button, e, inputs) 
+            }, 200);
+        })        
+    });
+
+    // const contentsInjected = document.querySelector('.injected-part')
+
+   
+
+    
+      
+
 })
+    

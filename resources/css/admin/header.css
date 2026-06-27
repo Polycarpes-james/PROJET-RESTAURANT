@@ -143,53 +143,32 @@
 
 /* menu fermé */
 .item-options {
-
     position: absolute;
     z-index: 9999999;
     top: calc(100% - 5px);
     left: 0;
-
     width: 100%;
-
     list-style: none;
     padding: 0;
     margin: 0;
-
     background: white;
-
     border-radius: 8px;
-
     overflow: hidden;
-
-
     opacity: 0;
     visibility: hidden;
-
     transform: translateY(-10%) scale(.98);
-
     max-height: 0;
-
-
-    transition:
-        opacity .25s ease,
-        transform .25s ease,
-        max-height .25s ease,
-        visibility .25s;
-
+    transition: opacity .25s ease, transform .25s ease, max-height .25s ease, visibility .25s;
     box-shadow: 0 0 15px #80808044;
 }
 
 
 /* menu ouvert */
 .item-options.active {
-
     opacity: 1;
-
     visibility: visible;
     z-index: 999999999;
-
     transform: translateY(10%) scale(1);
-
     max-height: 300px;
 }
 
@@ -197,26 +176,18 @@
 
 /* options */
 .item-options li {
-
     padding: 10px 15px;
-
     cursor:pointer;
-
-    transition:
-        background .2s ease,
-        padding-left .2s ease;
+    transition: background .2s ease, padding-left .2s ease;
 }
 
 
 .item-options li:hover {
-
     background:#f1f1f1;
-
     padding-left:20px;
-
 }
 
-.clear-select{
+.clear-select, .user-row .clear-select{
     position: absolute;
     cursor: pointer;
     padding: 0 6px;

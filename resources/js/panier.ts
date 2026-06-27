@@ -484,27 +484,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     all()
-    function delete_containt (id_name:string, what:boolean){
-        const contentSuppression = (what ? document.getElementById(id_name) : document.querySelector(id_name)) as HTMLElement;
-        if (contentSuppression) contentSuppression.style.display = "none" 
-    }
+
+  
 
     const btns = document.querySelectorAll(".btn-session")
+
     btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            delete_containt('.btn-item-session', false)
+        btn.addEventListener('click', () => {            
+            hideContainer('.btn-item-session', true, false, '')
         })
     })
 
 
     document.querySelectorAll<HTMLButtonElement>('.btn-suppression').forEach(btn => btn.addEventListener('click', () => {
         supprimerPlat(btn.dataset.id!)  
-        delete_containt('suppression_dish', true)
+        hideContainer('suppression_dish', false, false, '')
     }))
 
     document.querySelector('.multi_vide_btn')?.addEventListener('click', () => {
         viderPanier()
-        delete_containt('multi_tasks_modal', true)
+        hideContainer('multi_tasks_modal', false, false, '')
     })
     // ======================= MODIFIER QUANTITÉ =========================
     async function modifierQuantite(platId: string, delta: number): Promise<void> {
@@ -685,3 +684,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
  
+/**
+ *  Cette fonction permet de faire d'afficher ou de cacher un contenu
+ * 
+ * @param idClassName L'id du contenu
+ * @param what s'il s'agit d'une class ou d'un id (True:si c'est une class, False:si c'est un id)
+ * @param withClassName Indique si l'element est caché grace à un "ClassList" ou un "Style,Display:None" 
+ * @param elementTargetClassName Le nom de classe de l'element ciblé
+ */
+function hideContainer (idClassName:string, what:boolean, withClassName:boolean, elementTargetClassName:string){
+    const contentSuppressionClass = document.querySelectorAll(idClassName);
+    const contentSuppressionId = (what ? document.querySelector(idClassName) : document.getElementById(idClassName)) as HTMLElement;
+    
+    if (withClassName && what) {
+        contentSuppressionClass.forEach((content:any)=> {
+            content.classList.remove(elementTargetClassName);
+        })
+    } else {
+        if (contentSuppressionId) contentSuppressionId.style.display = "none" 
+    }
+}
+
+export {
+    hideContainer
+}

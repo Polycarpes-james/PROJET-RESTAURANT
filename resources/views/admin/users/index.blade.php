@@ -20,11 +20,11 @@
                 <label for="search-user-name">Rechercher par nom</label>
                 <input type="search" name="search-user-name" data-target="firstname" class="input-search" id="search-user-name" placeholder="Sate, Neron">
             </div>
-            <div class="item item-2">
+            <div class="item item-3">
                 <label for="search-user-email">Rechercher par email</label>
                 <input type="search" name="search-category-name" data-target="email" class="input-search" id="search-user-email" placeholder="example@no.fr">
             </div>
-            <div class="item item-2">
+            <div class="item item-4">
                 <label for="search-user-name">Rechercher par role</label>
                 <div class="item-select" data-filtable="{{ $filtable }}">
                     <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</span>
@@ -79,12 +79,7 @@
                                                 <li data-value="admin">Admin</li>
                                                 <li data-value="super_admin">Super Admin</li>
                                             </ul>
-                                        </div>  
-                                        {{-- <select id="role-select" name="role">
-                                            <option value="user" @selected($user->role == 'user')>User</option>
-                                            <option value="admin" @selected($user->role == 'admin')>Admin</option>
-                                            <option value="super_admin" @selected($user->role == 'super_admin')>Super Admin</option>
-                                        </select> --}}
+                                        </div> 
                                         <button type="submit">Changer</button>
                                     </form>
                                 </div>            

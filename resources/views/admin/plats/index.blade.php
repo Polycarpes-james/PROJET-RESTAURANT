@@ -3,6 +3,9 @@
 @section('title', 'PLATS')
     
 @section('content')
+@php
+    $filtable = true
+@endphp
     <x-show-modal-admin kind="btn-delete-admin" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
 
     <div class="container-items-admin">
@@ -29,7 +32,7 @@
                 </div>
                 <div class="item item-4">
                     <label for="search-plat-name">Rechercher par disponibilité</label>
-                    <div class="item-select">
+                    <div class="item-select" data-filtable="{{ $filtable }}">
                         <button class="item-btn-select user-filter" data-target="state" data-value="">Choisir un état</button>
                         <ul class="item-options" data-target="state">
                             <li data-value="yes">Disponibile</li>

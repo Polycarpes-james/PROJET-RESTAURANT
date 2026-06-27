@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @vite(['resources/js/app.ts', 'resources/css/app.css'])
     <title>@yield('title') | ADMIN </title>
 </head>
@@ -64,5 +65,6 @@
             </section>
         </div>
     </div>
+    
 </body>
 </html>

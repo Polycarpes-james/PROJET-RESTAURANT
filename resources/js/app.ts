@@ -1,5 +1,6 @@
 import './bootstrap';
 import './reservation';
+import './admin/grafists';
 import './panier';
 import './admin/actions';
 import './search';

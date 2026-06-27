@@ -22,6 +22,10 @@
     flex-direction: column;
 }
 
+#salesChartCommandes, #salesChartReservations{
+    width: 100px;
+    height: 100px;
+}
 .logo {
     padding: 20px;
     font-size: 23px;

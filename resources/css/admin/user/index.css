@@ -5,11 +5,11 @@
     top: -100%;
     opacity: 1;
     right: 0;
-    width: 100%;
+    width: 150%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    z-index: 9999999;
+    z-index: 99999999999;
 }
 .change-role form{
     background-color: white;
@@ -19,6 +19,9 @@
     box-shadow: 0 0 3px #8080807a;
     width: 100%;
 
+}
+.change-role{
+    width: 100%;
 }
 .btns-part{
     display: flex;

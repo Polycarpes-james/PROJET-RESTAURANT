@@ -130,12 +130,13 @@
 /* bouton */
 .item-btn-select {
     width: 100%;
-    padding: 10px 15px;
+    padding: 9px 15px;
     cursor: pointer;
-    border-radius: 8px;
+    position: relative;
+    border-radius: 3px;
     display: flex;
     justify-content: space-between;
-    border: 1px solid #ddd;
+    border: 1px solid #1e3b8a67;
     background: white;
 }
 
@@ -144,8 +145,8 @@
 .item-options {
 
     position: absolute;
-    z-index: 9999;
-    top: calc(100% + 5px);
+    z-index: 9999999;
+    top: calc(100% - 5px);
     left: 0;
 
     width: 100%;
@@ -164,7 +165,7 @@
     opacity: 0;
     visibility: hidden;
 
-    transform: translateY(-10px) scale(.98);
+    transform: translateY(-10%) scale(.98);
 
     max-height: 0;
 
@@ -187,7 +188,7 @@
     visibility: visible;
     z-index: 999999999;
 
-    transform: translateY(0) scale(1);
+    transform: translateY(10%) scale(1);
 
     max-height: 300px;
 }
@@ -215,11 +216,21 @@
 
 }
 
-.drop-role{
-    border-radius: 100%;
-    padding: 0px 3.5px;
-    font-size: 12px;
+.clear-select{
+    position: absolute;
+    cursor: pointer;
+    padding: 0 6px;
+    right: 2%;
+    top: 15%;
+    border-radius: 50%;
+    font-size: 20px;
     background-color: var(--red-pall);
-    border: 1px solid var(--red-color);
+    border: 1px solid var(--red-color); 
     color: var(--red-color);
+    background: transparent;
+}
+.clear-select:hover{
+    border: 1px solid var(--white-color); 
+    color: var(--white-color);
+    background-color: var(--red-color);
 }

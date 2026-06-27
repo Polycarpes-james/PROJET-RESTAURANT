@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.user-row #edit').forEach((btn:any) => {
         btn.addEventListener('click', () => {
-            const content = document.querySelector(`.change-role[data-target="${btn.dataset.id}"]`) as HTMLElement
+            const content = document.querySelector(`.injected-part[data-target="${btn.dataset.id}"]`) as HTMLElement
             content.classList.toggle('none')
         })
     })

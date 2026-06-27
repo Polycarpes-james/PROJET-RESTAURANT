@@ -29,19 +29,10 @@ function filterRows(){
         }); 
 
         for(const key in filters){
-
             const search = filters[key];
-
             if(search === "") continue;
-
-            const value = (row.dataset[key] ?? "").toLowerCase();
-            // console.log(row.dataset[key]?.includes(search));
-            
-            if(!value.includes(search) 
-                // && document.querySelector<HTMLButtonElement>(".item-btn-select")?.value === " "
-        ){
-                match = false;
-            }
+            const value = (row.dataset[key] ?? "").toLowerCase();            
+            if(!value.includes(search)) match = false;
         }
 
         if(match){
@@ -85,73 +76,154 @@ function highlightText(text:string, search:string){
     return text.replace(regex,"<mark>$1</mark>");
 }
 
-const roleButton = document.querySelectorAll<HTMLButtonElement>(".item-btn-select");
+
+
+
+// const roleButton = document.querySelectorAll<HTMLButtonElement>(".item-btn-select");
  
 
-roleButton.forEach((btn) => {
-    btn.addEventListener("click", ()=>{
-        const roleOptions = document.querySelectorAll<HTMLElement>(`.item-options[data-focus="${btn.dataset.focus}"]`)
-        roleOptions.forEach(opt => {
-            closeBox(opt)
-        })
-    })
-});
+// roleButton.forEach((btn) => {
+//     btn.addEventListener("click", ()=>{
+//         const roleOptions = document.querySelectorAll<HTMLElement>(`.item-options[data-focus="${btn.dataset.focus}"]`)
+//         roleOptions.forEach(opt => {
+//             closeBox(opt)
+//         })
+//     })
+// });
 
-function closeBox (opt:any) {
-    if(opt) opt?.classList.toggle("active");
-}
+// function closeBox (opt:any) {
+//     if(opt) opt?.classList.toggle("active");
+// }
 
 
-document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
+// document.querySelectorAll<HTMLLIElement>(".item-options li").forEach(option=>{
 
-    option.addEventListener("click",()=>{
-        const role = option.dataset.value ?? "";
+//     option.addEventListener("click",()=>{
+//         const role = option.dataset.value ?? "";
         
-        roleButton.forEach((btn) => {
-            if(btn){
-                btn.innerHTML = `
-                    <p>${option.textContent}</p>
-                    <button type="button" class="drop-role">×</button>
-                `;
-            }
-        })
+//         roleButton.forEach((btn) => {
+//             if(btn){
+//                 btn.innerHTML = `
+//                     <p>${option.textContent}</p>
+//                     <button type="button" class="drop-role">×</button>
+//                 `;
+//             }
+//         })
 
-        const roleOptions = document.querySelectorAll<HTMLUListElement>(".item-options");
+//         const roleOptions = document.querySelectorAll<HTMLUListElement>(".item-options");
 
-        roleOptions.forEach((opt) => {
-            const el = `${opt.dataset.target}`
-            filters[el] = role.toLowerCase();  
-            filterRows();
-        })
+//         roleOptions.forEach((opt) => {
+//             const el = `${opt.dataset.target}`
+//             filters[el] = role.toLowerCase();  
+//             filterRows();
+//         })
          
-        document.addEventListener("click", (e)=>{
-            const target = e.target as HTMLElement;
-            if(target.classList.contains("drop-role")){
+//         document.addEventListener("click", (e)=>{
+//             const target = e.target as HTMLElement;
+//             if(target.classList.contains("drop-role")){
 
-                roleButton.forEach(btn => {
-                    if(btn){
-                        btn.innerHTML = "Choisir un rôle";
-                        btn.blur();
-                    }
-                })
-                roleOptions.forEach(opt => {
-                    if(opt){
-                        const el = opt.dataset.target ?? "";
-                        filters[el] = "";
-                        filterRows();
-                        opt.classList.remove("active");
-                    }
-                })
+//                 roleButton.forEach(btn => {
+//                     if(btn){
+//                         btn.innerHTML = "Choisir un rôle";
+//                         btn.blur();
+//                     }
+//                 })
+//                 roleOptions.forEach(opt => {
+//                     if(opt){
+//                         const el = opt.dataset.target ?? "";
+//                         filters[el] = "";
+//                         filterRows();
+//                         opt.classList.remove("active");
+//                     }
+//                 })
+//             }
+//         });
+//         roleOptions.forEach(opt => {
+//             if(opt) opt.classList.remove("active");
+//         })
+//     });
+// });
+
+
+function initCustomSelect(){
+
+
+document.querySelectorAll<HTMLElement>(".item-select").forEach(select=>{
+
+
+    const button = select.querySelector<HTMLElement>(".item-btn-select");
+
+
+    const options = select.querySelector<HTMLElement>(".item-options");
+
+    if(!button || !options) return;
+    // ouvrir le select
+    button.addEventListener("click",(e)=>{
+
+        e.stopPropagation();
+        options.classList.toggle("active");
+
+    });
+
+    // choisir une option
+
+    options.querySelectorAll<HTMLLIElement>("li").forEach(option=>{
+
+        option.addEventListener("click",(e)=>{
+            e.stopPropagation();
+
+            const value = option.dataset.value ?? "";
+
+            button.innerHTML = `
+                <p>${option.textContent}</p>
+                <button class="clear-select" type="button">×</button>
+            `;
+
+            button.dataset.value = value;
+
+            const target = `${options?.dataset.target}`
+
+            // si ce select est un filtre
+            if(target){
+                filters[target] = value.toLowerCase();
+                const inputs = document.querySelectorAll('#hidden-input');
+                inputs.forEach((input:any) => {
+                    input.value = value
+                })                
+                if(select.dataset.filtable){
+                    filterRows();
+                }
             }
+            options.classList.remove("active");
+
+
+            // supprimer choix
+
+            const clear = button.querySelector(".clear-select");
+
+            clear?.addEventListener("click",(e)=>{
+                e.stopPropagation();
+                button.textContent = "Choisir un rôle";
+                button.dataset.value="";
+                if(target){
+                    filters[target]="";
+                    filterRows();
+                }
+            });
         });
-        roleOptions.forEach(opt => {
-            if(opt) opt.classList.remove("active");
-        })
     });
 });
 
 
 
+}
+
+
+
+
+// initialisation
+
+initCustomSelect();
 
 
 });

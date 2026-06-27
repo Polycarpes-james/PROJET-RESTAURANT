@@ -37,7 +37,7 @@
                 </form>
             @endif
         </div>
-        <div class="injected-part">
+        <div class="injected-part none" data-target="{{ $element->id }}">
             {{ $slot }}
         </div>
     </div>

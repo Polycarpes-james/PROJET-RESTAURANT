@@ -3,6 +3,9 @@
 @section('title', 'UTILISATEURS')
 
 @section('content')
+@php
+    $filtable = true
+@endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
         <div class="item">
@@ -15,7 +18,7 @@
             </div>
             <div class="item item-2">
                 <label for="search-user-name">Rechercher par nom</label>
-                <input type="search" name="search-user-name" data-target="name" class="input-search" id="search-user-name" placeholder="Sate, Neron">
+                <input type="search" name="search-user-name" data-target="firstname" class="input-search" id="search-user-name" placeholder="Sate, Neron">
             </div>
             <div class="item item-2">
                 <label for="search-user-email">Rechercher par email</label>
@@ -23,9 +26,9 @@
             </div>
             <div class="item item-2">
                 <label for="search-user-name">Rechercher par role</label>
-                <div class="item-select" data-target="first">
-                    <span class="item-btn-select user-filter" data-focus="first" data-target="state" data-value="">Choisir un rôle</span>
-                    <ul class="item-options" data-focus="first" data-target="role">
+                <div class="item-select" data-filtable="{{ $filtable }}">
+                    <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</span>
+                    <ul class="item-options" data-target="role">
                         <li data-value="user">User</li>
                         <li data-value="admin">Admin</li>
                         <li data-value="super_admin">Super Admin</li>
@@ -52,25 +55,26 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr class="user-row" 
-                        data-id="{{ $user->id }}" data-name="{{ $user->name }}" 
+                        data-id="{{ $user->id }}" data-firstname="{{ $user->firstname }}" 
                         data-email="{{ $user->email }}" data-role="{{ $user->role }}"
                         data-price="{{ $user->price }}" data-phone="{{ $user->phone }}"
                         >
                         <td class="item-id">{{ $user->id }}</td>
                         <td><img src="{{ $user->getPictureUrl(40, 40) }}" style="border-radius:30px" alt=""></td>
                         <td class="item-name">{{ $user->name }}</td>
-                        <td>{{ $user->firstname }}</td>
+                        <td class="item-firstname">{{ $user->firstname }}</td>
                         <td class="item-email">{{ $user->email }}</td>
                         <td class="item-role">{{ $user->role }}</td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" kind="link">
-                                <div class="change-role" data-target="{{ $user->id }}">
+                                <div class="change-role">
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <div class="item-select">
-                                            <span class="item-btn-select user-filter" data-focus="{{ $user->id }}" data-target="state" data-value="">Choisir un rôle</span>
-                                            <ul class="item-options" data-focus="{{ $user->id }}" data-target="role">
+                                        <div class="item-select" data-filtable="{{ !$filtable }}">
+                                            <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</span>
+                                            <input type="hidden" name="role" id="hidden-input">
+                                            <ul class="item-options" data-target="role">
                                                 <li data-value="user">User</li>
                                                 <li data-value="admin">Admin</li>
                                                 <li data-value="super_admin">Super Admin</li>
@@ -83,8 +87,7 @@
                                         </select> --}}
                                         <button type="submit">Changer</button>
                                     </form>
-                                </div>      
-                                           
+                                </div>            
                             </x-smally> 
                         @endcan
                     </tr>

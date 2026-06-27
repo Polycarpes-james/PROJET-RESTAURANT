@@ -109,7 +109,9 @@ class Plat extends Model
     
     public function getPicture (): ?Picture
     {
-        return $this->pictures[0] ?? null;        
+        return $this->pictures[0] ??  new Picture([
+            'filename'=>'modal1.jpg'
+        ]);;        
     }
 
     public function truncateText($text = null, $maxLength = 200)

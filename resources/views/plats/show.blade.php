@@ -1,7 +1,11 @@
 @extends('layout.base')
 
-@section('image-header', 'url(' . $plat->getPicture()->getPictureUrl(2000, 700) . ')')
-
+@section(
+'image-header',
+$plat->getPicture()
+    ? 'url(' . $plat->getPicture()->getPictureUrl(2000,700) . ')'
+    : ''
+)
 @section('title', $plat->name)
 
 @section('body-style', 'plat-item-body')

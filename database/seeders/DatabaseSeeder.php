@@ -5,7 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Category;
+use App\Models\Ingredient;
+use App\Models\Menu;
 use App\Models\Plat;
+use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -18,6 +21,9 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(10)->create(); 
         Category::factory(10)->create();
-        Plat::factory(40)->create();
+        $ingredients = Ingredient::factory(40)->create();
+        $plats = Plat::factory(40)->hasAttached($ingredients->random(10))->create();
+        Menu::factory(10)->hasAttached($plats->random(10))->create();
+        Reservation::factory(20)->create();
     }
 }

@@ -174,3 +174,222 @@ function changeOptimize (button:HTMLElement, e:Event, inputs:any) {
 export {
     changeOptimize
 }
+
+// import { hideContainer } from "./panier";
+
+// document.addEventListener("DOMContentLoaded", () => {
+
+// const filters: { [key: string]: string } = {};
+
+// const rows = document.querySelectorAll<HTMLTableRowElement>(
+//     ".user-row, .plat-row, .category-row, .ingredient-row, .reservation-row"
+// );
+
+// const noResults = document.querySelector<HTMLElement>("#no-results");
+
+
+// // =======================
+// // FILTER ENGINE
+// // =======================
+
+// function filterRows() {
+
+//     let count = 0;
+
+//     rows.forEach(row => {
+
+//         let match = true;
+
+//         const cells = row.querySelectorAll<HTMLElement>("[class^='item-']");
+
+//         cells.forEach(cell => {
+//             const key = cell.className.replace("item-", "");
+//             if (row.dataset[key]) {
+//                 cell.textContent = row.dataset[key];
+//             }
+//         });
+
+//         for (const key in filters) {
+
+//             const search = filters[key];
+
+//             if (!search) continue;
+
+//             const value = (row.dataset[key] ?? "").toLowerCase();
+
+//             if (!value.includes(search)) {
+//                 match = false;
+//                 break;
+//             }
+//         }
+
+//         if (match) {
+//             row.style.display = "";
+//             count++;
+
+//             for (const key in filters) {
+
+//                 const search = filters[key];
+//                 if (!search) continue;
+
+//                 const cell = row.querySelector(`.item-${key}`) as HTMLElement;
+
+//                 if (cell) {
+//                     cell.innerHTML = highlightText(
+//                         row.dataset[key] ?? "",
+//                         search
+//                     );
+//                 }
+//             }
+
+//         } else {
+//             row.style.display = "none";
+//         }
+//     });
+
+//     if (noResults) {
+//         noResults.style.display = count === 0 ? "" : "none";
+//     }
+// }
+
+
+// // =======================
+// // HIGHLIGHT
+// // =======================
+
+// function highlightText(text: string, search: string) {
+//     if (!search) return text;
+
+//     const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+//     const regex = new RegExp(`(${escaped})`, "gi");
+
+//     return text.replace(regex, "<mark>$1</mark>");
+// }
+
+
+// // =======================
+// // INIT SELECT CUSTOM
+// // =======================
+
+// function initCustomSelect() {
+
+//     const selects = document.querySelectorAll<HTMLElement>(".item-select");
+
+//     selects.forEach(select => {
+
+//         const button = select.querySelector<HTMLElement>(".item-btn-select");
+//         const options = select.querySelector<HTMLElement>(".item-options");
+
+//         if (!button || !options) return;
+
+
+//         // =======================
+//         // OPEN / CLOSE
+//         // =======================
+//         button.addEventListener("click", (e) => {
+
+//             e.stopPropagation();
+
+//             document.querySelectorAll(".item-options")
+//                 .forEach(opt => {
+//                     if (opt !== options) {
+//                         opt.classList.remove("active");
+//                     }
+//                 });
+
+//             options.classList.toggle("active");
+//         });
+
+
+//         // =======================
+//         // SELECT OPTION
+//         // =======================
+//         options.querySelectorAll<HTMLLIElement>("li")
+//             .forEach(option => {
+
+//                 option.addEventListener("click", (e) => {
+
+//                     e.stopPropagation();
+
+//                     const value = option.dataset.value ?? "";
+
+//                     const target = options.dataset.target ?? "";
+
+
+//                     // UI update
+//                     button.innerHTML = `
+//                         <span>${option.textContent}</span>
+//                         <button type="button" class="clear-select">×</button>
+//                     `;
+
+//                     button.dataset.value = value;
+
+
+//                     // FILTER update
+//                     if (target) {
+//                         filters[target] = value.toLowerCase();
+//                         filterRows();
+//                     }
+
+//                     options.classList.remove("active");
+
+
+//                     // =======================
+//                     // CLEAR BUTTON
+//                     // =======================
+//                     const clear = button.querySelector(".clear-select");
+
+//                     clear?.addEventListener("click", (e) => {
+
+//                         e.stopPropagation();
+
+//                         resetSelect(button, target);
+
+//                     });
+//                 });
+//             });
+//     });
+
+
+//     // =======================
+//     // CLOSE OUTSIDE CLICK
+//     // =======================
+//     document.addEventListener("click", () => {
+
+//         document.querySelectorAll(".item-options")
+//             .forEach(opt => opt.classList.remove("active"));
+
+//     });
+// }
+
+
+// // =======================
+// // RESET FUNCTION (IMPORTANT)
+// // =======================
+
+// function resetSelect(button: HTMLElement, target: string) {
+
+//     button.innerHTML = "Choisir un rôle";
+
+//     button.dataset.value = "";
+
+//     button.blur();
+
+//     if (target) {
+//         filters[target] = "";
+//         filterRows();
+//     }
+// }
+
+
+// // init
+// initCustomSelect();
+
+// });
+
+// // export {
+// //     resetSelect
+// // };
+
+
+

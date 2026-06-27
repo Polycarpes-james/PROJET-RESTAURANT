@@ -91,13 +91,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 200);
         })        
     });
-
-    // const contentsInjected = document.querySelector('.injected-part')
-
-   
-
-    
-      
-
 })
     

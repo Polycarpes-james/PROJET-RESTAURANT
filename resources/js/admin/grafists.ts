@@ -112,7 +112,6 @@ const index = elements[0].index;
 
 const item = data[index];
 
-// console.log(item);
 
 
 
@@ -242,118 +241,49 @@ return context.parsed.y + " FCFA";
 
 function openChartModal(item:any){
 
+const modal = document.getElementById("chart-modal");
+const title = document.getElementById("modal-title");
+const content = document.getElementById("modal-description");
+const price = document.getElementById("modal-price");
 
+if(!modal || !content || !title || !price) return;
 
-const modal =
-document.getElementById("chart-modal");
-
-
-
-const title =
-document.getElementById("modal-title");
-
-
-
-const content =
-document.getElementById("modal-description");
-
-
-
-const price =
-document.getElementById("modal-price");
-
-
-
-if(!modal || !content || !title || !price)
-return;
-
-
-
-
-
-title.textContent =
-`Commande #${item.id}`;
-
-
-
-price.textContent =
-`Total : ${item.total} FCFA`;
-
-
-
-
-
+title.textContent = `Commande #${item.id}`;
+price.textContent = `Total : ${item.total} FCFA`;
 
 let html = "";
 
-
-
-
-if(item.plats && item.plats.length > 0){
-
-
+if(item.commandes && item.commandes.length > 0){
 
 html += "<h3>Plats commandés</h3>";
 
 
-
-item.plats.forEach((plat:any)=>{
-
-
+item.commandes.forEach((plat:any)=>{
+console.log(plat.plats);
+plat.plats.forEach((dish:any) => {
+    
 html += `
-
 <div class="plat-detail">
 
-<h4>
-${plat.name}
-</h4>
+<h4>${dish.name}</h4>
 
+<p>Quantité : ${dish.quantite}</p>
 
-<p>
-Quantité :
-${plat.quantite}
-</p>
-
-
-<p>
-${plat.description}
-</p>
-
+<p>${dish.description}</p>
 
 </div>
-
-
 `;
-
-
+})
 
 });
 
-
-
 }else{
-
-
-html =
-"Aucun plat trouvé";
-
-
+html = "Aucun plat trouvé";
 }
-
-
-
 
 content.innerHTML = html;
-
-
-
-
-modal.style.display="flex";
-
-
-
+modal.style.display = "flex";
 }
-
 
 
 

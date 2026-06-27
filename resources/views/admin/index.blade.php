@@ -3,7 +3,7 @@
 @section('title', 'DASHBOARD')
     
 @section('content')
-<<div id="chart-modal" class="modal">
+<div id="chart-modal" class="modal">
 
     <div class="modal-content">
 
@@ -45,6 +45,6 @@
 <script>
     window.commandes = @json($commandes);
     window.reservations = @json($reservations);
-    console.log(window.commandes);
+    // console.log(window.commandes);
     
 </script>

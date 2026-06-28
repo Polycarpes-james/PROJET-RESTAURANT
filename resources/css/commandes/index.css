@@ -43,6 +43,7 @@
 
 .pass-commande-items .categories-items-commandes{
     display: flex;
+    flex-wrap: wrap;
 }
 .pass-commande-items .categories-items-commandes a{
     padding: 10px;

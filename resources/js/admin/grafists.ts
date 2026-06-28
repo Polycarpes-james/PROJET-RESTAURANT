@@ -255,21 +255,32 @@ let html = "";
 
 if(item.commandes && item.commandes.length > 0){
 
-html += "<h3>Plats commandés</h3>";
+html += `
+<h3>Plats commandés</h3>
+<p>Nombre de commandes : ${item.totalCommande}</p>
+
+`;
 
 
-item.commandes.forEach((plat:any)=>{
-console.log(plat.plats);
-plat.plats.forEach((dish:any) => {
+item.commandes.forEach((commande:any)=>{
+html +=`
+    <p>Prix Total des plats : ${commande.totalPrice}</p>
+    <p>Quantite total des plats : ${commande.quantite_total}</p>
+`
+commande.plats.forEach((dish:any) => {
     
 html += `
 <div class="plat-detail">
 
 <h4>${dish.name}</h4>
 
-<p>Quantité : ${dish.quantite}</p>
+<p>Prix Total : ${dish.prix_unit}</p>
+<p> Quantité: ${dish.quantite_total}</p>
+
 
 <p>${dish.description}</p>
+<img src="${dish.picture}" alt="">
+
 
 </div>
 `;
@@ -309,11 +320,6 @@ modal.style.display="none";
 
 
 });
-
-
-
-
-
 
 
 

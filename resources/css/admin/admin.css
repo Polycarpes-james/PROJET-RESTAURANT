@@ -28,11 +28,14 @@
     gap:20px;
 }
 
+#modal-description{
+    width: 100%;
+    display: flex;
+}
 
+.all-content-admin #chart-modald{
 
-.modal{
-
-    display:none;
+    /* display:none; */
 
     position:fixed;
 
@@ -51,37 +54,40 @@
 
 
 
-.modal-content{
+.all-content-admin #chart-modal .modal-content{
 
 
     background:white;
 
-    width:400px;
-
-    max-height:80vh;
+    width:100%;
+    position: relative;
+    max-height:97vh;
 
     overflow:auto;
 
     padding:25px;
 
-    border-radius:15px;
+    border-radius:5px;
 
 
 }
 
 
 
-#close-modal{
-
-
+.all-content-admin #chart-modal #close-modal{
     float:right;
 
     cursor:pointer;
+    position: absolute;
+    top: 1%;
+    left: 2%;
 
-    border:none;
+    border:1px solid var(--red-color);
 
-    background:none;
-
+    background:var(--red-pall);
+    color:var(--red-color);
+    padding: 0 6px;
+    border-radius: 100%;
     font-size:20px;
 
 }

@@ -4,27 +4,14 @@
     
 @section('content')
 <div id="chart-modal" class="modal">
-
     <div class="modal-content">
-
-
-        <button id="close-modal">
-            X
-        </button>
-
-
+        <button id="close-modal">×</button>
         <h2 id="modal-title"></h2>
-
-
         <div id="modal-description"></div>
-
-
         <p id="modal-price"></p>
-
-
     </div>
-
 </div>
+
     <div class="dashboard-charts">
         <div>
             <h1>Chiffres d'affaires pour les commandes</h1>

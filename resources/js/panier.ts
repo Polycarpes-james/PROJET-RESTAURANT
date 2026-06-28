@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const platId = btn.dataset.id!;
             const quantite = parseInt(btn.dataset.quantite!, 10);               
-            ajouterAuPanier(platId, quantite, true, false);
+            ajouterAuPanier(platId, quantite, false, false);
         });
     });
     

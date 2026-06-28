@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create(); 
+        User::factory(30)->create(); 
         Category::factory(10)->create();
         $ingredients = Ingredient::factory(40)->create();
         $plats = Plat::factory(40)->hasAttached($ingredients->random(10))->create();

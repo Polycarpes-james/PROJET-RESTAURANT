@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Commande;
+use App\Models\Panier;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -27,32 +29,24 @@ class HomeController extends Controller
         return [
 
             'date'=>$date,
-
             'total'=>$items->sum('total_price'),
-
+            'totalCommande' => $items->count(),
             'commandes'=>$items->map(function($commande){
-
-
                 return [
 
                     'id'=>$commande->id,
-
-                    'total'=>$commande->total_price,
-
-
+                    'totalPrice'=>$commande->total_price,
+                    'quantite_total' => $commande->paniers->first()->panierPlats->pluck('quantite')->sum(),
                     'plats'=>$commande->paniers->flatMap(function($panier){
 
-
-                        return $panier->plats->map(function($plat) use ($panier){
-
-
+                        return $panier->panierPlats->map(function($platPanier) use ($panier){
+                                                    
                             return [
-
-                                'name'=>$plat->name,
-
-                                'description'=>$plat->description,
-
-                                'quantite'=>$panier->pivot->quantite
+                                'name'=>$platPanier->plat->name,
+                                'description'=>$platPanier->plat->truncateText($platPanier->plat->description, 110),
+                                'quantite_total'=>$platPanier->quantite,
+                                'prix_unit' => $platPanier->prix_total,
+                                'picture' => $platPanier->plat->getPicture()->getPictureUrl(80, 70),
 
                             ];
 

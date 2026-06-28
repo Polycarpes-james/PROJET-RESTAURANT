@@ -2,6 +2,7 @@ import { hideContainer } from "./panier";
 
 document.addEventListener('DOMContentLoaded', () => {
     
+let openInjected: HTMLElement | null = null;
 
 const filters:{[key:string]:string} = {};
 
@@ -142,9 +143,63 @@ function initCustomSelect(){
         });
     });
 
-    document.addEventListener("click",()=>{
-        hideContainer(".item-options", true, true, 'active')   
-    });
+    // document.addEventListener("click",()=>{
+    //     hideContainer(".item-options", true, true, 'active')   
+    // });
+
+document.addEventListener("click", (e) => {
+
+    const target = e.target as HTMLElement;
+
+    const injected = target.closest(".injected-part") as HTMLElement | null;
+    const select = target.closest(".item-select") as HTMLElement | null;
+
+    // =========================
+    // CAS 1 : clic dans injected-part
+    // =========================
+    if (injected) {
+
+        // fermer dropdowns
+        hideContainer(".item-options", true, true, "active");
+
+        // si autre injected ouvert → fermer
+        if (openInjected && openInjected !== injected) {
+            openInjected.classList.add("none");
+        }
+
+        openInjected = injected;
+
+        return;
+    }
+
+
+    // =========================
+    // CAS 2 : clic dans dropdown
+    // =========================
+    if (select) {
+
+        // fermer injected
+        if (openInjected) {
+            openInjected.classList.add("none");
+            openInjected = null;
+        }
+
+        return;
+    }
+
+
+    // =========================
+    // CAS 3 : clic dehors → tout fermer
+    // =========================
+
+    hideContainer(".item-options", true, true, "active");
+
+    if (openInjected) {
+        openInjected.classList.add("none");
+        openInjected = null;
+    }
+
+});
 
 }
 

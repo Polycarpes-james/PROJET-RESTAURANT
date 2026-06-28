@@ -33,9 +33,9 @@
     display: flex;
 }
 
-.all-content-admin #chart-modald{
+.all-content-admin #chart-modal{
 
-    /* display:none; */
+    display:none;
 
     position:fixed;
 
@@ -130,11 +130,15 @@
 }
 
 .hover, .container-admin .header-container-admin a.nav-link-admin:hover{
-    background-color: var(--second-color);
-    color: white!important;
-    padding-left: 50px!important;
+    background-color: var(--second-pall);
+    color: var(--second-color)!important;
+    padding-left: 40px!important;
     opacity: 1!important;
 }
+.hover, .container-admin .header-container-admin a.nav-link-admin:hover .nav-link-p{
+    border-left: 5px solid var(--second-color);
+}
+
 
 .nav-admin-container {
     display: flex;
@@ -142,8 +146,10 @@
     margin-top: 3em;
 }
 
+
+
 .nav-admin-container a {
-    color: var(--second-color);
+    color: rgb(84, 84, 84);
     text-decoration: none;
     padding: 15px 20px;
     border-radius: 2px;

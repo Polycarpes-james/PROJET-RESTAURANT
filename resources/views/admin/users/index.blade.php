@@ -27,7 +27,10 @@
             <div class="item item-4">
                 <label for="search-user-name">Rechercher par role</label>
                 <div class="item-select" data-filtable="{{ $filtable }}">
-                    <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</span>
+                    <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
+                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg> --}}
+                    </span>
                     <ul class="item-options" data-target="role">
                         <li data-value="user">User</li>
                         <li data-value="admin">Admin</li>
@@ -72,7 +75,9 @@
                                         @csrf
                                         @method('PUT')
                                         <div class="item-select" data-filtable="{{ !$filtable }}">
-                                            <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle</span>
+                                            <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+                                            </span>
                                             <input type="hidden" name="role" id="hidden-input">
                                             <ul class="item-options" data-target="role">
                                                 <li data-value="user">User</li>

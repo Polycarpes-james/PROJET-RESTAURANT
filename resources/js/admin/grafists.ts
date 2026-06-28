@@ -32,14 +32,34 @@ document.getElementById(idName) as HTMLCanvasElement;
 
 
 if(!chartCanvas) return;
+const ctx = chartCanvas.getContext("2d");
 
+
+const gradient = ctx!.createLinearGradient(
+    0,
+    0,
+    0,
+    300
+);
+
+
+gradient.addColorStop(
+    0,
+    "rgba(0,123,255,0.5)"
+);
+
+
+gradient.addColorStop(
+    1,
+    "rgba(0,123,255,0)"
+);
 
 
 new Chart(chartCanvas,{
 
 
 type:'line',
-
+// line + bar + doughnut
 
 
 data:{
@@ -73,7 +93,14 @@ data:data.map(
 ),
 
 
-borderWidth:2
+borderWidth:2,
+            stepped:true,
+             borderColor:"rgba(0, 123, 255, 0.49)",
+
+            backgroundColor:gradient,
+
+            fill:true
+
 
 
 
@@ -86,7 +113,6 @@ borderWidth:2
 
 
 options:{
-
 
 
 responsive:true,

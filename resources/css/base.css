@@ -8,6 +8,9 @@
 
 a{
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: initial;
 }
 
@@ -18,6 +21,7 @@ input, textarea{
 :root{
     --main-color:#1E3A8A;
     --white-color:white;
+    --second-pall:#bc662021;
     --second-color:#bc6620;
     --spacing: .25rem;
     --red-color: #ff5b5b;

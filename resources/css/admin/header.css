@@ -135,6 +135,7 @@
     position: relative;
     border-radius: 3px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     border: 1px solid #1e3b8a67;
     background: white;

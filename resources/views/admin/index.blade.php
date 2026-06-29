@@ -3,14 +3,16 @@
 @section('title', 'DASHBOARD')
     
 @section('content')
-<div id="chart-modal" class="modal">
-    <div class="modal-content">
+{{-- <div id="chart-modal" class="modal">
+    <div class="">
         <button id="close-modal">×</button>
         <h2 id="modal-title"></h2>
         <div id="modal-description"></div>
         <p id="modal-price"></p>
     </div>
-</div>
+
+</div> --}}
+    <x-items-actions type="" contentId="chart-modal" contentSecondClass="chart-modal-content" headerClass="chart-modal-header" mainClass="chart-modal-description" footerClass="chart-modal-footer"/>
 
     <div class="dashboard-charts">
         <div>

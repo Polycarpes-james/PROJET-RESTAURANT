@@ -11,12 +11,13 @@
     display:flex;
     justify-content:center;
     align-items: center;
-    background: #00000080;
+    background: #00000036;
+    backdrop-filter: blur(2px);
     z-index:9999;
 }
 
 
-#customModal, #platWindowsInfo, #category_modal, #reservation-user-reservation,
+#customModal, #platWindowsInfo, #reservation-user-reservation,
 #admin_plat_delete
 {
     align-items:center;
@@ -26,7 +27,7 @@
 #customModalShow{
     z-index: 90000399;
 }
-#multi_tasks_modal, #suppression_dish, #category_modal, #reservation-user-reservation, #admin_plat_delete{
+#multi_tasks_modal, #suppression_dish, #reservation-user-reservation, #admin_plat_delete{
     z-index: 99999999;
     align-items: center;
     width: 100%;

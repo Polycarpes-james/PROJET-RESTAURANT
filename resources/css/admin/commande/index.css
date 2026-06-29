@@ -11,12 +11,15 @@
     text-align: left;
 }
 .styled-table th{
-  background: #92410e10;
-  color: var(--second-color);
+  background: var(--bg);
+  color: #64748B;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .styled-table td{
   padding: 8px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .styled-table .options{

@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index () {
-      $commandes = Commande::with([
-        'paniers.plats'
-    ])->get();
-
-
+        $commandes = Commande::with(['paniers.plats'])->get();
 
     // pour le graphique
     $chartCommandes = $commandes->groupBy(function($commande){
@@ -37,23 +33,17 @@ class HomeController extends Controller
                     'id'=>$commande->id,
                     'totalPrice'=>$commande->total_price,
                     'quantite_total' => $commande->paniers->first()->panierPlats->pluck('quantite')->sum(),
-                    'plats'=>$commande->paniers->flatMap(function($panier){
-
-                        return $panier->panierPlats->map(function($platPanier) use ($panier){
-                                                    
-                            return [
-                                'name'=>$platPanier->plat->name,
-                                'description'=>$platPanier->plat->truncateText($platPanier->plat->description, 110),
-                                'quantite_total'=>$platPanier->quantite,
-                                'prix_unit' => $platPanier->prix_total,
-                                'picture' => $platPanier->plat->getPicture()->getPictureUrl(80, 70),
-
-                            ];
-
-
-                        });
-
-
+                    'plats'=>$commande->livraisons->map(function($info, $commande){                    
+                        return [
+                            'name'=>$info->name,
+                            'lastname'=>$info->lastname,
+                            'email'=>$info->email,
+                            'phone'=>$info->phone,
+                            'avatar' => $info->user->getPictureUrl(50, 60),
+                            'address'=>$info->address,
+                            'instructions'=>$info->instructions,
+                            'link_commande' => route('admin.commande.show', ['commande' => $info->commande])
+                        ];
                     })
 
 
@@ -69,10 +59,8 @@ class HomeController extends Controller
 
 
 
-
-
-
         $reservations = Reservation::selectRaw('DATE(created_at) as date, SUM(id) as total')->groupBy('date')->orderBy('date')->get();
+
 
         return view('admin.index', [
             'commandes' => $chartCommandes,

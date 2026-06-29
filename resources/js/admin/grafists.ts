@@ -45,20 +45,20 @@ const gradient = ctx!.createLinearGradient(
 
 gradient.addColorStop(
     0,
-    "rgba(0,123,255,0.5)"
+    "rgba(0, 123, 255, 0.81)"
 );
 
 
 gradient.addColorStop(
     1,
-    "rgba(0,123,255,0)"
+    "rgba(0, 123, 255, 0.14)"
 );
 
 
 new Chart(chartCanvas,{
 
 
-type:'line',
+type:'bar',
 // line + bar + doughnut
 
 
@@ -94,12 +94,12 @@ data:data.map(
 
 
 borderWidth:2,
-            stepped:true,
-             borderColor:"rgba(0, 123, 255, 0.49)",
+            // stepped:true,
+            //  borderColor:"rgba(0, 123, 255, 0.49)",
 
-            backgroundColor:gradient,
+            // backgroundColor:gradient,
 
-            fill:true
+            // fill:true
 
 
 
@@ -268,14 +268,12 @@ return context.parsed.y + " FCFA";
 function openChartModal(item:any){
 
 const modal = document.getElementById("chart-modal");
-const title = document.getElementById("modal-title");
-const content = document.getElementById("modal-description");
-const price = document.getElementById("modal-price");
+const title = document.getElementById("modalTitle");
+const content = document.querySelector(".chart-modal-description");
 
-if(!modal || !content || !title || !price) return;
+if(!modal || !content || !title) return;
 
-title.textContent = `Commande #${item.id}`;
-price.textContent = `Total : ${item.total} FCFA`;
+title.textContent = `Commandes du ${item.date}`;
 
 let html = "";
 
@@ -299,13 +297,14 @@ html += `
 <div class="plat-detail">
 
 <h4>${dish.name}</h4>
+<img src="${dish.avatar}" alt="">
 
-<p>Prix Total : ${dish.prix_unit}</p>
-<p> Quantité: ${dish.quantite_total}</p>
+<p>${dish.email}</p>
+<p>${dish.instructions}</p>
+<p>${dish.phone}</p>
+<p>${dish.address}</p>
+<a href="${dish.link_commande}">Voir</p>
 
-
-<p>${dish.description}</p>
-<img src="${dish.picture}" alt="">
 
 
 </div>
@@ -327,7 +326,7 @@ modal.style.display = "flex";
 
 
 document
-.getElementById("close-modal")
+.getElementById("closeModal")
 ?.addEventListener(
 "click",
 ()=>{

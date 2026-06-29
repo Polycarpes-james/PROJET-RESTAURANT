@@ -3,7 +3,7 @@
 @section('title', 'INGREDIENTS')
     
 @section('content')
-    <x-items-actions :category="$ingredient" type="ingredient" contentId="category_modal" contentSecondClass="category_modal_item" headerClass="category_modal_header" mainClass="category_modal_main" footerClass="category_modal_footer"/>
+    <x-items-actions type="ingredient" contentId="category_modal" contentSecondClass="category_modal_item" headerClass="category_modal_header" mainClass="category_modal_main" footerClass="category_modal_footer"/>
 
     <div class="presentation-categories">
         <div class="item">

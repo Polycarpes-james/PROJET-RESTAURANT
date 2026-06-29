@@ -44,7 +44,7 @@
                             <td>{{ $commande->id }}</td>
                             <td>{{ $commande->user->name }}</td>
                             <td>{{ $commande->total_price }} €</td>
-                            <td>{{ $commande->status }}</td>
+                            <td><span class="badge {{ $commande->status === "en_attente" ? "nouveau" : ($commande->status === "en_preparation" ? "encours" : ($commande->status === "annulee" ? "annule" : "livre")) }}">{{ $commande->status === "en_attente" ? "Nouveau" : ($commande->status === "en_preparation" ? "En cours" : ($commande->status === "annulee" ? "Annulée" : "Livrée")) }}</span></td>
                             <td class="options">
                                 <form action="{{ route('admin.commande.update', $commande) }}" method="POST">
                                     @csrf

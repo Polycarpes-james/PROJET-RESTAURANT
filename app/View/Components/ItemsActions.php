@@ -13,7 +13,7 @@ class ItemsActions extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $type, public string $contentId, public ?Model $category = null, public string $contentSecondClass, public string $headerClass, public string $mainClass, public string $footerClass)
+    public function __construct(public ?string $type = null, public string $contentId, public string $contentSecondClass, public string $headerClass, public string $mainClass, public string $footerClass)
     {
         
     }

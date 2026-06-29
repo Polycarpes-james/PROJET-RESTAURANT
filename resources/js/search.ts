@@ -97,7 +97,14 @@ function initCustomSelect(){
                     option.classList.remove("active");
                 }
             });
+            const svg = !options.classList.contains('active') ? 
+            `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>` : 
+            `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>`
+            button.innerHTML = `Choisir un rôle${svg}`
             options.classList.toggle("active");
+            if (options.classList.contains('active')) {
+                
+            }
         });
         // choisir une option
 
@@ -218,7 +225,11 @@ initCustomSelect();
  */
 function changeOptimize (button:HTMLElement, e:Event, inputs:any) {
     e.stopPropagation();
-    button.textContent = "Choisir un rôle";
+    button.innerHTML = `
+    Choisir un rôle
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+
+    `;
     button.dataset.value="";
     inputs.forEach((input:any) => {
         input.value = ""

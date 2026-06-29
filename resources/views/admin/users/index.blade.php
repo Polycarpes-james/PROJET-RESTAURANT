@@ -4,7 +4,7 @@
 
 @section('content')
 @php
-    $filtable = true
+    $filtable = true;
 @endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
@@ -28,8 +28,7 @@
                 <label for="search-user-name">Rechercher par role</label>
                 <div class="item-select" data-filtable="{{ $filtable }}">
                     <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
-                        {{-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg> --}}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
                     </span>
                     <ul class="item-options" data-target="role">
                         <li data-value="user">User</li>
@@ -51,7 +50,7 @@
                     <th>Email</th>
                     <th>Role</th>
                     @if (Auth::user()->role !== 'admin')
-                        <th>Action</th>
+                        <th>Actions</th>
                     @endif
                 </tr>
             </thead>
@@ -67,7 +66,8 @@
                         <td class="item-name">{{ $user->name }}</td>
                         <td class="item-firstname">{{ $user->firstname }}</td>
                         <td class="item-email">{{ $user->email }}</td>
-                        <td class="item-role">{{ $user->role }}</td>
+                        <td class="item-role "><span class="badge {{ $user->role === 'user' ? "encours" : ($user->role === "admin" ? 'nouveau' : 'livre') }}" >
+                            {{ $user->role === "user" ? "User" : ($user->role === "admin" ? "Administrateur" : "Super Administrateur")}}</span></td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" kind="link">
                                 <div class="change-role">

@@ -19,7 +19,7 @@
                     Ajouter le plat
                 </a>
             </div>
-            <x-search name="search-plat-name" targetName="name" placeholder="Rechercher Poulet Yassa ...">
+            <x-search name="global-search" targetName="name" placeholder="Rechercher Poulet Yassa ...">
                 <x-select-personnalise :filtable="$filtable" target="state" searchValide="{{ $searchValide }}" :items="$items">
                 </x-select-personnalise>
             </x-search>
@@ -39,8 +39,17 @@
                 <tbody>
                     @foreach ($plats as $plat)
                         <tr class="plat-row" 
-                            data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" 
-                            data-price="{{ $plat->price }}" data-state="{{ $plat->disponible }}"
+
+data-name="{{ $plat->name }}"
+data-price="{{ $plat->price }}"
+data-state="{{ $plat->disponible }}"
+                            data-search="
+{{ $plat->id }}
+{{ $plat->name }}
+{{ $plat->price }}
+{{ $plat->disponible }}
+{{ $plat->created_at }}
+"
                             >     
                             <td class="item-id">{{ $plat->id }}</td>           
                             <td><img src="{{ $plat->getPicture() ? $plat->getPicture()->getPictureUrl(70, 60) : "" }}" alt=""></td>           

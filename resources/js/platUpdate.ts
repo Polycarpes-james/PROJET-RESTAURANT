@@ -162,6 +162,14 @@ function hideBox (button:string, content:string) {
         document.querySelectorAll(button).forEach(btn => {
             btn.addEventListener('click', ()=>{
                 hide(content)
+                if(content){
+                    const modal = document.getElementById(content)
+                    if (modal) {
+                        modal.querySelectorAll('input').forEach(input => {
+                            input.value = "";
+                        })
+                    }
+                }
             })
         })
     }

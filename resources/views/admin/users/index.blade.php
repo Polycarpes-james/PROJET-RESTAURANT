@@ -5,39 +5,18 @@
 @section('content')
 @php
     $filtable = true;
+    $items = ["user" => "User", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
+    $searchValide = true;
 @endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
         <div class="item">
             <h1>La liste les utilisateurs</h1>   
         </div>
-        <div class="actions-item-categories">
-            <div class="item item-1">
-                <label for="search-reservation">Rechercher par ID</label>
-                <input type="number" name="search-reservation-id" data-target="id" class="input-search" id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
-            </div>
-            <div class="item item-2">
-                <label for="search-user-name">Rechercher par nom</label>
-                <input type="search" name="search-user-name" data-target="firstname" class="input-search" id="search-user-name" placeholder="Sate, Neron">
-            </div>
-            <div class="item item-3">
-                <label for="search-user-email">Rechercher par email</label>
-                <input type="search" name="search-category-name" data-target="email" class="input-search" id="search-user-email" placeholder="example@no.fr">
-            </div>
-            <div class="item item-4">
-                <label for="search-user-name">Rechercher par role</label>
-                <div class="item-select" data-filtable="{{ $filtable }}">
-                    <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
-                    </span>
-                    <ul class="item-options" data-target="role">
-                        <li data-value="user">User</li>
-                        <li data-value="admin">Admin</li>
-                        <li data-value="super_admin">Super Admin</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <x-search name="search-user-name" targetName="firstname" placeholder="Rechercher Sate, Neron">
+            <x-select-personnalise target="role" :filtable="$filtable" searchValide="{{ $searchValide }}" :items="$items">
+            </x-select-personnalise>
+        </x-search>
     </div>
     <div class="all-users">
         <table class="styled-table">
@@ -45,9 +24,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Avatar</th>
-                    <th>Nom</th>
-                    <th>Prenom</th>
-                    <th>Email</th>
+                    <th>particulier</th>
                     <th>Role</th>
                     @if (Auth::user()->role !== 'admin')
                         <th>Actions</th>
@@ -61,12 +38,15 @@
                         data-email="{{ $user->email }}" data-role="{{ $user->role }}"
                         data-price="{{ $user->price }}" data-phone="{{ $user->phone }}"
                         >
-                        <td class="item-id">{{ $user->id }}</td>
+                        <td class="item-id">#{{ $user->id }}</td>
                         <td><img src="{{ $user->getPictureUrl(40, 40) }}" style="border-radius:30px" alt=""></td>
-                        <td class="item-name">{{ $user->name }}</td>
-                        <td class="item-firstname">{{ $user->firstname }}</td>
-                        <td class="item-email">{{ $user->email }}</td>
-                        <td class="item-role "><span class="badge {{ $user->role === 'user' ? "encours" : ($user->role === "admin" ? 'nouveau' : 'livre') }}" >
+                        <td class="item-name">
+                            <div class="user-td">
+                                <p class="bold">{{ $user->name }} {{ $user->firstname }}</p>
+                                <p class="fs-2">{{ $user->email }}</p>
+                            </div>
+                        </td>
+                        <td class="item-role"><span class="badge {{ $user->role === 'user' ? "encours" : ($user->role === "admin" ? 'nouveau' : 'livre') }}" >
                             {{ $user->role === "user" ? "User" : ($user->role === "admin" ? "Administrateur" : "Super Administrateur")}}</span></td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" kind="link">
@@ -74,17 +54,7 @@
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <div class="item-select" data-filtable="{{ !$filtable }}">
-                                            <span class="item-btn-select user-filter" data-target="state" data-value="">Choisir un rôle
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
-                                            </span>
-                                            <input type="hidden" name="role" id="hidden-input">
-                                            <ul class="item-options" data-target="role">
-                                                <li data-value="user">User</li>
-                                                <li data-value="admin">Admin</li>
-                                                <li data-value="super_admin">Super Admin</li>
-                                            </ul>
-                                        </div> 
+                                        <x-select-personnalise filtable="{{ !$filtable }}" target="role" searchValide="true" object="Choisir un role" :items="$items"></x-select-personnalise>
                                         <button type="submit">Changer</button>
                                     </form>
                                 </div>            
@@ -94,12 +64,7 @@
                 @endforeach
             </tbody>
         </table>
-        <div id="no-results" style="display:none;">
-            <div style="text-align:center; margin-top:1em">
-                <p>Aucun element trouvé</p> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-angry-icon lucide-angry"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><path d="M7.5 8 10 9"/><path d="m14 9 2.5-1"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>
-            </div>
-        </div>
+        <x-empty-box></x-empty-box>
     </div>
 @endsection
     

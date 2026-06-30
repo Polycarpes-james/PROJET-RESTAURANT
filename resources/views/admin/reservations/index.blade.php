@@ -20,24 +20,7 @@
 
     <div class="presentation-categories">
         <h1>La liste des reservations</h1>
-        <div class="actions-item-categories">
-            <div class="item item-1">
-                <label for="search-reservation">Rechercher par ID</label>
-                <input type="number" name="search-reservation-id" data-target="id" class="input-search"id="search-reservation-id" placeholder="1, 89, 299, 100 ...">
-            </div>
-            <div class="item item-2">
-                <label for="search-reservation-name">Rechercher par nom</label>
-                <input type="search" name="search-reservation-name" data-target="name" class="input-search"id="search-reservation-name" placeholder="Jean Pierre">
-            </div>
-            <div class="item item-3">
-                <label for="search-reservation-email">Rechercher par email</label>
-                <input type="email" name="search-reservation-email" data-target="email" class="input-search"id="search-reservation-email" placeholder="example@john.map">
-            </div>
-            <div class="item item-4">
-                <label for="search-reservation-phone">Rechercher par téléphone</label>
-                <input type="phone" name="search-reservation-phone" data-target="phone" class="input-search"id="search-reservation-phone" placeholder="06 900 60 06">
-            </div>
-        </div>
+        <x-search name="search-reservation-name" targetName="name" id="search-reservation-name" placeholder="Rechercher Jean Pierre ..."></x-search>
     </div>
     <div class="all-reservation">
         <table class="styled-table">

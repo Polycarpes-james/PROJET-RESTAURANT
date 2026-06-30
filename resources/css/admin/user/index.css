@@ -5,7 +5,7 @@
     top: -100%;
     opacity: 1;
     right: 0;
-    width: 150%;
+    width: 200%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -14,6 +14,14 @@
 .injected-part .item-select{
     width: 100%;
 }
+
+.item-select {
+    position: relative;
+    max-width: 250px;
+    width: 100%;
+}
+
+
 .change-role form{
     background-color: white;
     z-index: 9999999;
@@ -22,6 +30,49 @@
     box-shadow: 0 0 3px #8080807a;
     width: 100%;
 
+}
+
+.search-wrap{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 7px 10px;
+    max-width: 540px;
+    width: 100%;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.search-wrap svg {
+    width: 24px;
+    height: 24px;
+    color: var(--muted);
+    flex-shrink: 0;
+}
+
+.search-wrap:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px #3b82f61f;
+}
+
+
+.item-btn-select {
+    width: 100%;
+    padding: 9px 15px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+    transition: border-color var(--transition), box-shadow var(--transition);
+    border: 1px solid #1e3b8a67;
+    background: white;
+}
+.item-btn-select:hover{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px #3b82f61f;
 }
 .change-role{
     width: 100%;

@@ -17,9 +17,9 @@ class CommandeController extends Controller
     public function index()
     {
         
-        $commandesGuests = CommandeInvite::all();
+        $commandesGuests = CommandeInvite::latest()->paginate(10);
         $commandes = Commande::with('user')->latest()->paginate(10);
-        
+        // dd($commandes);
         return view('admin.commandes.index', [
             'commandesGuests' => $commandesGuests,
             'commandes' => $commandes

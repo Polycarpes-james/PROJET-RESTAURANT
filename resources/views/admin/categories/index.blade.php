@@ -14,17 +14,9 @@
                 <span class="tooltip-text">Nettoyer</span>
             </button>
         </div>
-        <div class="actions-item-categories">
-            <div class="item item-1">
-                <label for="search-category-id">Rechercher par ID</label>
-                <input type="number" name="search-category-id" class="input-search" data-target="id" id="search-category-id" placeholder="1, 89, 299, 100 ...">
-            </div>
-            <div class="item item-2">
-                <label for="search-category-name">Rechercher par nom</label>
-                <input type="search" name="search-category-name" class="input-search" data-target="name" id="search-category-name" placeholder="Dessert">
-            </div>
-        </div>
+        <x-search name="search-category-name" targetName="name" placeholder="Rechercher Jean Pierre ..."></x-search>
     </div>
+
     <div class="categories-items all-categories">
         <table class="styled-table">
             <thead>
@@ -44,11 +36,6 @@
                 @endforeach
             </tbody>
         </table>
-        <div id="no-results" style="display:none;">
-            <div style="text-align:center; margin-top:1em">
-                <p>Aucun element trouvé</p> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-angry-icon lucide-angry"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><path d="M7.5 8 10 9"/><path d="m14 9 2.5-1"/><path d="M9 10h.01"/><path d="M15 10h.01"/></svg>
-            </div>
-        </div>
+        <x-empty-box></x-empty-box>
     </div>
 @endsection

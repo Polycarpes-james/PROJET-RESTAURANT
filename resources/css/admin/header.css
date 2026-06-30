@@ -122,24 +122,8 @@
     border: 1px solid #da3232;
 } 
 
-.item-select {
-    position: relative;
-}
-
 
 /* bouton */
-.item-btn-select {
-    width: 100%;
-    padding: 9px 15px;
-    cursor: pointer;
-    position: relative;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #1e3b8a67;
-    background: white;
-}
 
 
 /* menu fermé */
@@ -193,7 +177,7 @@
     cursor: pointer;
     padding: 0 6px;
     right: 2%;
-    top: 15%;
+    top: 15%!important;
     border-radius: 50%;
     font-size: 20px;
     background-color: var(--red-pall);

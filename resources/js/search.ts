@@ -24,13 +24,6 @@ function filterRows(){
 
         const cells = row.querySelectorAll<HTMLElement>("[class^='item-']");
 
-        cells.forEach(cell=>{
-            const key = cell.className.replace("item-", "");
-            if(row.dataset[key]){
-                cell.textContent = row.dataset[key];
-            }
-        }); 
-
         for(const key in filters){
             const search = filters[key];
             if(search === "") continue;
@@ -42,14 +35,14 @@ function filterRows(){
             row.style.display = "";
             count++;
             // appliquer coloration
-            for(const key in filters){
-                const search = filters[key];
-                if(search === "") continue;
-                const cell = row.querySelector(`.item-${key}`) as HTMLElement;
-                if(cell){
-                    cell.innerHTML = highlightText(row.dataset[key] ?? "", search);
-                }
-            }
+            // for(const key in filters){
+            //     const search = filters[key];
+            //     if(search === "") continue;
+            //     const cell = row.querySelector(`.item-${key}`) as HTMLElement;
+            //     if(cell){
+            //         cell.innerHTML = highlightText(row.dataset[key] ?? "", search);
+            //     }
+            // }
         } else{
             row.style.display = "none";
         }
@@ -100,11 +93,11 @@ function initCustomSelect(){
             const svg = !options.classList.contains('active') ? 
             `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up-icon lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>` : 
             `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>`
-            button.innerHTML = `Choisir un rôle${svg}`
+            button.innerHTML = `Choisir un élément${svg}`
             options.classList.toggle("active");
-            if (options.classList.contains('active')) {
+            // if (options.classList.contains('active')) {
                 
-            }
+            // }
         });
         // choisir une option
 
@@ -117,7 +110,9 @@ function initCustomSelect(){
 
                 button.innerHTML = `
                     <p>${option.textContent}</p>
-                    <button class="clear-select" type="button">×</button>
+                    <button class="clear-select" type="button">
+                        <svg width="17px" height="17px" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
                 `;
 
                 button.dataset.value = value;
@@ -125,12 +120,13 @@ function initCustomSelect(){
                 const target = `${options?.dataset.target}`
                 
                 const inputs = document.querySelectorAll('#hidden-input');
-                // si ce select est un filtre
+
                 if(target){
                     filters[target] = value.toLowerCase();
                     inputs.forEach((input:any) => {
                         input.value = value
                     })                
+
                     if(select.dataset.filtable){
                         filterRows();
                     }
@@ -225,10 +221,12 @@ initCustomSelect();
  */
 function changeOptimize (button:HTMLElement, e:Event, inputs:any) {
     e.stopPropagation();
-    button.innerHTML = `
-    Choisir un rôle
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
 
+    if(!button || !inputs) return;
+    
+    button.innerHTML = `
+    Choisir un élément
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
     `;
     button.dataset.value="";
     inputs.forEach((input:any) => {

@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     transition: 0.3s;
 }
 .container-admin p{
@@ -295,4 +295,22 @@
 .badge.red {
     background: #ffc9c9;
     color: #b00020;
+}
+
+
+.actions-item-categories{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}   
+
+
+.actions-item-categories input.input-search
+{
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 13.5px;
+    color: var(--text);
+    width: 100%;
 }

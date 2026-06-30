@@ -2,6 +2,12 @@
 
 @section('title', 'COMMANDES')
     
+@php
+    $items = ["en_attente" => "En attente", "en_preparation" => "En préparation", "livree" => "Livrée", "annulee" => "Annulée"];
+    $items2 = ["ID", "CLIENT", "PRIx", "sTatus", "actions"];
+    $filtable = true;
+    $searchValide = true
+@endphp
 @section('content')
     <div class="presentation-categories">
         <h1>La liste des commandes</h1>
@@ -27,87 +33,15 @@
     </div>
     <div class="commandes-users">
         <h1>Gestion des commandes users</h1>
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Client</th>
-                    <th>Total</th>
-                    <th>Statut</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($commandes as $commande)
-                    @if ($commande->user)
-                        <tr>
-                            <td>{{ $commande->id }}</td>
-                            <td>{{ $commande->user->name }}</td>
-                            <td>{{ $commande->total_price }} €</td>
-                            <td><span class="badge {{ $commande->status === "en_attente" ? "nouveau" : ($commande->status === "en_preparation" ? "encours" : ($commande->status === "annulee" ? "annule" : "livre")) }}">{{ $commande->status === "en_attente" ? "Nouveau" : ($commande->status === "en_preparation" ? "En cours" : ($commande->status === "annulee" ? "Annulée" : "Livrée")) }}</span></td>
-                            <td class="options">
-                                <form action="{{ route('admin.commande.update', $commande) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <select name="status">
-                                        <option value="en_attente" @selected($commande->status == 'en_attente')>En attente</option>
-                                        <option value="en_preparation" @selected($commande->status == 'en_preparation')>En préparation</option>
-                                        <option value="livree" @selected($commande->status == 'livree')>Livrée</option>
-                                        <option value="annulee" @selected($commande->status == 'annulee')>Annulée</option>
-                                    </select>
-                                    <button type="submit">Changer</button>
-                                </form>
-                                <a href="{{ route('admin.commande.show', $commande) }}">        
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
-                                </a>
-                            </td>
-                        </tr>
-                    @endif
-                @endforeach
-            </tbody>
-        </table>
-
-        {{-- {{ $commandes->links() }}             --}}
+        <x-table :items="$items2" :model="$commandes" routeUpdate="admin.commande.update" routeShow="admin.commande.show" target="commande">
+            <x-select-personnalise :filtable="!$filtable" target="status" searchValide="{{ $searchValide }}" :items="$items"></x-select-personnalise>
+        </x-table>
     </div>
     <div class="commandes-guests">
         <h1>Gestion des commandes invités</h1>
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Client</th>
-                    <th>Total</th>
-                    <th>Statut</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($commandesGuests as $item)
-                    <tr>
-                        <td>{{ $item->id }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->total_prix }} €</td>
-                        <td>{{ $item->status }} </td>
-                        <td class="options">
-                            <form action="{{ route('admin.invite.commande.update', $item) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <select name="status">
-                                    <option value="en_attente" @selected($item->status == 'en_attente')>En attente</option>
-                                    <option value="en_preparation" @selected($item->status == 'en_preparation')>En préparation</option>
-                                    <option value="livree" @selected($item->status == 'livree')>Livrée</option>
-                                    <option value="annulee" @selected($item->status == 'annulee')>Annulée</option>
-                                </select>
-                                <button type="submit">Changer</button>
-                            </form>
-                            <a href="{{ route('admin.commande.showGuest', ['commande' => $item, 'invite_id' => $item->invite_id]) }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <x-table :items="$items2" :model="$commandesGuests" routeUpdate="admin.invite.commande.update" routeShow="admin.commande.showGuest" target="guest">
+            <x-select-personnalise :filtable="!$filtable" target="status" searchValide="{{ $searchValide }}" :items="$items"></x-select-personnalise>
+        </x-table>
         <div id="no-results" style="display:none;">
             <div style="text-align:center; margin-top:1em">
                 <p>Aucun element trouvé</p> 

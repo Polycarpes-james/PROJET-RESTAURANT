@@ -21,30 +21,6 @@
     transition: 0.4s;
     border-radius: 5px;
 }
-.actions-item-categories{
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}   
-.actions-item-categories .item{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 5px;
-}
-.actions-item-categories .item label{
-    opacity: 0.8;
-    font-size: 17px;
-    letter-spacing: 1px;
-    color: var(--main-color);
-}
-.actions-item-categories input.input-search
-{
-    padding: 10px 5px;
-    width: 100%;
-    border: 1px solid #1e3b8a67;
-    border-radius: 3px;
-}
 .presentation-categories button.open-category-modal{
     background-color: transparent;
     color: var(--main-color);
@@ -92,14 +68,12 @@ mark {
 }
 
 .action-category #show{
-    background-color: #1e3b8a4f;
     border: 1px solid #1e3b8a4f;
 }
 .action-category #show svg{
     color: var(--main-color);
 }
 .action-category #edit{
-    background-color: #0e500e2e;
     border: 1px solid #0e500e3d;
 }
 .action-category #edit svg{
@@ -114,10 +88,10 @@ mark {
     color: #ff5b5b;
 }
 
-.all-ingredients button, .all-categories .action-category button, .action-category button, .action-category>*{
+.all-ingredients button, .all-categories .action-category button, .action-category button, .action-category a, .action-category>*{
     border: none;
     background: transparent;
-    padding: 3px 5px 2px 5px;
+    padding: 5px;
     border-radius: 3px;
 }
 

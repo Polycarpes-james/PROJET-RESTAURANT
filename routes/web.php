@@ -180,7 +180,7 @@ prefix('admin')->name('admin.')->group(function () {
         'invite_id' => '[0-9a-z\-]+'
     ]);
 
-    Route::post('/invite/commande/{commande}', [CommandeInviteController::class, 'update'])->name('invite.commande.update')->where([
+    Route::put('/invite/commande/{commande}', [CommandeInviteController::class, 'update'])->name('invite.commande.update')->where([
         'commande' => '[0-9]+'
     ]);
 

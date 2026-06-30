@@ -32,7 +32,7 @@
 }
 
 .styled-table tbody tr:hover {
-  background-color: #c7c7c73b;
+  background-color: var(--bg);
 }
 
 /* Badges statut */

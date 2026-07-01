@@ -1,7 +1,7 @@
 <div class="actions-item-categories">
     <div class="search-wrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="search" name="{{ $name }}" data-target="{{ $targetName }}" class="input-search" id="{{ $name }}" placeholder="{{ $placeholder }}">
+        <input type="search" data-target="{{ $targetName }}" class="global-search"  placeholder="{{ $placeholder }}">
     </div>            
     {{ $slot }}
 </div>

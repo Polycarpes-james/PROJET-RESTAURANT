@@ -14,6 +14,50 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = "flex"
     }
     
+    function showModalContent (plat:any) {
+        const modal = document.getElementById('showUpDish');
+        const content = modal?.querySelector('.admin_plat_main');
+        // const titleEl = .getElementById('modalTitle');
+        
+        if(!modal || !content) return;
+        
+        modal.style.display = "flex"
+        content.innerHTML = `
+                <div class="plat-item">
+            <div class="title-category">
+                <h1>${ plat.name }</h1>
+            </div>
+            <div class="description">
+                <p>${ plat.description }</p>
+            </div>
+            <div class="item-picture">
+                @foreach ($plat->pictures as $picture)
+                    <img src="{{ $picture->getPictureUrl(200, 200) }}" alt="Photo">
+                @endforeach
+            </div>
+        <div class="ingredients-item">
+                <h2>Les ingredients du plat</h2>
+                @foreach ($plat->ingredients as $ingredient)
+                    <div class="ingredients">
+                        <p>{{ $ingredient->name }}</p>
+                        <p>{{ $ingredient->price }}€</p>
+                    </div>
+                @endforeach
+                <div class="total-price">
+                    <p>Prix Total des ingredients : </p>
+                    <p>{{ $plat->total_price() }}€</p>
+                </div>
+        </div>       
+            <div class="status">
+                <p>Statut </p>
+                <p class="disponible {{ $style_disponible }}">{{ $disponible }}</p>
+                <p>{{ $plat->raison_indisponible }}</p>
+            </div>
+        </div>
+        `
+
+
+    }
 
     document.querySelectorAll('.open-category-modal').forEach(element => {
         element.addEventListener('click', (e:any) => {
@@ -26,7 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
             showModalAdmin("Creation de l'ingredient")
         })
     })
-    
+
+    document.querySelectorAll('.plat-row #show').forEach((btn:any) => {
+        btn.addEventListener('click', (e:any) => {
+            showModalContent(btn.dataset)
+        })
+    })
+
     document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
         btn.addEventListener('click', (e:any) =>{            
             showModal(btn.dataset.id, ".btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)

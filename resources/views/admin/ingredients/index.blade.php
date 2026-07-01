@@ -1,7 +1,9 @@
 @extends('admin.base')
 
 @section('title', 'INGREDIENTS')
-    
+    @php
+        $isViewlable = true
+    @endphp
 @section('content')
     <x-items-actions type="ingredient" contentId="category_modal" contentSecondClass="category_modal_item" headerClass="category_modal_header" mainClass="category_modal_main" footerClass="category_modal_footer"/>
 
@@ -31,7 +33,7 @@
                         <td class="item-id">{{$ingredient->id}}</td>
                         <td class="item-name"><p style="text-transform:capitalize">{{$ingredient->name}}</p></td>
                         <td class="item-price">{{$ingredient->price}} €</td>
-                        <x-smally :element="$ingredient" class="edit-ingredient" route="ingredient" kind="btn"/>
+                        <x-smally :element="$ingredient" class="edit-ingredient" isViewlable="{{ $isViewlable }}" route="ingredient" kind="btn"/>
                     </tr>
                 @endforeach
             </tbody>

@@ -6,9 +6,12 @@
 @php
     $filtable = true;
     $items = ["yes" => "Disponible", "no" => "Indisponible"];
-    $searchValide = true
+    $searchValide = true;
+    $isViewlable = true;
+    $linkBtn = true
 @endphp
     <x-show-modal-admin kind="btn-delete-admin" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
+    <x-show-modal-admin kind="btn-delete-admin" contentId="showUpDish" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
 
     <div class="container-items-admin">
         <div class="presentation-categories">
@@ -19,7 +22,7 @@
                     Ajouter le plat
                 </a>
             </div>
-            <x-search name="global-search" targetName="name" placeholder="Rechercher Poulet Yassa ...">
+            <x-search targetName="name" placeholder="Rechercher Poulet Yassa ...">
                 <x-select-personnalise :filtable="$filtable" target="state" searchValide="{{ $searchValide }}" :items="$items">
                 </x-select-personnalise>
             </x-search>
@@ -60,7 +63,7 @@ data-state="{{ $plat->disponible }}"
                                     {{ $plat->disponible === "yes" ? $items["yes"] : $items["no"] }}
                                 </span>
                             </td>           
-                            <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="link"/>
+                            <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="btn" linkBtn="{{ !$linkBtn }}" isViewlable="{{ $isViewlable }}"/>
                         </tr>
                     @endforeach
                 </tbody>

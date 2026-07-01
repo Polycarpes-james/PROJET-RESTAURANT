@@ -13,7 +13,7 @@ class Smally extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public Model $element, public string $class, public string $route, public string $kind)
+    public function __construct(public Model $element, public string $class, public bool $linkBtn, public string $route, public ?bool $isViewlable = null, public string $kind)
     {
         //
     }

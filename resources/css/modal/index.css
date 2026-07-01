@@ -2,7 +2,7 @@
 
 /* Modale */
 #customModal, #platWindowsInfo, #customModalShow, #category_modal, #modal-connect, 
-#multi_tasks_modal, #suppression_dish, #container-user-reservation, #admin_plat_delete{
+#multi_tasks_modal, #suppression_dish, #container-user-reservation, #admin_plat_delete, #showUpDish{
     position: fixed;
     top:0; 
     left:0;
@@ -27,7 +27,7 @@
 #customModalShow{
     z-index: 90000399;
 }
-#multi_tasks_modal, #suppression_dish, #reservation-user-reservation, #admin_plat_delete{
+#multi_tasks_modal, #suppression_dish, #reservation-user-reservation, #admin_plat_delete, #showUpDish{
     z-index: 99999999;
     align-items: center;
     width: 100%;

@@ -7,6 +7,8 @@
     $filtable = true;
     $items = ["user" => "User", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
     $searchValide = true;
+    $linkBtn = true;
+    $isViewlable = true
 @endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
@@ -49,7 +51,7 @@
                         <td class="item-role"><span class="badge {{ $user->role === 'user' ? "encours" : ($user->role === "admin" ? 'nouveau' : 'livre') }}" >
                             {{ $user->role === "user" ? "User" : ($user->role === "admin" ? "Administrateur" : "Super Administrateur")}}</span></td>
                         @can('update', $user)
-                            <x-smally :element="$user" class="btn-delete-user-admin" route="user" kind="link">
+                            <x-smally :element="$user" class="btn-delete-user-admin" route="user" linkBtn="{{ !$linkBtn }}"  isViewlable="{{ $isViewlable }}" kind="link">
                                 <div class="change-role">
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf

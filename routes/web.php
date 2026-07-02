@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PlatController;
 use App\Http\Controllers\Admin\ReservationController as AdminReservationController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AvisController;
 use App\Http\Controllers\CommandeController;

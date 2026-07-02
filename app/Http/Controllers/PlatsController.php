@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Avis;
-use App\Models\Plat;
-use App\Models\Panier;
-use App\Models\Commande;
-
+use App\Data\PlatData;
 use App\Http\Controllers\Controller;
+use App\Models\Avis;
+use App\Models\Commande;
+use App\Models\Panier;
+use App\Models\Plat;
 use Illuminate\Support\Facades\Auth;
 
 class PlatsController extends Controller
 {
        
     public function plats () {
+        $plats = PlatData::collect(Plat::all());
         return view('plats.index', [
-            'plats' => Plat::all(),
+            'plats' => $plats,
             'total' => $this->total()
         ]);
     }

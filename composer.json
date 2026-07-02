@@ -12,7 +12,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.6",
         "league/glide-laravel": "^1.0",
-        "spatie/laravel-data": "*",
+        "spatie/laravel-data": "^4.23",
         "spatie/laravel-permission": "^6.25"
     },
     "require-dev": {

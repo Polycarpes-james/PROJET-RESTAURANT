@@ -8,7 +8,8 @@
     $items = ["client" => "User", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
     $searchValide = true;
     $linkBtn = true;
-    $isViewlable = true
+    $isViewlable = true;
+    // dd(auth()->user()->getRoleNames()->first());
 @endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
@@ -48,8 +49,8 @@
                                 <p class="fs-2">{{ $user->email }}</p>
                             </div>
                         </td>
-                        <td class="item-role"><span class="badge {{ $user->getRoleNames() === 'client' ? "encours" : ($user->getRoleNames() === "admin" ? 'nouveau' : 'livre') }}" >
-                            {{ $user->getRoleNames() }}</span></td>
+                        <td class="item-role"><span class="badge {{ $user->role_color }}" >
+                            {{ $user->role_label }}</span></td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" linkBtn="{{ !$linkBtn }}"  isViewlable="{{ $isViewlable }}" kind="link">
                                 <div class="change-role">

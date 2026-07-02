@@ -31,7 +31,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
+        $user->assignRole('client');
+        
         Auth::login($user);
 
         return redirect()->route('.rettine')->with('success', 'Compte créé avec succès.');

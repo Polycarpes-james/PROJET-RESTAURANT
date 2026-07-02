@@ -19,11 +19,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->enum('role', [
-                'user',
-                'admin',
-                'super_admin'
-            ])->default('user');
             $table->boolean('is_online')->default(false);
             $table->timestamp('last_activity')->nullable();
             $table->rememberToken();

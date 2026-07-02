@@ -45,7 +45,7 @@ class PlatPolicy
      */
     public function delete(User $user, Plat $plat): bool
     {
-        return $user->role === "super_admin";
+        return $user->hasRole("super_admin");
     }
 
     /**

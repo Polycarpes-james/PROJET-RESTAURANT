@@ -5,7 +5,7 @@
 @section('content')
 @php
     $filtable = true;
-    $items = ["user" => "User", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
+    $items = ["client" => "User", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
     $searchValide = true;
     $linkBtn = true;
     $isViewlable = true
@@ -16,7 +16,7 @@
             <h1>La liste les utilisateurs</h1>   
         </div>
         <x-search name="search-user-name" targetName="firstname" placeholder="Rechercher Sate, Neron">
-            <x-select-personnalise target="role" :filtable="$filtable" searchValide="{{ $searchValide }}" :items="$items">
+            <x-select-personnalise target="role" :filtable="!$filtable" searchValide="{{ !$searchValide }}" :items="$items">
             </x-select-personnalise>
         </x-search>
     </div>
@@ -28,7 +28,7 @@
                     <th>Avatar</th>
                     <th>particulier</th>
                     <th>Role</th>
-                    @if (Auth::user()->role !== 'admin')
+                    @if (Auth::user()->hasRole("super_admin"))
                         <th>Actions</th>
                     @endif
                 </tr>
@@ -37,7 +37,7 @@
                 @foreach ($users as $user)
                     <tr class="user-row" 
                         data-id="{{ $user->id }}" data-firstname="{{ $user->firstname }}" 
-                        data-email="{{ $user->email }}" data-role="{{ $user->role }}"
+                        data-email="{{ $user->email }}" data-role="{{ $user->getRoleNames() }}"
                         data-price="{{ $user->price }}" data-phone="{{ $user->phone }}"
                         >
                         <td class="item-id">#{{ $user->id }}</td>
@@ -48,15 +48,15 @@
                                 <p class="fs-2">{{ $user->email }}</p>
                             </div>
                         </td>
-                        <td class="item-role"><span class="badge {{ $user->role === 'user' ? "encours" : ($user->role === "admin" ? 'nouveau' : 'livre') }}" >
-                            {{ $user->role === "user" ? "User" : ($user->role === "admin" ? "Administrateur" : "Super Administrateur")}}</span></td>
+                        <td class="item-role"><span class="badge {{ $user->getRoleNames() === 'client' ? "encours" : ($user->getRoleNames() === "admin" ? 'nouveau' : 'livre') }}" >
+                            {{ $user->getRoleNames() }}</span></td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" linkBtn="{{ !$linkBtn }}"  isViewlable="{{ $isViewlable }}" kind="link">
                                 <div class="change-role">
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <x-select-personnalise filtable="{{ !$filtable }}" target="role" searchValide="true" object="Choisir un role" :items="$items"></x-select-personnalise>
+                                        <x-select-personnalise :filtable="$filtable" target="role" searchValide="{{ $searchValide }}" object="Choisir un role" :items="$items"></x-select-personnalise>
                                         <button type="submit">Changer</button>
                                     </form>
                                 </div>            

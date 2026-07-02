@@ -16,7 +16,7 @@ class SuperAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-         if(!Auth::check() || !auth()->user()->hasRole('super_admin')){
+         if(!Auth::check() || !auth()->user()->hasAnyRole(['admin', 'super_admin'])){
             return to_route('.rettine');
         }
 

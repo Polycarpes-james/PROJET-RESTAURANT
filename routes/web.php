@@ -159,7 +159,7 @@ Route::delete('rettine/logout', [AuthController::class, 'logout'])
 
 
 Route::
-middleware(['auth', 'admin', 'super_admin'])->
+middleware(['auth', 'super_admin'])->
 prefix('admin')->name('admin.')->group(function () {
     Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard');
     Route::resource('plat', PlatController::class);

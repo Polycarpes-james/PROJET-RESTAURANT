@@ -65,10 +65,8 @@ class UserController extends Controller
         $validated = $request->validate([
             'role' => 'required|in:user,admin,super_admin'
         ]);
-        $user->role = $validated['role'];
-        // dd($validated);
+        $user->assignRole($validated['role']);
         $user->save();
-
         return redirect()->back()->with('success', $user->name . " a été changé en " . $user->role);
     }
 

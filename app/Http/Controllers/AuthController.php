@@ -47,11 +47,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
 
             $request->session()->regenerate();
-            if (Auth::user()->hasAnyRole() === "admin" || Auth::user()->hasAnyRole() === "super_admin") {
+            if (Auth::user()->hasRole("admin") || Auth::user()->hasRole("super_admin")) {
                 return redirect()->route('admin.dashboard');
             } 
             
-            if (Auth::user()->role === "user") {
+            if (Auth::user()->hasRole("client")) {
                 return redirect()->route('.rettine');
             }
         }

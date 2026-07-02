@@ -2,18 +2,25 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
-class PermissionSeeder extends Seeder
+class RolePermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
-    {
-       $permissions = [
-            'manage users',
+    {   
+        $client = Role::findByName('client');
+
+        $admin = Role::findByName('admin');
+
+        $superAdmin = Role::findByName('super_admin');
+
+        $admin->givePermissionTo([
             'manage plats',
             'manage categories',
             'manage ingredients',
@@ -21,15 +28,10 @@ class PermissionSeeder extends Seeder
             'manage commandes',
             'manage menus',
             'manage dashboard',
-            'manage reviews',
-            'manage settings',
-        ];
+        ]);
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate([
-                'name' => $permission
-            ]);
-        }
-
+        $superAdmin->givePermissionTo(
+            Permission::all()
+        );
     }
 }

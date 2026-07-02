@@ -16,16 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
- $user = Auth::user();
+        $user = Auth::user();
 
-
-        if(
-            !$user ||
-            !$user->hasRole('super_admin')
-        ){
-
+        if(!$user || !$user->hasRole('admin')){
             return to_route('.rettine');
-
         }
 
         return $next($request);

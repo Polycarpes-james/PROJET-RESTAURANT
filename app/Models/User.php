@@ -40,6 +40,7 @@ class User extends Authenticatable
 
         return $role ? RoleEnum::from($role)->label() : 'Aucun rôle';
     }
+
     public function getRoleColorAttribute(): string
     {
         $role = $this->getRoleNames()->first();

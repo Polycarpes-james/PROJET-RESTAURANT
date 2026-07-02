@@ -11,7 +11,7 @@ class SelectPersonnalise extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public bool $filtable, public array $items, public bool $searchValide, public string $target)
+    public function __construct(public string $filtable, public array $items, public bool $searchValide, public string $target)
     {
         //
     }

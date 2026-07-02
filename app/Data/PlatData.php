@@ -14,9 +14,12 @@ class PlatData extends Data
         public string $name,
         public string $description,
         public float $price,
-        public string $availability,
+        public string $slug,
         public ?string $image,
-        public string $shortDescription,
+        public string $link,
+        public string $category,
+        public float $note,
+        public int $avis,
         public string $priceFormatted,
     ) {}
 
@@ -27,10 +30,13 @@ class PlatData extends Data
             name: $plat->name,
             description: $plat->description,
             price: $plat->price,
-            availability: $plat->disponible,
-            image: $plat->getPicture()?->getPictureUrl(300,250),
-            shortDescription: str($plat->description)->limit(60),
-            priceFormatted: number_format($plat->price,0,' ',' ').' FCFA',
+            slug: $plat->getSlug(),
+            image: $plat->getPicture()?->getPictureUrl(500,400),
+            link: $plat->getSlug(),
+            category: $plat->category?->name ?? "MULTITASK",
+            note: $plat->sumNotes(),
+            avis: $plat->nombreAvis(),
+            priceFormatted: number_format($plat->price,0,' ',' ').' €',
         );
     }
 }

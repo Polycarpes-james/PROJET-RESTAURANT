@@ -29,7 +29,7 @@ class PlatFactory extends Factory
             ]),
             'description' => $this->faker->sentences(7, true), 
             'price' => $this->faker->numberBetween(25, 75),
-            'disponible' => true,
+            'disponible' => true || false,
             'temps_preparation' => $this->faker->numberBetween(1600, 36000),
             'raison_indisponible' => $this->faker->sentences(7, true)
         ];

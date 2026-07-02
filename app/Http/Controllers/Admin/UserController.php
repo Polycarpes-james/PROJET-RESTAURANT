@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         return view('admin.users.index', [
-            'users' => User::paginate(8)
+            'users' => User::all()
         ]);
     }
 
@@ -61,12 +61,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // dd($request);
         $validated = $request->validate([
-            'role' => 'required|in:user,admin,super_admin'
+            'role' => 'required'
         ]);
         $user->assignRole($validated['role']);
+        // dd($user);
         $user->save();
-        return redirect()->back()->with('success', $user->name . " a été changé en " . $user->role);
+        
+        return redirect()->back()->with('success', $user->name . " a été changé en " . $user->getRoleNames()->first());
     }
 
     /**

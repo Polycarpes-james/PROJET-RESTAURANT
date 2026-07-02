@@ -21,7 +21,7 @@ class ReservationFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->id,
             'name' => $this->faker->name(),
-            'phone' => $this->faker->numberBetween(6, 10),
+            'phone' => $this->faker->numberBetween(98765433210, true),
             'email' => fake()->unique()->safeEmail(),
             'guests' => $this->faker->numberBetween(6, 10),
             'reservation_date' => fake()->dateTime(),

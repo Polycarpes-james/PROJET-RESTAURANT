@@ -15,17 +15,9 @@ let globalSearch = "";
 
 
 
-const rows =
-document.querySelectorAll<HTMLTableRowElement>(
-".user-row, .plat-row, .category-row, .ingredient-row, .reservation-row"
-);
+const rows = document.querySelectorAll<HTMLTableRowElement>(".user-row, .plat-row, .category-row, .ingredient-row, .reservation-row");
 
-
-
-const noResults =
-document.querySelector<HTMLElement>(
-"#no-results"
-);
+const noResults = document.querySelector<HTMLElement>("#no-results");
 
 
 
@@ -36,121 +28,50 @@ document.querySelector<HTMLElement>(
 
 function filterRows(){
 
-
-let count = 0;
-
-
-
-rows.forEach(row=>{
-
-
-let match = true;
-
-
-
-// ===============================
-// Recherche globale
-// ===============================
-
-if(globalSearch !== ""){
-
-
-const value =
-(row.dataset.search ?? "")
-.toLowerCase();
-
-
-
-if(!value.includes(globalSearch)){
-
-
-match = false;
-
-
-}
-
-
-}
-
-
-
-
-// ===============================
-// Tes filtres existants
-// ===============================
-
-for(const key in filters){
-
-
-const search =
-filters[key];
-
-
-if(search === "")
-continue;
-
-
-
-const value =
-(row.dataset[key] ?? "")
-.toLowerCase();
-
-
-
-if(!value.includes(search)){
-
-
-match = false;
-
-break;
-
-
-}
-
-
-
-}
-
-
-
-
-if(match){
-
-
-row.style.display = "";
-
-count++;
-
-
-
-}else{
-
-
-row.style.display = "none";
-
-
-}
-
-
-
-
-});
-
-
-
-
-if(noResults){
-
-
-noResults.style.display =
-count === 0
-? ""
-: "none";
-
-
-}
-
-
+    let count = 0;
+
+    rows.forEach(row=>{
+
+        let match = true;
+
+        if(globalSearch !== ""){
+            console.log(globalSearch);
+            
+            const value = (row.dataset.search ?? "").toLowerCase();
+            if(!value.includes(globalSearch)){
+                match = false;
+            }
+        }
+
+    // ===============================
+    // Tes filtres existants
+    // ===============================
+
+        for(const key in filters){
+            const search = filters[key];
+
+            if(search === "") continue;
+
+            const value = (row.dataset[key] ?? "").toLowerCase();
+            
+            if(!value.includes(search)){
+                match = false;
+                break;
+            }
+        }
+
+        if(match){
+            row.style.display = "";
+            count++;
+        } else{
+            row.style.display = "none";
+        }
+
+    });
+
+    if (noResults) {
+        noResults.style.display = count === 0 ? "" : "none";
+    }
 
 }
 
@@ -165,15 +86,15 @@ count === 0
 // ===============================
 
 
-document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
-    input.addEventListener("input",()=>{
-        const target = input.dataset.target!;
-        filters[target] = input.value.trim().toLowerCase();
-        filterRows();
-    });
+// document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
+//     input.addEventListener("input",()=>{
+//         const target = input.dataset.target!;
+//         filters[target] = input.value.trim().toLowerCase();
+//         filterRows();
+//     });
 
 
-});
+// });
 
 
 
@@ -184,12 +105,14 @@ document.querySelectorAll<HTMLInputElement>(".input-search").forEach(input=>{
 // ===============================
 
 
-const globalInput = document.querySelector<HTMLInputElement>(".global-search");
+const globalInputs = document.querySelectorAll<HTMLInputElement>(".global-search");
 
-globalInput?.addEventListener("input", ()=>{
-    globalSearch = globalInput.value.trim().toLowerCase();
+globalInputs.forEach((input:any) => {
+    input.addEventListener("input", ()=>{
+    globalSearch = input.value.trim().toLowerCase();    
     filterRows();
 });
+})
 
 
 // ===============================
@@ -254,16 +177,15 @@ function initCustomSelect(){
                 inputs.forEach((input:any)=>{
                     input.value=value;
                 });
-                selects.forEach((select:any) => {
-                    if (select.dataset.filtable) {
-                        filterRows();
-                    }
-                })
+                // if (document.querySelector<HTMLElement>(".item-select")?.dataset.filtable === "true") {
+                //     filterRows();
+                // }
             }
 
             options.classList.remove("active");
 
             const clear = button.querySelector(".clear-select");
+
             clear?.addEventListener("click", (e)=>{
                 changeOptimize(button, e, inputs);
                 if(target){

@@ -26,12 +26,12 @@ enum RoleEnum: string
         };
     }
 
-    public function icon(): string
-    {
-        return match ($this) {
-            self::SUPER_ADMIN => 'shield',
-            self::ADMIN => 'user-cog',
-            self::CLIENT => 'user',
-        };
-    }
+    // public function icon(): string
+    // {
+    //     return match ($this) {
+    //         self::SUPER_ADMIN => 'shield',
+    //         self::ADMIN => 'user-cog',
+    //         self::CLIENT => 'user',
+    //     };
+    // }
 }

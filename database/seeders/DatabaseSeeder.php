@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Avis;
 use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\Menu;
@@ -30,5 +31,6 @@ class DatabaseSeeder extends Seeder
         $plats = Plat::factory(40)->hasAttached($ingredients->random(10))->create();
         Menu::factory(10)->hasAttached($plats->random(10))->create();
         Reservation::factory(20)->create();
+        Avis::factory(100)->create();
     }
 }

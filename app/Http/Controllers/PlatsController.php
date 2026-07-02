@@ -14,8 +14,9 @@ class PlatsController extends Controller
 {
        
     public function plats () {
-        $plats = PlatData::collect(Plat::all());
-        return view('plats.index', [
+$plats = PlatData::collect(
+    Plat::with('category')->get()
+);        return view('plats.index', [
             'plats' => $plats,
             'total' => $this->total()
         ]);

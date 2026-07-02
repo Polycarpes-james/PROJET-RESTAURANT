@@ -4,12 +4,10 @@
 
 @section('content')
 @php
-    $filtable = true;
-    $items = ["client" => "User", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
+    $items = ["client" => "Client", "admin" => "Administrateur", 'super_admin' => "Super Administrateur"];
     $searchValide = true;
     $linkBtn = true;
     $isViewlable = true;
-    // dd(auth()->user()->getRoleNames()->first());
 @endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
@@ -17,7 +15,7 @@
             <h1>La liste les utilisateurs</h1>   
         </div>
         <x-search name="search-user-name" targetName="firstname" placeholder="Rechercher Sate, Neron">
-            <x-select-personnalise target="role" :filtable="!$filtable" searchValide="{{ !$searchValide }}" :items="$items">
+            <x-select-personnalise target="role" filtable="true" searchValide="{{ !$searchValide }}" :items="$items">
             </x-select-personnalise>
         </x-search>
     </div>
@@ -40,6 +38,7 @@
                         data-id="{{ $user->id }}" data-firstname="{{ $user->firstname }}" 
                         data-email="{{ $user->email }}" data-role="{{ $user->getRoleNames() }}"
                         data-price="{{ $user->price }}" data-phone="{{ $user->phone }}"
+                        data-search="{{ $user->id }}{{ $user->name }}{{ $user->price }}{{ $user->disponible }}{{ $user->created_at }}"
                         >
                         <td class="item-id">#{{ $user->id }}</td>
                         <td><img src="{{ $user->getPictureUrl(40, 40) }}" style="border-radius:30px" alt=""></td>
@@ -50,14 +49,14 @@
                             </div>
                         </td>
                         <td class="item-role"><span class="badge {{ $user->role_color }}" >
-                            {{ $user->role_label }}</span></td>
+                            {{ $user->getRoleNames()->first() }}</span></td>
                         @can('update', $user)
                             <x-smally :element="$user" class="btn-delete-user-admin" route="user" linkBtn="{{ !$linkBtn }}"  isViewlable="{{ $isViewlable }}" kind="link">
                                 <div class="change-role">
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <x-select-personnalise :filtable="$filtable" target="role" searchValide="{{ $searchValide }}" object="Choisir un role" :items="$items"></x-select-personnalise>
+                                        <x-select-personnalise filtable="false" target="role" searchValide="{{ $searchValide }}" object="Choisir un role" :items="$items"></x-select-personnalise>
                                         <button type="submit">Changer</button>
                                     </form>
                                 </div>            

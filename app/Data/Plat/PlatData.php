@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Data;
-
 use App\Models\Plat;
 use Spatie\LaravelData\Data;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+
 
 #[TypeScript]
 class PlatData extends Data
@@ -17,9 +16,6 @@ class PlatData extends Data
         public string $slug,
         public ?string $image,
         public string $link,
-        public string $category,
-        public float $note,
-        public int $avis,
         public string $priceFormatted,
     ) {}
 
@@ -32,11 +28,11 @@ class PlatData extends Data
             price: $plat->price,
             slug: $plat->getSlug(),
             image: $plat->getPicture()?->getPictureUrl(500,400),
-            link: $plat->getSlug(),
-            category: $plat->category?->name ?? "MULTITASK",
-            note: $plat->sumNotes(),
-            avis: $plat->nombreAvis(),
-            priceFormatted: number_format($plat->price,0,' ',' ').' €',
+            link: route('rettine.plats.show',[
+                'plat'=>$plat,
+                'slug'=>$plat->getSlug()
+            ]),
+            priceFormatted:number_format($plat->price,0,' ',' ').' €',
         );
     }
 }

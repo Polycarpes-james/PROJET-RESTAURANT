@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Data;
+
+use App\Data\Category\CategoryData;
+use App\Data\Ingredient\IngredientData;
+use App\Data\Picture\PictureData;
+use PlatData;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
+use Spatie\TypeScriptTransformer\Attributes\TypeScript;
+
+#[TypeScript]
+
+class PlatShowData extends Data
+{
+    public function __construct(
+        public PlatData $plat,
+        public float $note,
+        public int $avis,
+        public int $quantite,
+        #[DataCollectionOf(PictureData::class)]
+        public DataCollection $pictures,
+        #[DataCollectionOf(IngredientData::class)]
+        public DataCollection $ingredients,
+        public ?CategoryData $category,
+        public mixed $paginationAvis,
+    ) {}
+}

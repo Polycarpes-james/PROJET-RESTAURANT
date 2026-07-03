@@ -47,18 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${ data.plat.description }</p>
             </div>
             <div class="item-picture">
-                ${data.pictures.forEach((picture: any) => `
-                    <img src="${picture.filename}" alt="Photo">
-                `)}
+               ${data.pictures.map((picture: any) => `
+                    <img src="${picture.url}" alt="Photo" height="50px" width="60px">
+                `).join("")}
             </div>
         <div class="ingredients-item">
                 <h2>Les ingredients du plat</h2>
-                  ${ingredients.forEach((ingredient: any) => `
+                 ${ingredients.map((ingredient: any) => `
                     <div class="ingredients">
-                        <p>${ ingredient.name }</p>
-                        <p>${ ingredient.price }€</p>
+                        <p>${ingredient.name}</p>
+                        <p>${ingredient.price}€</p>
                     </div>
-                `)}
+                `).join("")}
                 <div class="total-price">
                     <p>Prix Total des ingredients : </p>
                 </div>

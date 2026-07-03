@@ -136,7 +136,12 @@ class PlatController extends Controller
      */
     public function show(Plat $plat)
     {
-       return response()->json(['plat' => $plat, 'pictures' => $plat->pictures, 'ingredients' => $plat->ingredients]);
+       return response()->json(['plat' => $plat, 'pictures' => $plat->pictures->map(function ($picture) {
+    return [
+        'id' => $picture->id,
+        'url' => asset('storage/'. $picture->filename),
+    ];
+}), 'ingredients' => $plat->ingredients]);
     }
 
     /**

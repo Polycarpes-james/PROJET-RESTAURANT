@@ -20,53 +20,24 @@ class PlatsController extends Controller
         protected PanierService $panierService
     ) {}
 
-    public function plats () {
-        $plats = PlatData::collect(Plat::with('category')->get());        
+    public function plats(PlatService $platService, PanierService $panierService){
         return view('plats.index', [
-            'plats' => $plats,
-            'total' => $this->total()
+            'plats' => $platService->cards(),
+            'total' => $panierService->total(),
         ]);
     }
     
+    public function show(string $slug, Plat $plat, PlatService $platService, PanierService $panierService) {
+        return view('plats.show', [
+            'plat' => $platService->show($plat),
+            'total' => $panierService->total(),
+        ]);
+    }
 
     /**
      * La fonction "show" permet de voir le contenu d'un plat en particulié
      */
-    public function show (string $slug, Plat $plat)
-    {
-        // Récupération des avis du plat avec l'utilisateur associé
-        $quantite = 0;
-        $ok = false;
-        $avis = Avis::where('plat_id', $plat->id)->with('user')->latest()->paginate(3);
-
-        // Calcul de la moyenne des notes et du nombre d'avis
-        $moyenne = $avis->avg('note');
-        $nombreAvis = $avis->count();
-
-        if ( Auth::user() && Panier::where('user_id', Auth::id()) ) {
-            if (Panier::where('user_id', Auth::id())->first() && Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first()) {
-                $quantite = Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first()->pivot->quantite;
-            }
-        } else {
-            if (session()->get('panier_invite')) {
-                if(!in_array($plat->id, session()->get('panier_invite'))){
-                    $ok = true;
-                } 
-            }
-        }
-
-        if($ok){
-            $quantite = session()->get('panier_invite')[$plat->id]['quantite']; 
-        }
-        return view('plats.show', [
-            'plat' => $plat,
-            'plat_quantite' => $quantite,
-            'avis' => $avis,
-            'moyenne' => $moyenne,
-            'nombreAvis' => $nombreAvis,
-            'total' => $this->total()
-        ]);
-    }
+    
 
     public function show_modal (Plat $plat) {
         $quantite = 0;

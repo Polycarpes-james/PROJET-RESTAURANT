@@ -20,7 +20,7 @@
 
     <div class="presentation-categories">
         <h1>La liste des reservations</h1>
-        <x-search name="search-reservation-name" targetName="name" id="search-reservation-name" placeholder="Rechercher Jean Pierre ..."></x-search>
+        <x-search placeholder="Rechercher Jean Pierre ..."></x-search>
     </div>
     <div class="all-reservation">
         <table class="styled-table">
@@ -29,31 +29,32 @@
                     <th>ID</th>
                     <th>Nom</th>
                     <th>Phone</th>
-                    <th>Email</th>
                     <th>Nombre de personnes</th>
                     <th>Date de reservation</th>
                     <th>Temps de reservation</th>
-                    <th>Message supplementaire</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+                {{-- <x-table :items="$items2" :model="$commandes" routeUpdate="admin.commande.update" routeShow="admin.commande.show" target="commande">
+                    <x-select-personnalise :filtable="!$filtable" target="status" searchValide="{{ $searchValide }}" :items="$items"></x-select-personnalise>
+                </x-table> --}}
                 @foreach ($reservations as $reservation)
-                    <tr class="reservation-row" data-id="{{ $reservation->id }}" 
-                        data-name="{{ $reservation->name }}" data-email="{{ $reservation->email }}"
-                        data-phone="{{ $reservation->phone }}"
-                        >
-                        <td class="item-id">{{ $reservation->id }}</td>
-                        <td class="item-name">{{ $reservation->name }}</td>
+                    <tr class="reservation-row" data-search="{{ $reservation->id }}{{ $reservation->name }}{{ $reservation->email }}{{ $reservation->phone }}">
+                        <td class="item-id"><span style="color:blue;font-weight:bold">#{{ $reservation->id }}</span></td>
+                        <td class="item-name">
+                            <div class="user-td">
+                                <p class="bold">{{ $reservation->name }}</p>
+                                <p class="fs-2">{{ $reservation->email}}</p>
+                            </div>
+                        </td>
                         <td class="item-phone">{{ $reservation->phone }}</td>
-                        <td class="item-email">{{ $reservation->email }}</td>
                         <td>{{ $reservation->guests }}</td>
                         <td>{{ $reservation->reservation_date }}</td>
                         <td>{{ $reservation->reservation_time }}</td>
-                        <td>{{ $reservation->truncateText($reservation->message, 60) }}</td>
                         <td class="action-item">
                             <button class="reservation_show" data-user='@json($reservation->user)'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
                             </button>
                         </td>
                     </tr>

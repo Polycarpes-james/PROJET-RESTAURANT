@@ -154,47 +154,49 @@ function initCustomSelect(){
         
         options.classList.toggle("active");
 
-    });
+        options.querySelectorAll<HTMLLIElement>("li").forEach(option=>{
 
-    options.querySelectorAll<HTMLLIElement>("li").forEach(option=>{
+            option.addEventListener("click", (e)=>{
+                e.stopPropagation();
+                const value = option.dataset.value ?? "";
 
-        option.addEventListener("click", (e)=>{
-            e.stopPropagation();
-            const value = option.dataset.value ?? "";
+                button.innerHTML = `
+                    <p>${option.textContent}</p>
+                    <button class="clear-select" type="button"><svg width="17px" height="17px" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+                    `;
+                button.dataset.value = value;
 
-            button.innerHTML = `
-                <p>${option.textContent}</p>
-                <button class="clear-select" type="button"><svg width="17px" height="17px" viewBox="0 0 24 20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-                `;
-            button.dataset.value = value;
+                const target = options.dataset.target;
 
-            const target = options.dataset.target;
+                const inputs = document.querySelectorAll("#hidden-input");
 
-            const inputs = document.querySelectorAll("#hidden-input");
-
-            if(target){
-                filters[target] = value.toLowerCase();
-                inputs.forEach((input:any)=>{
-                    input.value=value;
-                });
-                // if (document.querySelector<HTMLElement>(".item-select")?.dataset.filtable === "true") {
-                //     filterRows();
-                // }
-            }
-
-            options.classList.remove("active");
-
-            const clear = button.querySelector(".clear-select");
-
-            clear?.addEventListener("click", (e)=>{
-                changeOptimize(button, e, inputs);
                 if(target){
-                    filters[target]="";
-                    filterRows();
+                    filters[target] = value.toLowerCase();
+                    inputs.forEach((input:any)=>{
+                        input.value = value;
+                    });
+                    if (select.dataset.filtable) {
+                        filterRows();
+                    }
                 }
+
+                options.classList.remove("active");
+
+                const clear = button.querySelector(".clear-select");
+
+                clear?.addEventListener("click", (e)=>{
+                    changeOptimize(button, e, inputs);
+                    if(target){
+                        filters[target]="";
+                        filterRows();
+                    }
+                });
             });
         });
+
     });
+
+    
 });
 
 

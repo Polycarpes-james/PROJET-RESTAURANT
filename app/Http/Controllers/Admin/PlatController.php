@@ -136,23 +136,7 @@ class PlatController extends Controller
      */
     public function show(Plat $plat)
     {
-        $disponible = null;
-        $style_disponible = null;
-        $target = $plat->disponible;
-
-        if ($target === "yes") {
-            $disponible = "Le plat est disponible";
-            $style_disponible = "valide";
-        } else {
-            $disponible = "Le plat est indisponible";
-            $style_disponible = "invalide";
-        }
-        
-        return view('admin.plats.show', [
-            'plat' => $plat,
-            'disponible' => $disponible,
-            'style_disponible' => $style_disponible
-        ]);
+       return response()->json(['plat' => $plat, 'pictures' => $plat->pictures, 'ingredients' => $plat->ingredients]);
     }
 
     /**

@@ -46,9 +46,7 @@ btnReservationShow.forEach((btn) => {
         const target = e.currentTarget as HTMLElement;
 
         const user = JSON.parse(target.dataset.user as string);
-
-        console.log(user);
-
+        // console.log(user);
         showReservationModal(user);
     });
 });

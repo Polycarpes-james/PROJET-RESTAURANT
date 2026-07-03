@@ -11,7 +11,7 @@ class Search extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $targetName, public string $placeholder)
+    public function __construct(public string $placeholder)
     {
 
     }

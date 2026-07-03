@@ -22,8 +22,8 @@
                     Ajouter le plat
                 </a>
             </div>
-            <x-search targetName="name" placeholder="Rechercher Poulet Yassa ...">
-                <x-select-personnalise :filtable="$filtable" target="state" searchValide="{{ $searchValide }}" :items="$items">
+            <x-search placeholder="Rechercher Poulet Yassa ...">
+                <x-select-personnalise :filtable="$filtable" target="state" searchValide="{{ !$searchValide }}" :items="$items">
                 </x-select-personnalise>
             </x-search>
         </div>
@@ -41,19 +41,7 @@
                 </thead>
                 <tbody>
                     @foreach ($plats as $plat)
-                        <tr class="plat-row" 
-
-data-name="{{ $plat->name }}"
-data-price="{{ $plat->price }}"
-data-state="{{ $plat->disponible }}"
-                            data-search="
-{{ $plat->id }}
-{{ $plat->name }}
-{{ $plat->price }}
-{{ $plat->disponible }}
-{{ $plat->created_at }}
-"
-                            >     
+                        <tr class="plat-row" data-search="{{ $plat->id }}{{ $plat->name }}{{ $plat->price }}{{ $plat->disponible }}">     
                             <td class="item-id">{{ $plat->id }}</td>           
                             <td><img src="{{ $plat->getPicture() ? $plat->getPicture()->getPictureUrl(70, 60) : "" }}" alt=""></td>           
                             <td class="item-name">{{ $plat->truncateText($plat->name, 30) }}</td>           
@@ -62,7 +50,7 @@ data-state="{{ $plat->disponible }}"
                                 <span class="badge {{ $plat->disponible === "yes" ? "livre" : "annule"}}">
                                     {{ $plat->disponible === "yes" ? $items["yes"] : $items["no"] }}
                                 </span>
-                            </td>           
+                            </td>      
                             <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="btn" linkBtn="{{ !$linkBtn }}" isViewlable="{{ $isViewlable }}"/>
                         </tr>
                     @endforeach

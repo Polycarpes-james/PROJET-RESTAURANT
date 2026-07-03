@@ -65,11 +65,9 @@ class UserController extends Controller
         $validated = $request->validate([
             'role' => 'required'
         ]);
-        $user->assignRole($validated['role']);
-        // dd($user);
+        $user->syncRoles($validated['role']);        // dd($user);
         $user->save();
-        
-        return redirect()->back()->with('success', $user->name . " a été changé en " . $user->getRoleNames()->first());
+        return redirect()->back()->with('success', $user->name . " a été changé en " . $user->role_label);
     }
 
     /**

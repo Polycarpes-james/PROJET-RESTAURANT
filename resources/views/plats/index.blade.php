@@ -50,9 +50,7 @@
                             </div>
                         </div>
                         <div class="pictures-parts">
-                            {{-- @if ($plat->getPicture()) --}}
                                 <img src="{{ $plat->image }}" alt="">
-                            {{-- @endif --}}
                         </div>
                     </div>
                 @endforeach

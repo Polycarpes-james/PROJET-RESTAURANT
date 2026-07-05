@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Data\Ingredient\IngredientData;
+use App\Data\Plat\PlatData;
+use App\Data\Plat\PlatShowData;
+use App\Data\Plat\UpdatePlatData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PlatsRequest;
 use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\Menu;
 use App\Models\Picture;
 use App\Models\Plat;
+use App\Services\PlatService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PlatController extends Controller
@@ -32,10 +37,7 @@ class PlatController extends Controller
      */
     public function create()
     {
-        // dd(Menu::all()->pluck('id'));
-
         $plats = new Plat();
-        // dd($plats->menus);
         return view('admin.plats.form', [
             'plat' => new Plat(), 
             'menu' => null,
@@ -63,72 +65,30 @@ class PlatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PlatsRequest $request)
+    public function store(UpdatePlatData $data)
     {
-
-        // dd($request);
-        $validated = $request->validate([
-                'name' => 'required|string|min:5',
-                'description' => 'required|min:1',
-                'temps_preparation' => 'required|integer',
-                'price' => 'required|numeric',
-                'disponible' => 'required|in:yes,no',
-                'raison_indisponible' => 'nullable',
-                'category_id' => 'required|exists:categories,id',
-                'pictures' => 'array',
-                'pictures.*' => 'image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
-
-        // dd($validated);
-    
-        $plat = Plat::create($validated);
-        
-        $plat->ingredients()->sync($request->validated('ingredients'));
-        
-        if($request->hasFile('pictures')){
-            $plat->attachFiles($request->validated('pictures'));
+        // Initialisation du plat
+        $plat = Plat::create($data->toArray());
+        // Synchroniser les ingredients
+        $plat->ingredients()->sync($data->ingredients);
+        // Sunchroniser les pictures
+        if($data->pictures){
+            $plat->attachFiles($data->pictures);
         }
-
-        $plat->menus()->sync($request->validated('menus'));
-
+        // Synchroniser les menus 
+        $plat->menus()->sync($data->menus);
         $plat->save();
-
-        return to_route('admin.plat.index')->with('success', "Le plat à bien été crée");
+        return to_route('admin.plat.index')->with('success', "Le plat " . $plat->name . " à bien été crée");
     }
 
-    public function store_(PlatsRequest $request, Menu $menu)
-    {
-
-        $validated = $request->validate([
-                'name' => 'required|string|min:5',
-                'description' => 'required|min:1',
-                'disponible' => 'required|in:yes,no',
-                'raison_indisponible' => 'nullable',
-                'price' => 'required|numeric',
-                'temps_preparation' => 'required|integer',
-                'category_id' => 'required|exists:categories,id',
-                'pictures' => 'array',
-                'pictures.*' => 'image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
-
-        // dd($validated);
-    
-        $plat = Plat::create($validated);
-        
-        $plat->ingredients()->sync($request->validated('ingredients'));
-        
-        $plat->attachFiles($request->validated('pictures'));
-
-        $plat->menus()->sync($request->validated('menus'));
-
-
-        // dd($plat->ingredients()->sync($request->validated('ingredients')));
-        // dd($plat);
+    public function store_(UpdatePlatData $data, Menu $menu)
+    {    
+        $plat = Plat::create($data->toArray());
+        $plat->ingredients()->sync($data->ingredients);
+        $plat->attachFiles($data->pictures);
+        $plat->menus()->sync($data->menus);
         $plat->save();
-
-        return to_route('admin.menu.show', [
-            'menu' => $menu
-        ])->with('success', "Le plat à bien été crée");
+        return to_route('admin.menu.show', ['plat' => $plat])->with('success', "Le plat à bien été crée");
     }
 
     /**
@@ -136,12 +96,17 @@ class PlatController extends Controller
      */
     public function show(Plat $plat)
     {
-       return response()->json(['plat' => $plat, 'pictures' => $plat->pictures->map(function ($picture) {
-    return [
-        'id' => $picture->id,
-        'url' => asset('storage/'. $picture->filename),
-    ];
-}), 'ingredients' => $plat->ingredients]);
+    
+        // dd(IngredientData::collect($plat->ingredients));
+        $ingredients = IngredientData::collect($plat->ingredients);
+        $platShow = PlatShowData::fromModel($plat);
+        return $platShow;
+    //    response()->json(['plat' => $plat, 'pictures' => $plat->pictures->map(function ($picture) {
+    //         return [
+    //             'id' => $picture->id,
+    //             'url' => asset('storage/'. $picture->filename),
+    //         ];
+    //     }), 'ingredients' => $plat->ingredients]);
     }
 
     /**
@@ -164,37 +129,21 @@ class PlatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PlatsRequest $request, Plat $plat)
+    public function update(UpdatePlatData $data, Request $request, Plat $plat)
     {
-        // dd($request);
-        $validated = $request->validate([
-                'name' => 'required|string|min:5',
-                'temps_preparation' => 'required|integer',
-                'description' => 'required|min:1',
-                'raison_indisponible' => 'nullable',
-                'disponible' => 'required|in:yes,no',
-                'price' => 'required|numeric',
-                'category_id' => 'required|exists:categories,id',
-                'pictures' => 'array',
-                'pictures.*' => 'image|mimes:jpeg,png,jpg,gif|max:5000',
-        ]);
-
-        $plat->update($validated);
-        
-        $plat->ingredients()->sync($request->validated('ingredients'));
-        
-
-        if ($request->hasFile('pictures')) {
+        $plat->update($data->toArray());
+                // $plat->ingredients()->sync($data->toArray);
+        if (!empty($data->pictures)) {
             foreach ($plat->pictures as $picture) {
                 $picture->delete();
                 if ($picture->filename && Storage::disk('public')->exists($picture->filename)) {
                     Storage::disk('public')->delete($picture->filename);
                 }
             }
-            $plat->attachFiles($request->validated('pictures'));
-        }   
+            $plat->attachFiles($data->pictures);
+        }
 
-        $plat->menus()->sync($request->validated('menus'));
+        $plat->menus()->sync($data->menus);
         $plat->save();
 
         return to_route('admin.plat.index')->with('success', 'Le Plat '. $plat->name .' a été modifié !');
@@ -208,7 +157,6 @@ class PlatController extends Controller
         if(Storage::disk('public')->exists('plats/'.$plat->id)){
             Storage::disk('public')->deleteDirectory('plats/'.$plat->id);
         }
-
         Picture::destroy($plat->pictures()->pluck('id'));
 
         $plat->delete();

@@ -2,16 +2,15 @@
 
 namespace App\Services;
 
-use App\Data\Category\CategoryData;
 use App\Data\Ingredient\IngredientData;
 use App\Data\Picture\PictureData;
 use App\Data\Plat\PlatCardData;
-use App\Data\PlatShowData;
+use App\Data\Plat\PlatShowData;
 use App\Models\Avis;
 use App\Models\Panier;
 use App\Models\Plat;
 use Illuminate\Support\Facades\Auth;
-use PlatData;
+use App\Data\Plat\PlatData;
 use Spatie\LaravelData\DataCollection;
 
 class PlatService
@@ -25,15 +24,14 @@ class PlatService
     {
 
     }
+    /**
+     * @return DataCollection<PlatCardData>
+     */
     public function cards(): DataCollection
     {
-        $plats = Plat::with([
-            'category',
-            'pictures',
-        ])->get();
-
-        return PlatCardData::collect($plats);
+        return new DataCollection(PlatCardData::class, Plat::with(['category', 'pictures',])->get());
     }
+
     public function show (Plat $plat):PlatShowData
     {
         // Récupération des avis du plat avec l'utilisateur associé
@@ -62,13 +60,13 @@ class PlatService
         }
 
         return new PlatShowData(
-            plat: PlatData::fromModel($plat),
+            plat: PlatData::from($plat),
             note: $moyenne,
             avis: $nombreAvis,
             quantite: $quantite,
             pictures: PictureData::collect($plat->pictures),
             ingredients: IngredientData::collect($plat->ingredients),
-            category: $plat->category ? CategoryData::fromModel($plat->category) : null,
+            category: $plat->category,
             paginationAvis: $avis,
         );
     }

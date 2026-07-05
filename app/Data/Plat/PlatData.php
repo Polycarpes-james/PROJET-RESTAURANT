@@ -1,7 +1,14 @@
 <?php
+namespace App\Data\Plat;
 
+use App\Data\Category\CategoryData;
+use App\Data\Picture\PictureData;
 use App\Models\Plat;
+use Illuminate\Http\UploadedFile;
+use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\DataCollection;
+use Spatie\LaravelData\Optional;
 use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 
 
@@ -9,30 +16,24 @@ use Spatie\TypeScriptTransformer\Attributes\TypeScript;
 class PlatData extends Data
 {
     public function __construct(
-        public int $id,
         public string $name,
         public string $description,
         public float $price,
-        public string $slug,
-        public ?string $image,
-        public string $link,
-        public string $priceFormatted,
+        public string $disponible,
+        public ?string $temps_preparation,
+        public ?string $raison_indisponible,
+        public ?CategoryData $category,
+        public  Optional|UploadedFile $pictures
     ) {}
 
-    public static function fromModel(Plat $plat): self
-    {
-        return new self(
-            id: $plat->id,
-            name: $plat->name,
-            description: $plat->description,
-            price: $plat->price,
-            slug: $plat->getSlug(),
-            image: $plat->getPicture()?->getPictureUrl(500,400),
-            link: route('rettine.plats.show',[
-                'plat'=>$plat,
-                'slug'=>$plat->getSlug()
-            ]),
-            priceFormatted:number_format($plat->price,0,' ',' ').' €',
-        );
-    }
+    // public static function fromModel(Plat $plat): self
+    // {
+    //     return self::from(
+    //         $plat,
+    //         [
+    //             "category_id" => $plat->category ? CategoryData::fromModel($plat->category) : null,
+    //         ]
+    //         // pictures: PictureData::collect($plat->pictures),
+    //     );
+    // }
 }

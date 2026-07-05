@@ -30,46 +30,47 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
         });
         
-        data = await guestRes.json();
+        data = await guestRes.json()
 
         
-        console.log(data.pictures);
+        console.log(data);
 
         modal.style.display = "flex"
-        const ingredients = data.ingredients
+        
+        // const ingredients = data.ingredients
 
-        content.innerHTML = `
-                <div class="plat-item">
-            <div class="title-category">
-                <h1>${ data.plat.name }</h1>
-            </div>
-            <div class="description">
-                <p>${ data.plat.description }</p>
-            </div>
-            <div class="item-picture">
-               ${data.pictures.map((picture: any) => `
-                    <img src="${picture.url}" alt="Photo" height="50px" width="60px">
-                `).join("")}
-            </div>
-        <div class="ingredients-item">
-                <h2>Les ingredients du plat</h2>
-                 ${ingredients.map((ingredient: any) => `
-                    <div class="ingredients">
-                        <p>${ingredient.name}</p>
-                        <p>${ingredient.price}€</p>
-                    </div>
-                `).join("")}
-                <div class="total-price">
-                    <p>Prix Total des ingredients : </p>
-                </div>
-        </div>       
-            <div class="status">
-                <p>Statut </p>
-                <p class="disponible {{ $style_disponible }}">{{ $disponible }}</p>
-                <p>{{ $plat->raison_indisponible }}</p>
-            </div>
-        </div>
-        `
+        // content.innerHTML = `
+        //         <div class="plat-item">
+        //     <div class="title-category">
+        //         <h1>${ data.plat.name }</h1>
+        //     </div>
+        //     <div class="description">
+        //         <p>${ data.plat.description }</p>
+        //     </div>
+        //     <div class="item-picture">
+        //        ${data.pictures.map((picture: any) => `
+        //             <img src="${picture.url}" alt="Photo" height="50px" width="60px">
+        //         `).join("")}
+        //     </div>
+        // <div class="ingredients-item">
+        //         <h2>Les ingredients du plat</h2>
+        //          ${ingredients.map((ingredient: any) => `
+        //             <div class="ingredients">
+        //                 <p>${ingredient.name}</p>
+        //                 <p>${ingredient.price}€</p>
+        //             </div>
+        //         `).join("")}
+        //         <div class="total-price">
+        //             <p>Prix Total des ingredients : </p>
+        //         </div>
+        // </div>       
+        //     <div class="status">
+        //         <p>Statut </p>
+        //         <p class="disponible {{ $style_disponible }}">{{ $disponible }}</p>
+        //         <p>{{ $plat->raison_indisponible }}</p>
+        //     </div>
+        // </div>
+        // `
 
 
     }

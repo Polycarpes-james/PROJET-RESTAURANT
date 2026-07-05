@@ -32,7 +32,7 @@ class PlatModalData extends Data
         return new self(
             id: $plat->id,
             name: $plat->name,
-            description: $plat->description,
+            description: $plat->pivot->quantite,
             price: $plat->price,
             category: $plat->category ? CategoryData::fromModel($plat->category) : null,
             pictures: PictureData::collect($plat->pictures),

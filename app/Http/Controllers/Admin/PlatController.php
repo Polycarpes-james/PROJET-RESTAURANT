@@ -94,19 +94,10 @@ class PlatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Plat $plat)
+    public function show(Plat $plat, PlatService $platService)
     {
-    
-        // dd(IngredientData::collect($plat->ingredients));
-        $ingredients = IngredientData::collect($plat->ingredients);
-        $platShow = PlatShowData::fromModel($plat);
-        return $platShow;
-    //    response()->json(['plat' => $plat, 'pictures' => $plat->pictures->map(function ($picture) {
-    //         return [
-    //             'id' => $picture->id,
-    //             'url' => asset('storage/'. $picture->filename),
-    //         ];
-    //     }), 'ingredients' => $plat->ingredients]);
+        $platShow = $platService->show($plat);
+        return response()->json(['platShow' => $platShow]);
     }
 
     /**

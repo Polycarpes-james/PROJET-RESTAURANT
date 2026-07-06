@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
+use App\Data\Category\CategoryData;
 use App\Data\Ingredient\IngredientData;
 use App\Data\Picture\PictureData;
 use App\Data\Plat\PlatCardData;
+use App\Data\Plat\PlatData;
 use App\Data\Plat\PlatShowData;
 use App\Models\Avis;
 use App\Models\Panier;
 use App\Models\Plat;
 use Illuminate\Support\Facades\Auth;
-use App\Data\Plat\PlatData;
 use Spatie\LaravelData\DataCollection;
 
 class PlatService
@@ -37,7 +38,7 @@ class PlatService
         // Récupération des avis du plat avec l'utilisateur associé
         $quantite = 0;
         $ok = false;
-        $avis = Avis::where('plat_id', $plat->id)->with('user')->latest()->paginate(3);
+        $avis = Avis::where('plat_id', $plat->id)->with('user')->latest()->paginate(10);
 
         // Calcul de la moyenne des notes et du nombre d'avis
         $moyenne = $avis->avg('note');
@@ -58,16 +59,16 @@ class PlatService
         if($ok){
             $quantite = session()->get('panier_invite')[$plat->id]['quantite']; 
         }
-
+        $totalPriceIngredients = $plat->ingredients->sum('price');
         return new PlatShowData(
             plat: PlatData::from($plat),
-            note: $moyenne,
-            avis: $nombreAvis,
+            note: $plat->sumNotes(),
+            avis: $plat->nombreAvis(),
             quantite: $quantite,
-            pictures: PictureData::collect($plat->pictures),
-            ingredients: IngredientData::collect($plat->ingredients),
-            category: $plat->category,
-            paginationAvis: $avis,
+            totalIngredientsPrice: $totalPriceIngredients,
+            pictures: new DataCollection(PictureData::class, $plat->pictures->map(fn ($picture) => PictureData::fromModel($picture, $picture->getPictureUrl(200, 190)))),
+            ingredients: new DataCollection(IngredientData::class, $plat->ingredients->map(fn ($ingredient) => IngredientData::fromModel($ingredient))),
+            category: $plat->category ? CategoryData::fromModel($plat->category) : null
         );
     }
 }

@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function showModalContent (plat:any) {
         const modal = document.getElementById('showUpDish');
-        const content = modal?.querySelector('.admin_plat_main');
-        // const titleEl = .getElementById('modalTitle');
+        const content = modal?.querySelector('.admin_plat_main') as HTMLElement;
+        const titleEl = modal?.querySelector('#item-font');
         
-        if(!modal || !content) return;
+        if(!modal || !content || !titleEl) return;
 
         let data
 
@@ -32,45 +32,44 @@ document.addEventListener('DOMContentLoaded', () => {
         
         data = await guestRes.json()
 
-        
-        console.log(data);
+        const platShow = data.platShow
 
+        console.log(platShow);
+        
         modal.style.display = "flex"
         
         // const ingredients = data.ingredients
+        titleEl.textContent = platShow.plat.name
 
-        // content.innerHTML = `
-        //         <div class="plat-item">
-        //     <div class="title-category">
-        //         <h1>${ data.plat.name }</h1>
-        //     </div>
-        //     <div class="description">
-        //         <p>${ data.plat.description }</p>
-        //     </div>
-        //     <div class="item-picture">
-        //        ${data.pictures.map((picture: any) => `
-        //             <img src="${picture.url}" alt="Photo" height="50px" width="60px">
-        //         `).join("")}
-        //     </div>
-        // <div class="ingredients-item">
-        //         <h2>Les ingredients du plat</h2>
-        //          ${ingredients.map((ingredient: any) => `
-        //             <div class="ingredients">
-        //                 <p>${ingredient.name}</p>
-        //                 <p>${ingredient.price}€</p>
-        //             </div>
-        //         `).join("")}
-        //         <div class="total-price">
-        //             <p>Prix Total des ingredients : </p>
-        //         </div>
-        // </div>       
-        //     <div class="status">
-        //         <p>Statut </p>
-        //         <p class="disponible {{ $style_disponible }}">{{ $disponible }}</p>
-        //         <p>{{ $plat->raison_indisponible }}</p>
-        //     </div>
-        // </div>
-        // `
+        content.innerHTML = `
+            <div class="plat-item">
+                <div class="description">
+                    <p>${ platShow.plat.description }</p>
+                </div>
+                <div class="item-picture">
+                ${platShow.pictures.map((picture: any) => `
+                        <img src="${picture.filename}" alt="Photo" >
+                    `).join("")}
+                </div>
+                <div class="ingredients-item">
+                    <h2>Les ingredients du plat</h2>
+                        ${platShow.ingredients.map((ingredient: any) => `
+                        <div class="ingredient">
+                            <p>${ingredient.name}</p>
+                            <p>${ingredient.price}€</p>
+                        </div>
+                    `).join("")}
+                    <div class="total-price">
+                        <p>Prix Total des ingredients : ${platShow.totalIngredientsPrice}€</p>
+                    </div>
+                </div>       
+                <div class="status">
+                    <p>Statut </p>
+                    <p class="disponible ">{ $disponible }</p>
+                    <p>{{ $plat->raison_indisponible }}</p>
+                </div>
+            </div>
+        `
 
 
     }

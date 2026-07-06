@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\RoleEnum;
+use App\Enums\AnyEnum;
 use App\Models\Commande;
 use App\Models\Livraison;
 use App\Models\Panier;
@@ -38,14 +38,14 @@ class User extends Authenticatable
     {
         $role = $this->getRoleNames()->first();
 
-        return $role ? RoleEnum::from($role)->label() : 'Aucun rôle';
+        return $role ? AnyEnum::from($role)->label() : 'Aucun rôle';
     }
 
     public function getRoleColorAttribute(): string
     {
         $role = $this->getRoleNames()->first();
 
-        return $role ? RoleEnum::from($role)->color() : '';
+        return $role ? AnyEnum::from($role)->color() : '';
     }
 
     public function commande ():BelongsTo

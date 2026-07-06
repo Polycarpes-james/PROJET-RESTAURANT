@@ -167,13 +167,13 @@
 .container-admin .header-container-admin a.hover::before{
     content: '';
     position: absolute;
-    left: 0;
+    left: 3%;
     top: 50%;
     transform: translateY(-50%);
-    width: 3px;
+    width: 5px;
     height:70%;
     background: var(--second-color);
-    border-radius: 0 3px 3px 0;
+    border-radius: 3px;
 }
 
 

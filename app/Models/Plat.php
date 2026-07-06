@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\AnyEnum;
+use App\Enums\RoleEnum;
 use App\Models\Category;
 use App\Models\Commande;
 use App\Models\Ingredient;
@@ -33,7 +35,19 @@ class Plat extends Model
     {
         return $this->hasMany(PanierPlat::class);
     }
-    
+
+    public function getPlatStatusAttribute(): string
+    {
+        $status = $this->disponible;
+        return $status ? AnyEnum::from($status)->platStatus() : '';
+    }
+
+    public function getPlatColorAttribute(): string
+    {
+        $status = $this->disponible;
+        return $status ? AnyEnum::from($status)->platColor() : '';
+    }
+
     public function category ():BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -76,33 +90,28 @@ class Plat extends Model
     {
         return $this->avis()->count();
     }
-    public function platValide ()
-    {
-        $disponible = $this->disponible;
-        $stringValide = ""; 
-        if ($disponible === "yes") {
-            $stringValide = "Le plat est disponible";
-        } else {
-            $stringValide = "Le plat n'est pas disponible";
-        }
+    // public function platValide ()
+    // {
+    //     $disponible = $this->disponible;
+    //     $stringValide = ""; 
+    //     if ($disponible === "yes") {
+    //         $stringValide = "Le plat est disponible";
+    //     } else {
+    //         $stringValide = "Le plat n'est pas disponible";
+    //     }
         
-        return [
-            $stringValide,
-            $disponible
-        ]; 
-    }
+    //     return [
+    //         $stringValide,
+    //         $disponible
+    //     ]; 
+    // }
 
     public function ingredients():BelongsToMany
     {
         return $this->belongsToMany(Ingredient::class);
     }
 
-    public function total_price() 
-    {
-        return $this->ingredients()->sum('price');
-    }
-
-     public function getSlug()
+    public function getSlug()
     {
         return Str::slug($this->name);
     }

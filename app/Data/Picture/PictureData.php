@@ -14,11 +14,11 @@ class PictureData extends Data
         public string $filename
     ) {}
 
-    public static function fromModel(Picture $picture): self
+    public static function fromModel(Picture $picture, $pictureUrl): self
     {
-        return self::from(
+        return new self(
             id: $picture->id, 
-            filename: $picture->filename
+            filename: $pictureUrl
         );
     }
 }

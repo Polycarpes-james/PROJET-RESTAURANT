@@ -8,12 +8,11 @@
     $items = ["yes" => "Disponible", "no" => "Indisponible"];
     $searchValide = true;
     $isViewlable = true;
-    $linkBtn = true
+    $linkBtn = true;
 @endphp
     <x-show-modal-admin kind="btn-delete-admin" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
-    <x-show-modal-admin kind="btn-delete-admin" contentId="showUpDish" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
-
     <div class="container-items-admin">
+        <x-show-modal-admin kind="btn-delete-admin" contentId="showUpDish" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
         <div class="presentation-categories">
             <div class="item">
                 <h1>les plats</h1>    
@@ -45,12 +44,8 @@
                             <td class="item-id">{{ $plat->id }}</td>           
                             <td><img src="{{ $plat->getPicture() ? $plat->getPicture()->getPictureUrl(70, 60) : "" }}" alt=""></td>           
                             <td class="item-name">{{ $plat->truncateText($plat->name, 30) }}</td>           
-                            <td class="item-price">{{ $plat->price }} €</td>           
-                            <td class="item-state">
-                                <span class="badge {{ $plat->disponible === "yes" ? "livre" : "annule"}}">
-                                    {{ $plat->disponible === "yes" ? $items["yes"] : $items["no"] }}
-                                </span>
-                            </td>      
+                            <td class="item-price">{{ $plat->price }} €</td>
+                            <td class="item-state"><span class="badge {{ $plat->plat_color }}">{{ $plat->plat_status }}</span></td>      
                             <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="btn" linkBtn="{{ !$linkBtn }}" isViewlable="{{ $isViewlable }}"/>
                         </tr>
                     @endforeach

@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RolePermissionSeeder::class,
         ]);
-        User::factory(30)->create(); 
+        $avis = Avis::factory(100)->create();
+        User::factory(30)->hasAttached($avis->random(15))->create(); 
         Category::factory(10)->create();
         $ingredients = Ingredient::factory(40)->create();
-        $plats = Plat::factory(40)->hasAttached($ingredients->random(10))->create();
+        $plats = Plat::factory(40)->hasAttached($ingredients->random(10), $avis->random(15))->create();
         Menu::factory(10)->hasAttached($plats->random(10))->create();
         Reservation::factory(20)->create();
-        Avis::factory(100)->create();
     }
 }

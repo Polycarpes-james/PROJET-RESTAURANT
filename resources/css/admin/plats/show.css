@@ -13,7 +13,7 @@
     border-radius: 3px;
 }
 
-.plat-item .ingredients, .plat-item .ingredients-item .total-price{
+.plat-item .ingredient, .plat-item .ingredients-item .total-price{
     display: flex;
     margin-top: 5px;
     justify-content: space-between;
@@ -27,7 +27,7 @@
     border-bottom: 1px solid grey;
 }
 
-.plat-item .ingredients-item .ingredients p:last-child{
+.plat-item .ingredients-item .ingredient p:last-child{
     opacity: 0.6;
 }
 

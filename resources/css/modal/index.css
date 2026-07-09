@@ -113,23 +113,25 @@
 }
 .container-items-admin .admin_plat_content{
     max-width: 90%!important;
-    padding: 4em 2em 2em 2em;
     height: 90vh;
     overflow-y: scroll;
+    position: relative;
     display: flex;
     flex-direction: column;
 }
 .container-items-admin .admin_plat_header{
     position: fixed;
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0;
+    width: 90%;
+    padding: 0 10px;
+    box-shadow: 0 0 5px grey;
+    background-color: white;
     top: 5%;
 }
+.admin_plat_content .admin_plat_main {
+    padding: 4em 2em 2em 2em;
+}
 .container-items-admin .modal-close-admin{
-    position:inherit
+    position:inherit;
 }
 /* 
 #panierModal{

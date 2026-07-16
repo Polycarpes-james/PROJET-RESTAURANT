@@ -7,12 +7,10 @@
     $filtable = true;
     $items = ["yes" => "Disponible", "no" => "Indisponible"];
     $searchValide = true;
-    $isViewlable = true;
-    $linkBtn = true;
 @endphp
-    <x-show-modal-admin kind="btn-delete-admin" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
+    <x-show-modal-admin kind="btn-delete-admin" contentId="admin_item_delete" contentSecondClass="admin_item_content" headerClass="admin_item_header" mainClass="admin_item_main" footerClass="admin_item_footer"/>
     <div class="container-items-admin">
-        <x-show-modal-admin kind="btn-delete-admin" contentId="showUpDish" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
+        <x-show-modal-admin kind="btn-delete-admin" contentId="showUpDish" contentSecondClass="admin_item_content" headerClass="admin_item_header" mainClass="admin_item_main" footerClass="admin_item_footer"/>
         <div class="presentation-categories">
             <div class="item">
                 <h1>les plats</h1>    
@@ -46,7 +44,7 @@
                             <td class="item-name">{{ $plat->truncateText($plat->name, 30) }}</td>           
                             <td class="item-price">{{ $plat->price }} €</td>
                             <td class="item-state"><span class="badge {{ $plat->plat_color }}">{{ $plat->plat_status }}</span></td>      
-                            <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="btn" linkBtn="{{ !$linkBtn }}" isViewlable="{{ $isViewlable }}"/>
+                            <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="btn" delete={{ true }} linkBtn="{{ false }}" isViewlable="{{ true }}"/>
                         </tr>
                     @endforeach
                 </tbody>

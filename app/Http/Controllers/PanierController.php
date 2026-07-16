@@ -209,7 +209,7 @@ class PanierController extends Controller
         $quantiteAjoutee = $request->quantite;
 
         // Vérifier si le plat est déjà dans le panier
-        $panierPlat = PanierPlat::where('panier_id', $panier->id)->where('plat_id', $plat->id)->first();
+        $panierPlat = PanierPlat::panierId($panier->id)->platId($plat->id)->first();
 
         $totalGeneral = null;
 
@@ -323,10 +323,8 @@ class PanierController extends Controller
         $user = auth()->user();
         $panier = $user->panier ?? Panier::create(['user_id' => $user->id]);
 
-        $panierPlat = PanierPlat::where('panier_id', $panier->id)
-                                ->where('plat_id', $request->plat_id)
-                                ->first();
-        
+        $panierPlat = PanierPlat::panierId($panier->id)->platId($request->plat_id)->first();
+
         if ($panierPlat) {
             $panierPlat->delete();
 

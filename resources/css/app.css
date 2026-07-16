@@ -12,6 +12,7 @@
 @import "admin/header.css";
 @import "admin/admin.css";
 @import "admin/reservation/index.css";
+@import "admin/avis/index.css";
 @import "admin/user/index.css";
 
 @import "components/form/input.css";

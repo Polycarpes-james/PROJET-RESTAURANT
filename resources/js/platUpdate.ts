@@ -13,10 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
         titleEl.textContent = title;
         modal.style.display = "flex"
     }
+   
     
     async function showModalContent (plat:any) {
         const modal = document.getElementById('showUpDish');
-        const content = modal?.querySelector('.admin_plat_main') as HTMLElement;
+        const content = modal?.querySelector('.admin_item_main') as HTMLElement;
         const titleEl = modal?.querySelector('#item-font');
         
         if(!modal || !content || !titleEl) return;
@@ -26,19 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const guestRes = await fetch(`/admin/plat/${plat.id}`, { 
             headers: { 
                 'Content-Type': 'application/json',
-                'Accept': 'application/json' 
+                'Accept': 'application/json'
             } 
         });
         
         data = await guestRes.json()
 
-        const platShow = data.platShow
-
-        console.log(platShow);
-        
+        const platShow = data.platShow        
         modal.style.display = "flex"
-        
-        // const ingredients = data.ingredients
+
         titleEl.textContent = platShow.plat.name
 
         content.innerHTML = `
@@ -70,8 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `
-
-
     }
 
     document.querySelectorAll('.open-category-modal').forEach(element => {
@@ -84,23 +79,55 @@ document.addEventListener('DOMContentLoaded', () => {
         element.addEventListener('click', (e:any) => {
             showModalAdmin("Creation de l'ingredient")
         })
-    })
+    }) 
+    
+    async function aviShowModal (plat:any) {
+        const modal = document.getElementById('showUpDish');
+        const content = modal?.querySelector('.admin_item_main') as HTMLElement;
+        const titleEl = modal?.querySelector('#item-font');
+        
+        if(!modal || !content || !titleEl) return;
 
-    document.querySelectorAll('.plat-row #show').forEach((btn:any) => {
-        btn.addEventListener('click', (e:any) => {
+        let data
+
+        const guestRes = await fetch(`/admin/avis/${plat.id}`, { 
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            } 
+        });
+        
+        data = await guestRes.json()
+        console.log(data);
+        modal.style.display = "flex"
+        
+        content.innerHTML = `
+            ${data.avi.commentaire}
+        `
+    }
+
+    document.querySelectorAll(".plat-row #show").forEach((btn:any) => {
+        btn.addEventListener('click', (e:any) => {            
             showModalContent(btn.dataset)
         })
     })
 
+    document.querySelectorAll(".avi-row #show").forEach((btn:any) => {
+        btn.addEventListener('click', (e:any) => {
+            aviShowModal(btn.dataset)
+        })
+    })
+
+
     document.querySelectorAll(".btn-delete-dish").forEach((btn:any) => {
         btn.addEventListener('click', (e:any) =>{            
-            showModal(btn.dataset.id, ".btn-delete-admin", "Suppression d'un plat", "admin_plat_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
+            showModal(btn.dataset.id, ".btn-delete-admin", "Suppression d'un plat", "admin_item_delete", ".paragraphe_message", `Voulez vous vraiment retirer le plat ${btn.dataset.name} du panier ? `)
         })
     })
     
 
     hideBox(".modal-close", "category_modal")
-    hideBox(".modal-close-admin", "admin_plat_delete")
+    hideBox(".modal-close-admin", "admin_item_delete")
     
     document.querySelectorAll(".btn-delete-admin").forEach((btn:any) => {
         btn.addEventListener('click', () => {

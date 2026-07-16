@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Commande;
 use App\Models\CommandeInvite;
 use App\Models\CommandeInvitePlat;
+use App\Models\Livraison;
 use App\Models\Panier;
 use Illuminate\Http\Request;
 
@@ -33,12 +34,12 @@ class CommandeController extends Controller
    public function show(Commande $commande)
     {
         $panier = Panier::with('plats')->where('user_id', $commande->user_id)->first();
-
+        $infos = Livraison::where('commande_id', $commande->id)->first();
         // dd($panier);
-
-        return view('admin.commandes.show', [
+        return response()->json([
             'commande' => $commande, 
-            'panier' => $panier, 
+            'panier' => $panier,
+            'infos' => $infos
         ]);
     }
 
@@ -53,8 +54,7 @@ class CommandeController extends Controller
             ->get();
 
             // dd($panierGuest);
-
-        return view('admin.commandes.show', [
+        return response()->json([
             'commande' => $commandeGuest, 
             'panierGuest' => $panierGuest
         ]);

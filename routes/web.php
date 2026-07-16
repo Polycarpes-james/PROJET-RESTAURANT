@@ -173,7 +173,7 @@ prefix('admin')->name('admin.')->group(function () {
     Route::delete('/picture/delete/{picture}', [PictureController::class, 'destroy'])->name('picture.destroy')->where([
         'picture' => '[0-9]+'
     ]);
-
+    // La vue de la commande d'un invité
     Route::get('/commande/{invite_id}/{commande}', [AdminCommandeController::class, 'showGuest'])->name('commande.showGuest')->where([
         'commande' => '[0-9]+',
         'invite_id' => '[0-9a-z\-]+'

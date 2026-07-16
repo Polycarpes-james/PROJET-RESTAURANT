@@ -52,7 +52,7 @@ class PlatsController extends Controller
         $session_invite = session()->get('invite_session');
 
         if (auth()->check()) {
-            $panierElement = Panier::where('user_id', Auth::id())->first()->plats->where('id', $plat->id)->first();
+            $panierElement = Panier::where('user_id', Auth::id())->first()->plats->id($plat->id)->first();
             if ($panierElement) {
                 $quantite = $panierElement->pivot->quantite;
             }

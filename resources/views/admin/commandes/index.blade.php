@@ -9,6 +9,10 @@
     $searchValide = true
 @endphp
 @section('content')
+    <div class="commandes-big-content">
+        <x-show-modal-admin kind="" contentId="admin_item_delete" contentSecondClass="admin_item_content" headerClass="admin_item_header" mainClass="admin_item_main" footerClass="admin_item_footer"/>
+    </div>
+
     <div class="presentation-categories">
         <h1>La liste des commandes</h1>
     </div>

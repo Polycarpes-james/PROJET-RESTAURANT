@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,15 @@ class PanierPlat extends Model
     public function panier()
     {
         return $this->belongsTo(Panier::class);
+    }
+
+        public function scopePanierId (Builder $builder, string $id): Builder
+    {   
+        return $builder->where('panier_id', $id);
+    }
+    public function scopePlatId (Builder $builder, string $id): Builder
+    {   
+        return $builder->where('plat_id', $id);
     }
 }
 

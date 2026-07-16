@@ -9,17 +9,20 @@ use App\Models\Commande;
 use App\Models\Ingredient;
 use App\Models\Menu;
 use App\Models\Picture;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class Plat extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name', 
@@ -90,21 +93,11 @@ class Plat extends Model
     {
         return $this->avis()->count();
     }
-    // public function platValide ()
-    // {
-    //     $disponible = $this->disponible;
-    //     $stringValide = ""; 
-    //     if ($disponible === "yes") {
-    //         $stringValide = "Le plat est disponible";
-    //     } else {
-    //         $stringValide = "Le plat n'est pas disponible";
-    //     }
-        
-    //     return [
-    //         $stringValide,
-    //         $disponible
-    //     ]; 
-    // }
+
+    public function scopeId (Builder $builder, string $id): Builder
+    {   
+        return $builder->where('id', $id);
+    }
 
     public function ingredients():BelongsToMany
     {
@@ -125,7 +118,6 @@ class Plat extends Model
 
     public function truncateText($text = null, $maxLength = 200)
     {
-        
         $text = mb_convert_encoding($text ?? '', 'UTF-8', 'auto');
         // Si le texte est plus court que la limite → on le retourne tel quel
         if (mb_strlen($text, 'UTF-8') <= $maxLength) {

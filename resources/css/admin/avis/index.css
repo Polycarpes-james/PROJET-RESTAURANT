@@ -1,0 +1,20 @@
+.avis-container{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.avi-inner-item{
+    background-color: #e0e0e029;
+    padding: 10px;
+    border: 1px solid var(--main-pall);
+    border-radius: 10px;
+    margin: 10px;
+}
+.avis-items{
+    width: 25%;
+}
+.avis-items .avi-item{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}

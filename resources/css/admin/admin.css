@@ -175,7 +175,9 @@
     background: var(--second-color);
     border-radius: 3px;
 }
-
+.classIdChange{
+    color:blue;font-weight:bold
+}
 
 .nav-admin-container {
     display: flex;

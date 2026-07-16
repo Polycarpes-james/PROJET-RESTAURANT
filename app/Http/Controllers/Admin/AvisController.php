@@ -4,13 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Avis;
-use Illuminate\Http\Request;
+use App\Models\Plat;
 
 class AvisController extends Controller
 {
-    function index () {
+    public function index () {
         return view('admin.avis.index', [
-            'avis' =>  Avis::all()
+            'plats' => Plat::all()
         ]);
     }
+
+    public function show (Plat $plat) {
+
+        // $avis = $plat;
+
+        return response()->json(['avis' => $plat]);
+    }
+
+    public function destroy (Avis $avi) {
+        $avi->delete();
+    }
+    
 }

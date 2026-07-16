@@ -28,7 +28,7 @@ class PlatController extends Controller
     public function index()
     {
         return view('admin.plats.index', [
-            'plats' => Plat::all()
+            'plats' => Plat::orderBy('created_at', 'desc')->withTrashed()->paginate(20)
         ]);
     }
 

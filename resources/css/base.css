@@ -48,6 +48,7 @@ input, textarea{
 }
 
 :root{
+    --main-pall:#1e3b8a1f;
     --main-color:#1E3A8A;
     --white-color:white;
     --second-pall:#bc662021;

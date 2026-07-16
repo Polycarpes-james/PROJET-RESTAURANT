@@ -1,7 +1,12 @@
 @extends('admin.base')
 
 @section('title', 'CATEGORIES')
-    
+
+@php
+    $isViewlable = true;
+    $linkBtn = true;
+    $delete = true
+@endphp
 @section('content')
 
     <x-items-actions type="category" contentId="category_modal" contentSecondClass="category_modal_item" headerClass="category_modal_header" mainClass="category_modal_main" footerClass="category_modal_footer"/>
@@ -31,7 +36,7 @@
                     <tr class="category-row" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
                         <td class="item-id">{{ $category->id }}</td>
                         <td class="item-name">{{ $category->name }}</td>
-                        <x-smally :element="$category" class="edit-category" route="category" kind="btn"/>
+                        <x-smally :element="$category" class="edit-category" delete="{{ $delete }}" route="category" kind="btn" linkBtn="{{ $linkBtn }}" isViewlable="{{ $isViewlable }}"/>
                     </tr>
                 @endforeach
             </tbody>

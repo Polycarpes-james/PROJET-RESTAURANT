@@ -8,7 +8,8 @@
     $searchValide = true;
     $linkBtn = true;
     $isViewlable = true;
-    $filtable = true
+    $filtable = true;
+    $delete = true;
 @endphp
     <x-show-modal-admin kind="btn-delete-user" contentId="admin_plat_delete" contentSecondClass="admin_plat_content" headerClass="admin_plat_header" mainClass="admin_plat_main" footerClass="admin_plat_footer"/>
     <div class="presentation-categories">
@@ -46,7 +47,7 @@
                         </td>
                         <td class="item-role"><span class="badge {{ $user->role_color }}" >{{ $user->role_label }}</span></td>
                         @can('update', $user)
-                            <x-smally :element="$user" class="btn-delete-user-admin" route="user" linkBtn="{{ !$linkBtn }}"  isViewlable="{{ $isViewlable }}" kind="link">
+                            <x-smally :element="$user" class="btn-delete-user-admin" delete="{{ $delete }}" route="user" linkBtn="{{ $linkBtn }}"  isViewlable="{{ $isViewlable }}" kind="link">
                                 <div class="change-role">
                                     <form action="{{ route('admin.user.update', $user) }}" method="POST">
                                         @csrf

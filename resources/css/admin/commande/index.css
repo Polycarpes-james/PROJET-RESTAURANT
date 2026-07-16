@@ -70,3 +70,65 @@
 .commandes-guests{
   margin-top: 2em;
 }
+
+/* 
+.commandes-big-content .admin_item_header{
+
+} */
+
+.commandes-big-content .commande_show_content .modal-commande-row{
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.commandes-big-content .commande_show_content .modal-commande-row:nth-child(1),
+.commandes-big-content .commande_show_content .modal-commande-row:nth-child(2)
+{
+  /* padding-bottom: 5px;
+  border-bottom: 1px solid #8080802c; */
+}
+.commandes-big-content .commande_show_content .commande-field{
+  flex: 1;
+  width: 100%;
+}
+.commandes-big-content .commande_show_content .commande-field label{
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #808080c7;
+}
+.commandes-big-content .commande_show_content .modal-commande-row .modal-commande{
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.commandes-big-content .commande_show_content .modal-commande-row .modal-commande .item-commande small{
+  opacity: 0.6;
+  font-weight: bold;
+}
+.modal-commande-row .item-commande{
+  width: 33.33%;
+}
+.modal-commande-row .item{
+  background-color: var(--second-pall);
+  margin: 5px 5px 5px 0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px #80808043;
+  padding: 5px;
+}
+
+
+
+/* Modal Part */
+
+.commandes-big-content .admin_item_content{
+    overflow-y: scroll;
+    width: 950px;
+    height: 100vh;
+    max-width: 100%;
+}

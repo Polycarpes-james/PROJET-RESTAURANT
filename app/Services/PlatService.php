@@ -60,6 +60,7 @@ class PlatService
             $quantite = session()->get('panier_invite')[$plat->id]['quantite']; 
         }
         $totalPriceIngredients = $plat->ingredients->sum('price');
+        
         return new PlatShowData(
             plat: PlatData::from($plat),
             note: $plat->sumNotes(),

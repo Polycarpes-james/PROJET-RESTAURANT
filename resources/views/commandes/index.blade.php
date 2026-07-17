@@ -67,8 +67,9 @@
                                                 <button class="add-card" type="button" data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" data-price="{{ $plat->price }}" data-picture="{{ $plat->getPicture()->getPictureUrl(100, 100) }}" data-quantite="1">
                                                     <span class="clickable"></span>
                                                 </button>
+                                                <span class="ribbon available"></span>
                                             @else
-                                                <span class="ribbon">Indisponible</span>
+                                                <span class="ribbon notavailable">Indisponible</span>
                                             @endif
                                             <div class="items-btns">
                                                 <a href="{{ route('rettine.plats.show', ['plat' => $plat, 'slug' => $plat->getSlug()]) }}">

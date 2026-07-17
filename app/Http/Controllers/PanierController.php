@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 header('Content-Type: application/json; charset=utf-8');
 
 use App\Models\Category;
-use App\Models\Plat;
-use App\Models\Panier;
 use App\Models\Commande;
+use App\Models\Panier;
 use App\Models\PanierPlat;
+use App\Models\Plat;
+use App\Services\PanierService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PanierController extends Controller
 {
 
-    
+    public function __construct(
+        public PanierService $panierService
+    ) {}
+
     public function sessionInvite (Request $request) {
 
         $request->validate([
@@ -23,6 +27,73 @@ class PanierController extends Controller
         ]);
 
         return response()->json(['success' => true, 'session' => session()->put('invite_session', $request->session_element),'message' => "Vous pouvez passez vos commandes en tant qu'invité"]);
+    }
+/**
+     * La fonction "ajouterAuPanier" permet d'ajouter un plat au panier (Invité|Abonné)
+     */
+    public function ajouterAuPanier(Request $request)
+    {
+
+        if (!auth()->check()) {
+            return response()->json([
+                'error' => 'connect',
+                'message' => 'Veuillez vous connecter ou continuer en tant qu’invité.',
+            ], 403);
+        }
+        $request->validate([
+            'plat_id' => 'required|exists:plats,id',
+            'quantite' => 'required|integer|max:100|min:1',
+            'state' => 'nullable|boolean'
+        ]);
+
+        $user = auth()->user();
+        // Récupérer ou créer le panier
+        $panier = $user->panier ?? Panier::create(['user_id' => $user->id]);
+        $plat = Plat::findOrFail($request->plat_id);
+
+        $element = $panierService->verifierDisponibilite($plat);
+
+        $quantiteAjoutee = $request->quantite;
+
+        // Vérifier si le plat est déjà dans le panier
+        $panierPlat = PanierPlat::panierId($panier->id)->platId($plat->id)->first();
+
+        $totalGeneral = null;
+
+
+        if ($panierPlat) {
+            $nouvelleQuantite = $panierPlat->quantite + $quantiteAjoutee;
+            $panierPlat->update([
+                'quantite' => $request->state ? $quantiteAjoutee : $nouvelleQuantite,
+                'prix_total' => $plat->price * ($request->state ? $quantiteAjoutee : $nouvelleQuantite)
+            ]);
+            return response()->json(['success' => true, 'platTotal' => $panierPlat->quantite, 'total' => $panier->panierPlats()->sum('quantite'), 'message' => 'Le plat ' . "'$plat->name'" . ' a été augmentée dans le panier !']);
+        } else {
+            PanierPlat::create([
+                'panier_id' => $panier->id,
+                'plat_id' => $plat->id,
+                'quantite' => $quantiteAjoutee,
+                'prix_total' => $plat->price * $quantiteAjoutee
+            ]);
+        }
+
+        $panierDetails = $this->panierPlats($panier);;
+
+        $totalGeneral = $panierDetails->sum('prix_total');
+
+        $panier->total = $totalGeneral;
+        $panier->save();
+        // Calcul du total général
+
+        return response()->json([
+            'success' => true,
+            'element' => $element, 
+            'message_first' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
+            'panier' => $panierDetails,
+            'total' => $panier->panierPlats()->sum('quantite'),
+            'platTotal' => $quantiteAjoutee,
+            'total_general' => $totalGeneral
+        ]);
     }
 
     public function ajouterAuPanierInvite(Request $request)
@@ -36,7 +107,7 @@ class PanierController extends Controller
 
         $panier = session()->get('panier_invite');
 
-        $plat = Plat::findOrFail($request->plat_id);
+        $element = $panierService->verifierDisponibilite($plat);
 
         $platsInCard = session()->get('platsInCard', []);  
         // Vérifier si le plat est déjà dans le panier
@@ -183,70 +254,7 @@ class PanierController extends Controller
             'panier_condition' => $panier->total ?? null
         ]);
     }
-    /**
-     * La fonction "ajouterAuPanier" permet d'ajouter un plat au panier (Invité|Abonné)
-     */
-    public function ajouterAuPanier(Request $request)
-    {
-
-        if (!auth()->check()) {
-            return response()->json([
-                'error' => 'connect',
-                'message' => 'Veuillez vous connecter ou continuer en tant qu’invité.',
-            ], 403);
-        }
-        $request->validate([
-            'plat_id' => 'required|exists:plats,id',
-            'quantite' => 'required|integer|max:100|min:1',
-            'state' => 'nullable|boolean'
-        ]);
-
-        $user = auth()->user();
-        // Récupérer ou créer le panier
-        $panier = $user->panier ?? Panier::create(['user_id' => $user->id]);
-        $plat = Plat::findOrFail($request->plat_id);
-
-        $quantiteAjoutee = $request->quantite;
-
-        // Vérifier si le plat est déjà dans le panier
-        $panierPlat = PanierPlat::panierId($panier->id)->platId($plat->id)->first();
-
-        $totalGeneral = null;
-
-
-        if ($panierPlat) {
-            $nouvelleQuantite = $panierPlat->quantite + $quantiteAjoutee;
-            $panierPlat->update([
-                'quantite' => $request->state ? $quantiteAjoutee : $nouvelleQuantite,
-                'prix_total' => $plat->price * ($request->state ? $quantiteAjoutee : $nouvelleQuantite)
-            ]);
-            return response()->json(['success' => true, 'platTotal' => $panierPlat->quantite, 'total' => $panier->panierPlats()->sum('quantite'), 'message' => 'Le plat ' . "'$plat->name'" . ' a été augmentée dans le panier !']);
-        } else {
-            PanierPlat::create([
-                'panier_id' => $panier->id,
-                'plat_id' => $plat->id,
-                'quantite' => $quantiteAjoutee,
-                'prix_total' => $plat->price * $quantiteAjoutee
-            ]);
-        }
-
-        $panierDetails = $this->panierPlats($panier);;
-
-        $totalGeneral = $panierDetails->sum('prix_total');
-
-        $panier->total = $totalGeneral;
-        $panier->save();
-        // Calcul du total général
-
-        return response()->json([
-            'success' => true,
-            'message_first' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
-            'panier' => $panierDetails,
-            'total' => $panier->panierPlats()->sum('quantite'),
-            'platTotal' => $quantiteAjoutee,
-            'total_general' => $totalGeneral
-        ]);
-    }
+    
     
     public function panierPlats (Panier $panier) {
 

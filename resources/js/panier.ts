@@ -398,9 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
 
                     data = await resGuest.json()
-                }
-                console.log(data);
-                
+                }                
             } else {
                 if(res.status === 403) {
                     showAuthModal()
@@ -408,6 +406,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } 
             
+            console.log(data);
+
             if(data.success){  
                 complet_actions(data, condition)   
                                              
@@ -703,6 +703,17 @@ function hideContainer (idClassName:string, what:boolean, withClassName:boolean,
     } else {
         if (contentSuppressionId) contentSuppressionId.style.display = "none" 
     }
+}
+
+export async function apiFetch(url: string, options: RequestInit) {
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw data;
+    }
+
+    return data;
 }
 
 export {

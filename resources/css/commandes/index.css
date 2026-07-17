@@ -87,28 +87,45 @@
 
 .ribbon{
     position: absolute;
+    padding: 6px 0;
+    font-size: 14px;
+}
+.notavailable{
+    background: #e53935;
+    transform: rotate(45deg);
     top: 18px;
     right: -38px;
-    width: 140px;
-    padding: 6px 0;
-    background: #e53935;
-    color: white;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    transform: rotate(45deg);
+    color: white;
     box-shadow: 0 2px 8px #00000040;
+    font-weight: bold;
+    width: 140px;
+}
+.available{
+    background: #29983d;
+    right: 5px;
+    top: 5px;
+    width: 12px;
+    height: 10px;
+    border-radius: 100%;
 }
 
-.ribbon::before,
+/* .ribbon::before,
 .ribbon::after{
     content: "";
     position: absolute;
     bottom: -8px;
-
-    border-top: 8px solid #b71c1c;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
+}
+
+.notavailable::before,
+.notavailable::after{
+    border-top: 8px solid #b71c1c;
+}
+.available::before,
+.available::after{
+    border-top: 8px solid #29983d;
 }
 
 .ribbon::before{
@@ -117,7 +134,7 @@
 
 .ribbon::after{
     right: 0;
-}
+} */
 /* ====================================== */
 .pass-commande .plats-items{
     margin-top: 3em;

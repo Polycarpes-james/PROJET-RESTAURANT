@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use App\Exceptions\PlatIndisponibleException;
 
 class Handler extends ExceptionHandler
 {
@@ -56,4 +57,22 @@ class Handler extends ExceptionHandler
         return redirect()->guest(route('login'));
     }
 
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof PlatIndisponibleException) {
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
+                ], 422);
+            }
+
+            return back()->withErrors([
+                'plat' => $e->getMessage(),
+            ]);
+        }
+
+        return parent::render($request, $e);
+    }
 }

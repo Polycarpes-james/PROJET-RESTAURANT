@@ -2,8 +2,10 @@
 namespace App\Services;
 
 
+use App\Exceptions\PlatIndisponibleException;
 use App\Models\Commande;
 use App\Models\Panier;
+use App\Models\Plat;
 use Illuminate\Support\Facades\Auth;
 
 class PanierService
@@ -22,5 +24,15 @@ class PanierService
             }
         }
         return $total_number;
+    }
+
+    
+    public function verifierDisponibilite(Plat $plat): void
+    {
+        if ($plat->disponible !== 'yes') {
+            throw new PlatIndisponibleException(
+                "Le plat '{$plat->name}' est actuellement indisponible."
+            );
+        }
     }
 }

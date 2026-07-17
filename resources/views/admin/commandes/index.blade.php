@@ -14,27 +14,15 @@
     </div>
 
     <div class="presentation-categories">
-        <h1>La liste des commandes</h1>
-    </div>
-    <div class="cards">
-        <h3>Bilan global sur les commandes</h3>
         <div class="item">
-            <div class="card">
-                <h3>Commandes</h3>
-                <p>120</p>
-            </div>
-
-            <div class="card">
-                <h3>Revenus</h3>
-                <p>2450 €</p>
-            </div>
-
-            <div class="card">
-                <h3>Plats</h3>
-                <p>35</p>
-            </div>
+            <h1>La liste des commandes</h1>   
         </div>
+        <x-search placeholder="Rechercher Dominique, Julle, Neron">
+            <x-select-personnalise target="status" :filtable="$filtable" searchValide="{{ !$searchValide }}" :items="$items">
+            </x-select-personnalise>
+        </x-search>
     </div>
+    
     <div class="commandes-users">
         <h1>Gestion des commandes users</h1>
         <x-table :items="$items2" :model="$commandes" routeUpdate="admin.commande.update" routeShow="admin.commande.show" target="commande">

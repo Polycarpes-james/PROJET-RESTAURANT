@@ -1,5 +1,6 @@
 <?php
-
+use App\Exceptions\PlatIndisponibleException;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Create The Application

@@ -85,8 +85,39 @@
     opacity: 0.5;
 }
 
+.ribbon{
+    position: absolute;
+    top: 18px;
+    right: -38px;
+    width: 140px;
+    padding: 6px 0;
+    background: #e53935;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 8px #00000040;
+}
 
+.ribbon::before,
+.ribbon::after{
+    content: "";
+    position: absolute;
+    bottom: -8px;
 
+    border-top: 8px solid #b71c1c;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
+.ribbon::before{
+    left: 0;
+}
+
+.ribbon::after{
+    right: 0;
+}
 /* ====================================== */
 .pass-commande .plats-items{
     margin-top: 3em;
@@ -143,7 +174,6 @@
 }
 
 .pass-commande .plats-items .content-plats .items{
-    /* width: 19%; */
     flex: 0 1 100px;
 }
 .pass-commande .plats-items .content-plats .items h3{
@@ -157,10 +187,11 @@
     justify-content: space-between;
     flex-direction: column;
     padding: 10px;
-    /* margin: 5px; */
+    overflow: hidden;
     gap: 10px;
     cursor: pointer;
 }
+
 .pass-commande .plats-items .items-content .pictures-parts img{
     border-radius: 5px;
 }

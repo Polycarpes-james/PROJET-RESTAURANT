@@ -4,8 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const modal = document.getElementById('admin_item_delete');
         const content = modal?.querySelector('.commandes-big-content .admin_item_main') as HTMLElement;
         const headerTitle = modal?.querySelector('.commandes-big-content #item-font');
+        const footer = modal?.querySelector('.commandes-big-content footer');
 
-        if (!modal || !content || !headerTitle) return;
+        if (!modal || !content || !headerTitle || !footer) return;
 
         const res = await fetch(isGuest === "false" ? `/admin/commande/${commandeid}` : `/admin/commande/${inviteid}/${commandeid}`, {
             headers: {
@@ -20,42 +21,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
         headerTitle.textContent = `Commande #${data.commande.id}`
 
+        const field = (data.infos && data.commande) ? data.infos : data.commande 
+
+        const panierField = data.panier ? data.panier : data.panierGuest
+
         content.innerHTML = `
             <div class="commande_show_content">
                 <div class="modal-commande-row">
                     <div class="commande-field">
                         <label>Client</label>
-                        <p>${data.infos.name} ${data.infos.lastname}</p>
+                        <p>${field.name} ${field.lastname}</p>
                     </div>
                     <div class="commande-field">
                         <label>Email</label>
-                        <p>${data.infos.email}</p>
+                        <p>${field.email}</p>
                     </div>
                 </div>
                 <div class="modal-commande-row">
                     <div class="commande-field">
                         <label>date de commande</label>
-                        <p>${data.panier.created_at}€</p>
+                        <p>${formatDate(panierField.created_at ?? field.created_at)}</p>
                     </div>
                     <div class="commande-field">
                         <label>montant total</label>
-                        <p>${data.panier.total}€</p>
+                        <p>${panierField.total ?? field.total_prix} €</p>
                     </div>
                 </div>
                 <div class="modal-commande-row">
                     <div class="commande-field">
                         <label>telephone</label>
-                        <p>${data.infos.phone}</p>
+                        <p>${field.phone}</p>
                     </div>
                     <div class="commande-field">
                         <label>addresse</label>
-                        <p>${data.infos.address}</p>
+                        <p>${field.address}</p>
                     </div>
                 </div>
                 <div class="modal-commande-row">
                     <div class="commande-field">
-                        <label>date de commande</label>
-                        <p>${data.infos.instructions}</p>
+                        <label>instructions supplementaire</label>
+                        <p>${field.instructions}</p>
+                    </div>
+                    <div class="commande-field">
+                        <label>status</label>
+                        <p>${data.commande.status}</p>
                     </div>
                 </div>
                 <div class="modal-commande-row">
@@ -65,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${(data.panier ? data.panier.plats : data.panierGuest).map((plat: any) => `
                                 <div class="item-commande">
                                      <div class="item">
-                                        <p>${plat.name ?? plat.plat_name}×${plat.pivot.quantite}</p>
-                                        <small>${plat.price} €</small>
+                                        <p>${plat.name ?? plat.plat_name}×${data.panier ? plat.pivot.quantite : plat.quantite}</p>
+                                        <small>${plat.price ?? plat.prix_unitaire} €</small>
                                     </div>
                                 </div>
                                 `).join("")}
@@ -76,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `
         modal.style.display = 'flex'
-
+        footer.innerHTML = ""
         
     }
 
@@ -86,3 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 })
+
+export function formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        // hour: '2-digit',
+        // minute: '2-digit',
+    });
+}

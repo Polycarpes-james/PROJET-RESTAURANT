@@ -98,6 +98,8 @@
   font-size: 13px;
   color: #808080c7;
 }
+/* .commandes-big-content .commande_show_content .commande-field p{
+} */
 .commandes-big-content .commande_show_content .modal-commande-row .modal-commande{
   display: flex;
   flex-wrap: wrap;
@@ -129,6 +131,6 @@
 .commandes-big-content .admin_item_content{
     overflow-y: scroll;
     width: 950px;
-    height: 100vh;
+    height: 75%;
     max-width: 100%;
 }

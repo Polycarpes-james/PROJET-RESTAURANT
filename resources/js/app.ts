@@ -11,6 +11,7 @@ import './platUpdate';
 import './model';
 import './upload-picture';
 import './toggleRadio';
+import './modals';
 import './validator';
 import './convert';
 import './validatorJunior';

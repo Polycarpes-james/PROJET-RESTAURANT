@@ -10,14 +10,16 @@ use App\Models\Panier;
 use App\Models\PanierPlat;
 use App\Models\Plat;
 use App\Services\PanierService;
+use App\Services\PlatService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PanierController extends Controller
 {
-
+    
     public function __construct(
-        public PanierService $panierService
+        protected PlatService $platService,
+        protected PanierService $panierService
     ) {}
 
     public function sessionInvite (Request $request) {
@@ -31,15 +33,14 @@ class PanierController extends Controller
 /**
      * La fonction "ajouterAuPanier" permet d'ajouter un plat au panier (Invité|Abonné)
      */
-    public function ajouterAuPanier(Request $request)
+    public function ajouterAuPanier(Request $request, PanierService $panierService)
     {
-
         if (!auth()->check()) {
             return response()->json([
                 'error' => 'connect',
                 'message' => 'Veuillez vous connecter ou continuer en tant qu’invité.',
             ], 403);
-        }
+        } 
         $request->validate([
             'plat_id' => 'required|exists:plats,id',
             'quantite' => 'required|integer|max:100|min:1',
@@ -51,7 +52,7 @@ class PanierController extends Controller
         $panier = $user->panier ?? Panier::create(['user_id' => $user->id]);
         $plat = Plat::findOrFail($request->plat_id);
 
-        $element = $panierService->verifierDisponibilite($plat);
+        $panierService->verifierDisponibilite($plat);
 
         $quantiteAjoutee = $request->quantite;
 
@@ -87,7 +88,6 @@ class PanierController extends Controller
 
         return response()->json([
             'success' => true,
-            'element' => $element, 
             'message_first' => "Le plat " . $plat->name . ' a été ajouté dans le panier !',
             'panier' => $panierDetails,
             'total' => $panier->panierPlats()->sum('quantite'),
@@ -96,7 +96,7 @@ class PanierController extends Controller
         ]);
     }
 
-    public function ajouterAuPanierInvite(Request $request)
+    public function ajouterAuPanierInvite(Request $request, PanierService $panierService)
     {
 
         $request->validate([

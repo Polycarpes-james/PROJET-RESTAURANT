@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
 
     // Interface de configuration globale
@@ -405,7 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
             } 
-            
+
+            if(!data.success){
+                // showMessage(data)
+                console.log(data);
+                
+            }
             console.log(data);
 
             if(data.success){  

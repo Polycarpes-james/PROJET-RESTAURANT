@@ -2,7 +2,7 @@
 
 /* Modale */
 #customModal, #platWindowsInfo, #customModalShow, #category_modal, #modal-connect, 
-#multi_tasks_modal, #suppression_dish, #container-user-reservation, #admin_item_delete, #showUpDish{
+#multi_tasks_modal, #suppression_dish, #container-user-reservation, #admin_item_delete, #showUpDish, .modal-overlay{
     position: fixed;
     top:0; 
     left:0;

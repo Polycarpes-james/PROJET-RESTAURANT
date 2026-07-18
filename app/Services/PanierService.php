@@ -27,11 +27,12 @@ class PanierService
     }
 
     
-    public function verifierDisponibilite(Plat $plat): void
+    public function verifierDisponibilite(Plat $plat)
     {
         if ($plat->disponible !== 'yes') {
             throw new PlatIndisponibleException(
-                "Le plat '{$plat->name}' est actuellement indisponible."
+                raison: $plat->raison_indisponible ?? "Aucune raison n'a été précisée.",
+                message: "Le plat '{$plat->name}' est actuellement indisponible."
             );
         }
     }

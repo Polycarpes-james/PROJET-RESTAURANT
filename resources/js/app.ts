@@ -6,6 +6,8 @@ import './panier';
 import './admin/actions';
 import './search';
 import './avis';
+import './Alert/Alert';
+import './Alert/AlertTypes';
 import './carousel';
 import './platUpdate';
 import './model';

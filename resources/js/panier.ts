@@ -1,3 +1,5 @@
+import AlertService from "./Services/AlertServices";
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Interface de configuration globale
@@ -360,7 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function btn(){
         document.querySelectorAll<HTMLButtonElement>('.delete-dish-link').forEach(btn => btn.addEventListener('click', () => {
-            showModalSuppression(btn.dataset.id!, btn.dataset.name!)
+            // showModalSuppression(btn.dataset.id!, btn.dataset.name!)
+            AlertService.suppressionPlat(btn.dataset.id!);
         }));
     }
 
@@ -405,9 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
 
             if(!data.success){
-                // showMessage(data)
-                console.log(data);
-                
+                AlertService.platIndisponible(data.raison)
             }
             console.log(data);
 
@@ -482,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll<HTMLInputElement>('.text').forEach(field => field.addEventListener('change', async (e:any) => {
             const platId = e.target.dataset.id!;
             const quantite = parseInt(e.target.value, 10)            
-            await ajouterAuPanier(platId, quantite, false, true)
+            await ajouterAuPanier(platId, quantite, true, true)            
         }))
     }
 
@@ -490,24 +491,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 
-    const btns = document.querySelectorAll(".btn-session")
+    
 
-    btns.forEach(btn => {
-        btn.addEventListener('click', () => {            
-            hideContainer('.btn-item-session', true, false, '')
-        })
-    })
-
-
-    document.querySelectorAll<HTMLButtonElement>('.btn-suppression').forEach(btn => btn.addEventListener('click', () => {
-        supprimerPlat(btn.dataset.id!)  
-        hideContainer('suppression_dish', false, false, '')
-    }))
-
-    document.querySelector('.multi_vide_btn')?.addEventListener('click', () => {
-        viderPanier()
-        hideContainer('multi_tasks_modal', false, false, '')
-    })
+ 
     // ======================= MODIFIER QUANTITÉ =========================
     async function modifierQuantite(platId: string, delta: number): Promise<void> {
         try {
@@ -562,61 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // ======================= SUPPRIMER UN PLAT =========================
-    async function supprimerPlat(platId: string): Promise<void> {
-        try {
-            let data:any
-            const res = await fetch('/rettine/panier/supprimer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify({ plat_id: platId })
-            });
-            data = await res.json();
-            // console.log(data);
-            
-            if (data.session === 'invite') {
-                const resGuest = await fetch('/guest/panier/supprimer', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        'Accept': 'application/json'
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({ plat_id: platId})
-                })
-                
-                data = await resGuest.json()
-
-            } else {
-                if (res.status === 430) {
-                    showAuthModal()
-                    return
-                }
-            }
-
-            if (data.success) {
-                const e = document.querySelector('.total-number-plats') as HTMLParagraphElement
-                if(e){
-                    e.textContent = data.total
-                }
-                location.reload();
-
-                loadPanierShow(platId)   
-            } else {
-                console.log('Déjà');
-            }   
-            
-        } catch (e){
-            console.log(e);
-            showModal("Erreur serveur", "Impossible de supprimer le plat", "error");
-        }
-    }
-
+    
     
     // Attache l'événement d’ajout
     document.querySelectorAll<HTMLButtonElement>('.add-card').forEach(btn => {
@@ -719,6 +651,51 @@ export async function apiFetch(url: string, options: RequestInit) {
     return data;
 }
 
+async function supprimerPlat(platId: string): Promise<void> {
+        try {
+            let data:any
+            const res = await fetch('/rettine/panier/supprimer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'Accept': 'application/json'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ plat_id: platId })
+            });
+            data = await res.json();
+            // console.log(data);
+            
+            if (data.session === 'invite') {
+                const resGuest = await fetch('/guest/panier/supprimer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ plat_id: platId})
+                })
+                
+                data = await resGuest.json()
+
+            } else {
+                // if (res.status === 430) {
+                //     showAuthModal()
+                //     return
+                // }
+            }
+            location.reload();
+          
+        } catch (e){
+            console.log(e);
+            // showModal("Erreur serveur", "Impossible de supprimer le plat", "error");
+        }
+    }
+
 export {
-    hideContainer
+    hideContainer,
+    supprimerPlat
 }

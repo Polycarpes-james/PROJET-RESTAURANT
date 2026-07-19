@@ -15,8 +15,13 @@
     backdrop-filter: blur(3px);
     z-index:9999;
 }
-
-
+div:where(.swal2-container) h2:where(.swal2-title){
+    /* padding: 0; */
+}
+.swal2-container {
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
 #customModal, #platWindowsInfo, #reservation-user-reservation,
 #admin_item_delete
 {

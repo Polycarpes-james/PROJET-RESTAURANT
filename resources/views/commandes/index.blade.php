@@ -20,9 +20,6 @@
 @endsection
 
 @section('content_second')
-
-    <x-modals.show-modal panier="false" type="message" contentId="customModal" contentSecondClass="modal-content" headerClass="modal-header-content" mainClass="modal-main-content" footerClass="modal-footer-content"/>
-
     <div class="pass-commande-items">
         <div>
             <div>

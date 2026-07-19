@@ -21,10 +21,6 @@
 
 @section('content_second')
 
-    <x-modals.show-modal panier="true" type="message" contentId="customModal" contentSecondClass="modal-content" headerClass="modal-header-content" mainClass="modal-main-content" footerClass="modal-footer-content"/>
-    <x-modals.show-modal panier="false" type="multi" contentId="multi_tasks_modal" contentSecondClass="multi_tasks_modal_container" headerClass="multi_tasks_header_modal" mainClass="multi_main_modal" footerClass="multi_footer_modal"/>
-    <x-modals.show-modal panier="false" type="remove" contentId="suppression_dish" contentSecondClass="suppression-modal-item" headerClass="suppression-header-modal" mainClass="suppression-main-modal" footerClass="suppression-footer-modal"/>
-
     <aside id="platWindowsInfo" class="modal" style="display: none;">
         <div class="main-modal-containt" id="mainModalContaint">
             <header id="modalHead">

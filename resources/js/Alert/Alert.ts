@@ -2,20 +2,6 @@ import Swal from "sweetalert2";
 import { AlertOptions } from "./AlertTypes";
 
 
-// Swal.fire({
-//     title: "Supprimer ce plat ?",
-//     text: "Cette action est irréversible.",
-//     icon: "warning",
-
-//     confirmButtonColor: "#c26214",
-//     cancelButtonColor: "#6c757d",
-
-//     confirmButtonText: "Oui",
-//     cancelButtonText: "Annuler",
-
-//     showCancelButton: true
-// });
-
 export default class Alert {
 
     static success(options: AlertOptions) {
@@ -47,9 +33,9 @@ export default class Alert {
             text: options.text,
             html: options.html,
             confirmButtonColor: "#c26214",
+            backdrop:"rgba(0,0,0,0.35)",
             confirmButtonText: options.confirmButtonText ?? "Compris",
         });
-
     }
 
     static info(options: AlertOptions) {
@@ -60,7 +46,6 @@ export default class Alert {
             html: options.html,
             confirmButtonText: options.confirmButtonText ?? "OK",
         });
-
     }
 
     
@@ -115,7 +100,7 @@ export default class Alert {
         //         await onConfirm();                
         //     }
         // }
-     static async confirmDelete(options: {title: string;text: string;onConfirm: () => Promise<void> | void;}) {
+     static async confirmDelete(options: {title: string;btn:string;text: string;onConfirm: () => Promise<void> | void;}) {
 
         const result = await Swal.fire({
             icon: "warning",
@@ -124,9 +109,32 @@ export default class Alert {
             showCancelButton: true,
             confirmButtonText: "Supprimer",
             cancelButtonText: "Annuler",
+            backdrop:"rgba(0,0,0,0.35)",
             confirmButtonColor: "#ff7171",
             customClass: {
-                confirmButton: "supprimerPlat",
+                confirmButton: options.btn,
+                cancelButton: "btn-cancel"
+            }
+        });
+
+        if (result.isConfirmed) {
+            await options.onConfirm();
+        }
+    }
+
+    static async videPanier (options: {title: string;text: string;onConfirm: () => Promise<void> | void;}) {
+
+        const result = await Swal.fire({
+            icon: "warning",
+            title: options.title,
+            text: options.text,
+            showCancelButton: true,
+            confirmButtonText: "Vider",
+            cancelButtonText: "Annuler",
+            backdrop:"rgba(0,0,0,0.35)",
+            confirmButtonColor: "#ff7171",
+            customClass: {
+                confirmButton: "multi_vide_btn",
                 cancelButton: "btn-cancel"
             }
         });

@@ -362,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function btn(){
         document.querySelectorAll<HTMLButtonElement>('.delete-dish-link').forEach(btn => btn.addEventListener('click', () => {
-            // showModalSuppression(btn.dataset.id!, btn.dataset.name!)
             AlertService.suppressionPlat(btn.dataset.id!);
         }));
     }
@@ -428,29 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function viderPanier() {
-
-        const response = await fetch('/guest/panier/vider', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN':(document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
-                'Accept': 'application/json'
-            },
-            credentials: 'same-origin',
-        });
-
-        const data = await response.json();
-
-        console.log(data);
-        
-        if (data.success) {            
-            location.reload();
-        }
-    }
 
     document.querySelector('.vider-panier')?.addEventListener('click', (e)=>{
-        showModalMulti('Nettoyer votre panier', "Voulez vous vraiment nettoyer votre panier!");
+        AlertService.viderPanier();
     })
 
     function complet_actions(data: any, condition: boolean) {
@@ -603,9 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } 
             
             if (data.error === 'vide') {
-                // console.log(data);
-                
-                showModal("Panier vide !", data.message, "error");
+                AlertService.panierVide(data.message)
             }
         } catch (e){
             showModal("Erreur", "Impossible de passer la commande" + e, "error");
@@ -650,6 +627,28 @@ export async function apiFetch(url: string, options: RequestInit) {
 
     return data;
 }
+
+async function viderPanier() {
+
+    const response = await fetch('/guest/panier/vider', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN':(document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
+            'Accept': 'application/json'
+        },
+        credentials: 'same-origin',
+    });
+
+    const data = await response.json();
+
+    console.log(data);
+    
+    if (data.success) {            
+        location.reload();
+    }
+}
+
 
 async function supprimerPlat(platId: string): Promise<void> {
         try {
@@ -697,5 +696,6 @@ async function supprimerPlat(platId: string): Promise<void> {
 
 export {
     hideContainer,
-    supprimerPlat
+    supprimerPlat,
+    viderPanier
 }

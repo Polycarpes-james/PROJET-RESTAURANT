@@ -60,7 +60,7 @@
             </div>
             <div class="category">
                 <p>Le plat est un(e) {{ $platService['category']['name'] }}</p>
-                <p>Temps de cuissant : <strong>{{ $platService['plat']['temps_preparation'] }}</strong></p>
+                <p>Temps de cuissant : <strong>{{ convertSecondsToText($platService['plat']['temps_preparation']) }}</strong></p>
             </div>
             <div class="ingredients-item">
                 <h3>Tous les ingredients sur plat</h3>
@@ -125,7 +125,7 @@
                                         <div class="i"> 
                                             <strong>{{ $avi['user']['name'] }} {{ $avi['user']['firstname'] }}</strong>
                                         </div>
-                                        <small class="text-muted">{{ str_replace('Il y a', 'Il y a ', $avi['user']['updated_at']) }}</small>
+                                        <small class="text-muted">{{ format_date($avi['user']['updated_at'], 'relative') }}</small>
                                     </div>
                                 </div>
                                 <div class="stars-display" data-note="{{ $avi['note'] }}">

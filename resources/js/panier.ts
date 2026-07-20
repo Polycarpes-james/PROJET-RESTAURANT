@@ -241,30 +241,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
         try {
             let data: any;
-            let res = await fetch(`/rettine/plats/${plat_id}`, { 
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-            })
+            let resultat = await apiFetch(`/rettine/plats/${plat_id}`, 'GET');
 
-            data = await res.json();
-            if(res.status === 403){
-                const resGuest = await fetch(`/guest/plats/${plat_id}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'  
-                    }
-                })
-                data = await resGuest.json()
-
+            data = await resultat.data;
+            if(resultat.response.status === 403){
+                data = (await apiFetch(`/guest/plats/${plat_id}`, 'GET')).data
                 if (text && total) {
                     text.value = `${data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0}`          
                     total.textContent = `${(data.plat.price * (data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0)).toFixed(2)} €`
                 }
             } else {
                 if (text && total) {
-                    text.value = `${data.quantite === undefined  ? "0" : (data.quantite === null ? "0" : data.quantite)}`          
+                    text.value = `${data.quantite === undefined  ? "0" : (data.quantite === null ? "0" : data.quantite)}`                              
                     total.textContent = `${(data.plat.price * data.quantite).toFixed(2)} €`
                 }
             }
@@ -476,42 +464,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // ======================= MODIFIER QUANTITÉ =========================
     async function modifierQuantite(platId: string, delta: number): Promise<void> {
         try {
-            let data:any
-            const res = await fetch('/rettine/panier/modifier', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify({ plat_id: platId, delta: delta })
-            });
-            
-            data = await res.json()
+            let data: any
+            const resultat = await apiFetch('/rettine/panier/modifier', 'POST', { plat_id: platId, delta: delta }) 
+            data = await resultat.data
             
             if(data.session === 'invite'){
-                if(res.status === 403){
-                    const resGuest = await fetch('/guest/panier/modifier', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                            'Accept': 'application/json'
-                        },
-                        credentials: 'same-origin',
-                        body: JSON.stringify({ plat_id: platId, delta: delta })
-                    })
-                
-                    data = await resGuest.json()
+                if(resultat.response.status === 403){
+                    data = (await apiFetch('/guest/panier/modifier', 'POST', { plat_id: platId, delta: delta })).data
                 }
             } else {
-                if(res.status === 403){
+                if(resultat.response.status === 403){
                     showAuthModal();
                     return;
                 }
             }
-
             if (data.success) {
                 complet_actions(data, false);
                 await loadPanierShow(platId);
@@ -551,32 +517,15 @@ document.addEventListener('DOMContentLoaded', () => {
     async function validerPanier(auth:any): Promise<void> {
         try {
             let data
-            let res = await fetch('/rettine/panier/commander', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    'Accept': 'application/json'
-                },
-            });
+            let resultat = await apiFetch('/rettine/panier/commander', 'POST');
+            data = await resultat.data;      
 
-            data = await res.json();      
-
-            if (res.status === 403) {  
-                let resGuest = await fetch('/guest/panier/commander', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
-                        'Accept': 'application/json'
-                    },
-                });
-                data = await resGuest.json();      
+            if (resultat.response.status === 403) {  
+                data = (await apiFetch('/guest/panier/commander', 'POST')).data;  
                 if (data.session){                    
                     window.location.href = `/guest/valide-plats-${auth}`
                 }
             }            
-
             if (data.success) {
                 window.location.href = `/rettine/valider-plats-${data.panier.id}`
             } 
@@ -617,34 +566,49 @@ function hideContainer (idClassName:string, what:boolean, withClassName:boolean,
     }
 }
 
-export async function apiFetch(url: string, options: RequestInit) {
-    const response = await fetch(url, options);
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw data;
-    }
-
-    return data;
-}
-
-async function viderPanier() {
-
-    const response = await fetch('/guest/panier/vider', {
-        method: 'POST',
+/**
+ * Cette fonction gere le fetch
+ * @param url L'url à envoyé
+ * @param options Toutes les options
+ * @returns 
+ */
+export async function apiFetch(
+    url: string,
+    method: string,
+    options: Record<string, any> = {}
+) {
+    const config: RequestInit = {
+        method,
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN':(document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
+            'X-CSRF-TOKEN': (
+                document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+            ).content,
             'Accept': 'application/json'
         },
-        credentials: 'same-origin',
-    });
+        credentials: 'same-origin'
+    };
+
+    if (method === 'GET' || method === 'HEAD') {
+        const params = new URLSearchParams(options as Record<string, string>);
+        if (params.toString()) {
+            url += `?${params.toString()}`;
+        }
+    } else {
+        config.body = JSON.stringify(options);
+    }
+
+    const response = await fetch(url, config);
 
     const data = await response.json();
 
-    console.log(data);
-    
-    if (data.success) {            
+    if (!response.ok) throw data;
+
+    return { data, response };
+}
+async function viderPanier() {
+    const resultat = await apiFetch('/guest/panier/vider', 'POST');
+    if (resultat.data.success) {            
         location.reload();
     }
 }

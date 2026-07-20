@@ -15,6 +15,11 @@ if (!function_exists('truncateText')) {
     }
 }
 
+if (!function_exists('convertSecondsToText')) {
+    function convertSecondsToText(?int $time): string {
+        return Text::convertSecondsToText($time);
+    }
+}
 
 if (! function_exists('format_date')) {
     function format_date(string|\DateTime $date, string $format = 'date'): string

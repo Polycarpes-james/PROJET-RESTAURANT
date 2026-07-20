@@ -67,16 +67,17 @@ export default class AlertService {
 
     }
 
+    static messageSimple (title: string, message:string) {
+        return Alert.success({
+            title: title,
+            html: `<p>${message}</p>`
+        })
+    }
 
-      static panierVide (message:string) {
+    static panierVide (message:string) {
         return Alert.warning({
-
             title: "Votre panier est entierement vide !",
-
-            html: `
-                <p>${message}</p>
-            `
-
+            html: `<p>${message}</p>`
         });
 
     }
@@ -93,7 +94,7 @@ export default class AlertService {
 
     }
 
-    static erreur(message: string) {
+    static erreur(message: any) {
 
         return Alert.error({
 

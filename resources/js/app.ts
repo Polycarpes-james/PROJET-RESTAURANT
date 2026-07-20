@@ -7,6 +7,7 @@ import './admin/actions';
 import './search';
 import './avis';
 import './Alert/Alert';
+import './apiFetch'
 import './Alert/AlertTypes';
 import './carousel';
 import './platUpdate';

@@ -1,3 +1,4 @@
+import { apiFetch } from "./apiFetch";
 import AlertService from "./Services/AlertServices";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -202,24 +203,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function createSessionInvite (session_element: string) {
         try {
-            const res = await fetch('/guest/session', 
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({session_element : session_element})
-                }
-            )
-
-            const data = await res.json()
-            console.log(data);
-
+            const res = await apiFetch('/guest/session', 'POST', {session_element: session_element})
+            const data = res.data
             if (data.success) {
-                showModal('success', data.message)
-                console.log(data);
+                AlertService.messageSimple('success', data.message)
             }
 
         } catch (e) {
@@ -272,32 +259,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!list || !totalEl) return;
         try {
-            
-            let res = await fetch('/rettine/panier/refresh', { 
-                headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json' 
-                    }
-                });
             let data:any;
-            data = await res.json()
+            let resultat = await apiFetch('/rettine/panier/refresh', 'GET');
+            data = resultat.data
 
             if (data.session === 'invite') {
-                if (res.status === 403) {
-                    const guestRes = await fetch('/guest/panier/refresh', { 
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json' 
-                        } 
-                    });
-                    
-                    data = await guestRes.json();
-                                         
+                if (resultat.response.status === 403) {
+                    data = (await apiFetch('/guest/panier/refresh', 'GET')).data                                         
                     const modalConnect = document.getElementById('modal-connect');
                     if (modalConnect) modalConnect.style.display = "none";
                 }
             } else {
-                if(res.status === 403){
+                if(resultat.response.status === 403){
                     showAuthModal();
                     return;
                 }
@@ -361,39 +334,21 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             let data: any
 
-            let res = await fetch('/rettine/panier/ajouter', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state})
-            });
+            let resultat = await apiFetch('/rettine/panier/ajouter', "POST", { plat_id: platId, quantite: quantite, state: state});
 
-            data = await res.json()          
+            data = resultat.data          
 
             if(data.session === 'invite'){
-                if (res.status === 403) {
-                    const resGuest = await fetch('/guest/panier/ajouter', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content,
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({ plat_id: platId, quantite: quantite, state: state })
-                    });
-
-                    data = await resGuest.json()
+                if (resultat.response.status === 403) {
+                    data = await apiFetch('/guest/panier/ajouter', 'POST', { plat_id: platId, quantite: quantite, state: state })
                 }                
             } else {
-                if(res.status === 403) {
+                if(resultat.response.status === 403) {                    
                     showAuthModal()
                     return;
                 }
             } 
-
+            
             if(!data.success){
                 AlertService.platIndisponible(data.raison)
             }
@@ -403,15 +358,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 complet_actions(data, condition)   
                                              
                 const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
-                if (totalBtn) {
-                    totalBtn.textContent = `${data.platTotal}`                
-                }
+                if (totalBtn) totalBtn.textContent = `${data.platTotal}` 
                 // location.reload();
                 await loadPanierShow(platId);
             }
             loadPanier()
-        } catch{            
-            showModal("Erreur", "Impossible de contacter le serveur ", "error");
+        } catch (e){            
+            console.log(e);
+            
+            // AlertService.erreur('Impossible de charger le serveur')
         }
     }
 
@@ -566,46 +521,8 @@ function hideContainer (idClassName:string, what:boolean, withClassName:boolean,
     }
 }
 
-/**
- * Cette fonction gere le fetch
- * @param url L'url à envoyé
- * @param options Toutes les options
- * @returns 
- */
-export async function apiFetch(
-    url: string,
-    method: string,
-    options: Record<string, any> = {}
-) {
-    const config: RequestInit = {
-        method,
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': (
-                document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
-            ).content,
-            'Accept': 'application/json'
-        },
-        credentials: 'same-origin'
-    };
 
-    if (method === 'GET' || method === 'HEAD') {
-        const params = new URLSearchParams(options as Record<string, string>);
-        if (params.toString()) {
-            url += `?${params.toString()}`;
-        }
-    } else {
-        config.body = JSON.stringify(options);
-    }
 
-    const response = await fetch(url, config);
-
-    const data = await response.json();
-
-    if (!response.ok) throw data;
-
-    return { data, response };
-}
 async function viderPanier() {
     const resultat = await apiFetch('/guest/panier/vider', 'POST');
     if (resultat.data.success) {            

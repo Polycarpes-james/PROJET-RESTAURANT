@@ -81,14 +81,7 @@
                 @foreach ($platService['pictures'] as $picture)
                     <div class="picture-item">
                         <div class="item">
-                          
                             <img src="{{ $picture['filename'] }}" alt="photo">
-                            <button class="btn-picture" type="button">
-                                <span class="clickable" data-picture="{{ $picture['filename'] }}" data-name="{{ $picture['filename'] }}"></span>
-                            </button>
-                            <div class="affiche" style="display: none">
-                                <p>Voir l'image</p>
-                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -119,7 +112,7 @@
                             <div class="item">                        
                                 <div class="items-i">
                                     @if ($avi['user']['avatar'])
-                                        <img id="avatarPreview" src="{{ $avi['user']['avatar'] ? $avi['user']['avatar'] : asset('img/user.png')}}" 
+                                        <img id="avatarPreview" src="{{ $avi['user']['avatar'] ? image_url($avi['user']['avatar'], 50, 50) : asset('img/user.png')}}" 
                                     alt="Avatar" class="{{ $avi['user']['avatar'] ? "profile-user" : "no-profile-user" }}">
                                     @else
                                         @php
@@ -132,7 +125,7 @@
                                         <div class="i"> 
                                             <strong>{{ $avi['user']['name'] }} {{ $avi['user']['firstname'] }}</strong>
                                         </div>
-                                        <small class="text-muted">{{ str_replace('Il y a', 'Il y a ', $avi['user']['updated_at'])}}</small>
+                                        <small class="text-muted">{{ str_replace('Il y a', 'Il y a ', $avi['user']['updated_at']) }}</small>
                                     </div>
                                 </div>
                                 <div class="stars-display" data-note="{{ $avi['note'] }}">

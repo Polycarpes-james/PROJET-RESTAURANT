@@ -69,7 +69,7 @@ class PlatService
             avis: $avis,
             quantite: $quantite,
             totalIngredientsPrice: $totalPriceIngredients,
-            pictures: new DataCollection(PictureData::class, $plat->pictures->map(fn ($picture) => PictureData::fromModel($picture, $picture->getPictureUrl(200, 190)))),
+            pictures: new DataCollection(PictureData::class, $plat->pictures->map(fn ($picture) => PictureData::fromModel($picture, image_url($picture->filename, 370, 350)))),
             ingredients: new DataCollection(IngredientData::class, $plat->ingredients->map(fn ($ingredient) => IngredientData::fromModel($ingredient))),
             category: $plat->category ? CategoryData::fromModel($plat->category) : null
         );

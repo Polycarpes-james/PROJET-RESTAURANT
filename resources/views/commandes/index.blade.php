@@ -52,14 +52,14 @@
                                 <div class="items-content" data-plat-id="{{ $plat->id }}">
                                     <div class="item">
                                         <div class="disponible-plat">
-                                            <h3>{{ $plat->truncateText($plat->name, 25)}}</h3>
+                                            <h3>{{ truncateText($plat->name, 25)}}</h3>
                                             <div>
                                                 <p class="price">{{ $plat->price }} €</p>
                                                 <p class="price-none">{{ $plat->price + 12 }} €</p>
                                             </div>
                                         </div>
                                         <div class="btns-panier">
-                                            <p class="description">{{ $plat->truncateText($plat->description, 50) }}</p>
+                                            <p class="description">{{ truncateText($plat->description, 50) }}</p>
                                             <button class="add-card" type="button" data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" data-price="{{ $plat->price }}" data-picture="{{ $plat->getPicture()->getPictureUrl(100, 100) }}" data-quantite="1">
                                                 <span class="clickable"></span>
                                             </button>
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="pictures-parts">
                                         @if ($plat->getPicture())
-                                            <img src="{{ $plat->getPicture()->getPictureUrl(240, 150) }}" alt="">
+                                            <img src="{{ image_url($plat->getPicture()->filename, 240, 150) }}" alt="">
                                         @endif
                                     </div>
                                 </div>

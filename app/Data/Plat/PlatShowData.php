@@ -8,19 +8,23 @@ use App\Data\Picture\PictureData;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Avis;
 
 class PlatShowData extends Data
 {
     public function __construct(
         public PlatData $plat,
-        public float $note,
-        public int $avis,
-        public int $quantite,
+        public float $notes,
+        public LengthAwarePaginator $avis,
+        public ?Avis $aviUserPlat,
+        public string $quantite,
         public int $totalIngredientsPrice,
         #[DataCollectionOf(PictureData::class)]
         public DataCollection $pictures,
         #[DataCollectionOf(IngredientData::class)]
         public DataCollection $ingredients,
+        public  Optional|string $firstPicture,
         public ?CategoryData $category,
     ) {}
 

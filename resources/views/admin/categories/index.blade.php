@@ -36,7 +36,7 @@
                     <tr class="category-row" data-id="{{ $category->id }}" data-name="{{ $category->name }}">
                         <td class="item-id">{{ $category->id }}</td>
                         <td class="item-name">{{ $category->name }}</td>
-                        <x-smally :element="$category" class="edit-category" delete="{{ $delete }}" route="category" kind="btn" linkBtn="{{ $linkBtn }}" isViewlable="{{ $isViewlable }}"/>
+                        <x-smally :element="$category" class="edit-category" delete="delete" route="category" kind="btn" linkBtn="{{ $linkBtn }}" isViewlable="{{ !$isViewlable }}"/>
                     </tr>
                 @endforeach
             </tbody>

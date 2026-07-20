@@ -63,8 +63,10 @@ class PlatService
         
         return new PlatShowData(
             plat: PlatData::from($plat),
-            note: $plat->sumNotes(),
-            avis: $plat->nombreAvis(),
+            firstPicture: $plat->getPicture()->getPictureUrl(2000,700),
+            notes: $plat->sumNotes(),
+            aviUserPlat: $plat->avis()->where('user_id', Auth::id())->first() ?? null,
+            avis: $avis,
             quantite: $quantite,
             totalIngredientsPrice: $totalPriceIngredients,
             pictures: new DataCollection(PictureData::class, $plat->pictures->map(fn ($picture) => PictureData::fromModel($picture, $picture->getPictureUrl(200, 190)))),

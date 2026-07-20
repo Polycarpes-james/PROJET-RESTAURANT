@@ -4,12 +4,12 @@
     </div>
     <nav class="nav-content">
         <a href="{{ route('.rettine') }}" @class(['nav-link', 'modify' => str_contains($route, '.rettine')])>Acceuil</a>
-        <a href="{{ route('rettine.plats') }}" @class(['nav-link', 'modify' => str_contains($route, '.plats')])>Plats</a>
-        <a href="#">menus</a>
+        <a href="{{ route('rettine.plats') }}" @class(['nav-link', 'modify' => str_contains($route, '.plats')])>nos Plats</a>
+        {{-- <a href="#">menus</a> --}}
         <a href="{{ route('rettine.commandes') }}" @class(['nav-link', 'modify' => str_contains($route, '.commandes')])>commander</a>
-        <a href="#">avis</a>
+        {{-- <a href="#">avis</a> --}}
         <a href="{{ route('rettine.reservations') }}" @class(['nav-link', 'modify' => str_contains($route, '.reservations')])>reservation</a>
-        <a href="#">a propos</a>
+        <a href="#">nous contacter</a>
     </nav>
     <div class="inscription-users">
         <a href="{{ auth()->check() ? route('rettine.panier') : route('guest.panier', ['invite_id' => Cookie::get('invite_id') ?? "guest"]) }}" id="ouvrirPanierBtn" class="btn btn-open-modal">

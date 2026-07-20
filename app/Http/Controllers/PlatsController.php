@@ -28,9 +28,13 @@ class PlatsController extends Controller
     }
     
     public function show(string $slug, Plat $plat, PlatService $platService, PanierService $panierService) {
+        $avis = Avis::where('plat_id', $plat->id)->with('user')->latest()->paginate(3);
+
+        // dd($platService->show($plat)->toArray());
         return view('plats.show', [
-            'plat' => $platService->show($plat),
+            'platService' => $platService->show($plat)->toArray(),
             'total' => $panierService->total(),
+            'avis' => $avis
         ]);
     }
 

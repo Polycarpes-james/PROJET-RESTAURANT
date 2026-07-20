@@ -263,7 +263,7 @@ class PanierController extends Controller
                 return [
                 'plat_id' => $item->plat->id,
                 'name' => $item->plat->name,
-                'category_id' => $item->plat->category->id,
+                'category_id' => $item->plat->category ? $item->plat->category->id : 0,
                 'price' => $item->plat->price,
                 'picture' => $item->plat->getPicture()->getPictureUrl(160, 140),
                 'quantite' => $item->quantite,

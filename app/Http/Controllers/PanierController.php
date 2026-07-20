@@ -107,6 +107,7 @@ class PanierController extends Controller
 
         $panier = session()->get('panier_invite');
 
+        $plat = Plat::findOrFail($request->plat_id);
         $element = $panierService->verifierDisponibilite($plat);
 
         $platsInCard = session()->get('platsInCard', []);  
@@ -129,7 +130,7 @@ class PanierController extends Controller
                 'price' => $plat->price,
                 'category_id' => $plat->category->id,
                 'prix_total' => $plat->price * $request->quantite,
-                'description' => $plat->truncateText($plat->description, 75),
+                'description' => truncateText($plat->description, 75),
                 'picture' => $plat->getPicture()->getPictureUrl(160, 140),
                 'link_view' => route('rettine.plats.show', ['plat' => $plat, 'slug' => $plat->getSlug()]),
             ];

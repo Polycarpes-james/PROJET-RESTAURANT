@@ -4,15 +4,13 @@ import { supprimerUser } from "@/admin/actions";
 
 export default class AlertService {
 
-    static platIndisponible (raison?: string) {
+    static platIndisponible (message?: string, raison?: string) {
 
         return Alert.warning({
-
             title: "Plat indisponible",
-
             html: `
                 <p>Ce plat ne peut pas être ajouté au panier.</p>
-
+                <p>${message}.</p>
                 ${raison ? `<br><b>Pourquoi ?</b> ${raison}` : ""}
             `,
             confirmButtonText:"Ok"

@@ -24,9 +24,10 @@ export async function apiFetch(url: string, method: string, options: Record<stri
     const response = await fetch(url, config);
 
     const data = await response.json();
-
-
-    if (!response.ok) throw data;
-
-    return { data, response };
+    
+    return { 
+        status: response.status,
+        ok: response.ok,
+        data: data,
+    };
 }

@@ -333,40 +333,47 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try {
             let data: any
+            let resultat:any
 
-            let resultat = await apiFetch('/rettine/panier/ajouter', "POST", { plat_id: platId, quantite: quantite, state: state});
+            resultat = await apiFetch('/rettine/panier/ajouter', "POST", { plat_id: platId, quantite: quantite, state: state});
 
-            data = resultat.data          
+            data = resultat.data     
+                        
 
             if(data.session === 'invite'){
-                if (resultat.response.status === 403) {
-                    data = await apiFetch('/guest/panier/ajouter', 'POST', { plat_id: platId, quantite: quantite, state: state })
+                if (resultat.status === 403) {
+                    resultat = await apiFetch('/guest/panier/ajouter', 'POST', { plat_id: platId, quantite: quantite, state: state })
+                    data = resultat.data
                 }                
             } else {
-                if(resultat.response.status === 403) {                    
-                    showAuthModal()
+                if (resultat.status === 403) {
+                    showAuthModal();
                     return;
                 }
             } 
+            // console.log(data);
             
-            if(!data.success){
-                AlertService.platIndisponible(data.raison)
+            if (resultat.status === 422) {
+                AlertService.platIndisponible(resultat.data.message, resultat.data.raison);
+                return;
             }
-            console.log(data);
 
             if(data.success){  
-                complet_actions(data, condition)   
-                                             
+                complet_actions(data, condition)                                                
                 const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
                 if (totalBtn) totalBtn.textContent = `${data.platTotal}` 
                 // location.reload();
                 await loadPanierShow(platId);
             }
-            loadPanier()
-        } catch (e){            
-            console.log(e);
             
-            // AlertService.erreur('Impossible de charger le serveur')
+            if (!resultat.ok) {
+                AlertService.erreur("Une erreur est survenue.");
+                return;
+            }
+
+            await loadPanier()
+        } catch (e){            
+            AlertService.erreur("Le serveur est inaccessible.");
         }
     }
 

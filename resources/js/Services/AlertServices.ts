@@ -53,25 +53,26 @@ export default class AlertService {
 
 
     
-    static platAjoute() {
-
+    static platAjoute(message:string) {
         return Alert.success({
-
             title: "Succès",
-
-            text: "Le plat a été ajouté au panier."
-
+            text: message
         });
 
     }
 
-    static messageSimple (title: string, message:string) {
+    static messageSimple (title: string, message:string|undefined) {
         return Alert.success({
             title: title,
             html: `<p>${message}</p>`
         })
     }
-
+   static messageAlert (title: string, message:string) {
+        return Alert.warning({
+            title: title,
+            html: `<p>${message}</p>`
+        })
+    }
     static panierVide (message:string) {
         return Alert.warning({
             title: "Votre panier est entierement vide !",

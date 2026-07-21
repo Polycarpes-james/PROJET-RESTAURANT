@@ -32,7 +32,7 @@ if (! function_exists('format_date')) {
             'time'      => $date->format('H:i'),
             'short'     => $date->translatedFormat('d M Y'),
             'long'      => $date->translatedFormat('l d F Y'),
-            'relative'  => $date->diffForHumans(),
+            'relative'  => str_replace('il y a', 'Il y a', $date->diffForHumans()),
             default     => $date->format('d/m/Y'),
         };
     }

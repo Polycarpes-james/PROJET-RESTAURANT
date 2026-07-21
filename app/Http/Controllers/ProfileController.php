@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Panier;
-use App\Models\Commande;
-use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Commande;
+use App\Models\Panier;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -20,7 +19,9 @@ class ProfileController extends Controller
     {
         // dd(Auth::user());
         $total_number = 0;
-        if(Auth::user() && Commande::where('user_id', Auth::id()) && Panier::where('user_id', Auth::id())->first()){
+        $commande = Commande::where('user_id', Auth::id())->first();
+        
+        if(Auth::user() && $commande && Panier::where('user_id', Auth::id())->first()){
             $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
         } else {
             $panier = session()->get('panier_invite');          
@@ -28,8 +29,13 @@ class ProfileController extends Controller
                 $total_number = array_sum(array_column($panier, 'quantite'));
             }
         }
+
+        // dd(Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats);
+
         return view('profile.index', [
             'user' => Auth::user(),
+            'commandes' => Commande::where('user_id', Auth::id())->first(),
+            'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],
             'total' => $total_number
         ]);
     }
@@ -69,21 +75,41 @@ class ProfileController extends Controller
     //     ]);
     // }
 
-    // /**
-    //  * Update the user's profile information.
-    //  */
-    // public function update(Request $request): RedirectResponse
-    // {
-    //     $request->user()->fill($request->validated());
+    /**
+     * Update the user's profile information.
+     */
+    public function update(Request $request):JsonResponse
+    {
+        // dd($request);
+        $request->validate([
+            'name' => "required|string", 
+            'firstname' => "required|string", 
+            'email' => "required|email", 
+            'password' => "nullable", 
+            'passwordconfirm' => "same:password|nullable", 
+        ]);
 
-    //     if ($request->user()->isDirty('email')) {
-    //         $request->user()->email_verified_at = null;
-    //     }
+        $request->user()->update([
+            'name' => $request->name, 
+            'firstname' => $request->firstname, 
+            'email' => $request->email, 
+            'password' => Hash::make($request->password), 
+            'passwordconfirm' => $request->passwordconfirm, 
+        ]);
 
-    //     $request->user()->save();
+        // if ($request->user()->isDirty('email')) {
+        //     $request->user()->email_verified_at = null;
+        // }
 
-    //     return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    // }
+        $request->user()->save();
+
+        return response()->json([
+                'success' => true, 
+                'message' => 'Vos informations ont été modifiées !'
+            ])
+        // to_route('rettine.profile.index')
+        ;
+    }
 
     // /**
     //  * Delete the user's account.

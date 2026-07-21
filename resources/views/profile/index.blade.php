@@ -35,10 +35,27 @@
             </form>
         </div>
     </div>
+    <div class="belongToUser">
+        <h1>{{ $total }}</h1>
+        @forelse ($platsCommande as $plat)
+            <p>{{ $plat->name }}</p>
+        @empty
+            <p>Pas de commande !</p>
+        @endforelse
+
+        @forelse ($user->avis as $avi)
+            <p>{{ $avi->note }}</p>
+            <p>{{ $avi->plat->name }}</p>
+            <p>{{ $avi->commentaire }}</p>
+            <p>{{ format_date($avi->updated_at, 'relative')  }}</p>
+        @empty
+            <p>Pas de commande !</p>
+        @endforelse
+    </div>
     <div class="profile-container-form">
         <div class="formulaire">
             <h2>Modifier votre profile actuel</h2>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('rettine.profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <x-form.index name="name" :value="Auth::user()->name" label="Mon nom de profile"/>
@@ -49,7 +66,7 @@
                     <p>Vous pouvez changer votre mot de passe actuel</p>
                 </div>
                 <x-form.index type="password" name="password" label="Nouveau mot de pass" placeholder="................"/>
-                <x-form.index type="password" name="password" label="Comfirmer le mot de pass" placeholder="................"/>
+                <x-form.index type="password" name="passwordconfirm" label="Comfirmer le mot de pass" placeholder="................"/>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
             </form>
         </div>

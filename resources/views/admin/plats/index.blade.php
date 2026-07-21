@@ -40,8 +40,8 @@
                     @foreach ($plats as $plat)
                         <tr class="plat-row" data-search="{{ $plat->id }}{{ $plat->name }}{{ $plat->price }}{{ $plat->disponible }}">     
                             <td class="item-id">{{ $plat->id }}</td>           
-                            <td><img src="{{ $plat->getPicture() ? $plat->getPicture()->getPictureUrl(70, 60) : "" }}" alt=""></td>           
-                            <td class="item-name">{{ $plat->truncateText($plat->name, 30) }}</td>           
+                            <td><img src="{{ $plat->getPicture() ? image_url($plat->getPicture()->filename, 70, 60) : "" }}" alt=""></td>           
+                            <td class="item-name">{{ truncateText($plat->name, 30) }}</td>           
                             <td class="item-price">{{ $plat->price }} €</td>
                             <td class="item-state"><span class="badge {{ $plat->plat_color }}">{{ $plat->plat_status }}</span></td>      
                             <x-smally :element="$plat" class="btn-delete-dish" route="plat" kind="btn" delete={{ true }} linkBtn="{{ false }}" isViewlable="{{ true }}"/>

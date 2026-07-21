@@ -21,77 +21,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // ======================= MODAL GÉNÉRIQUE =========================
-    function showModal(title: string, message: string, type: "success" | "error" | "info" = "info"): void {
-        const modal = document.getElementById('customModal') as HTMLElement | null;
-        const content = document.getElementById('modalContent') as HTMLElement | null;
-        const titleEl = document.getElementById('modalTitle') as HTMLElement | null;
-        const messageEl = document.getElementById('modalMessage') as HTMLElement | null;
-        const footer = document.querySelector('.modal-footer-content') as HTMLElement;
+    // function showModal(title: string, message: string, type: "success" | "error" | "info" = "info"): void {
+    //     const modal = document.getElementById('customModal') as HTMLElement | null;
+    //     const content = document.getElementById('modalContent') as HTMLElement | null;
+    //     const titleEl = document.getElementById('modalTitle') as HTMLElement | null;
+    //     const messageEl = document.getElementById('modalMessage') as HTMLElement | null;
+    //     const footer = document.querySelector('.modal-footer-content') as HTMLElement;
 
-        if (!modal || !content || !titleEl || !messageEl || !footer) return;
+    //     if (!modal || !content || !titleEl || !messageEl || !footer) return;
 
-        const colors: Record<string, string> = {
-            success: "modal-success",
-            error: "modal-error",
-            info: "modal-info"
-        };
+    //     const colors: Record<string, string> = {
+    //         success: "modal-success",
+    //         error: "modal-error",
+    //         info: "modal-info"
+    //     };
 
-        const url = footer.dataset.auth ? '/rettine/panier' : `/guest/shopCartUp@/cart-${footer.dataset.invite_id}`;
+    //     const url = footer.dataset.auth ? '/rettine/panier' : `/guest/shopCartUp@/cart-${footer.dataset.invite_id}`;
 
-        content.className = "modal-content " + (colors[type] || '');
-        titleEl.textContent = title;
-        messageEl.textContent = message;
-        modal.style.display = "flex";
+    //     content.className = "modal-content " + (colors[type] || '');
+    //     titleEl.textContent = title;
+    //     messageEl.textContent = message;
+    //     modal.style.display = "flex";
         
-        console.log(modal.dataset.panier);
+    //     console.log(modal.dataset.panier);
         
-        if(modal.dataset.panier === "true"){
-            footer.innerHTML = `<a href="/rettine/commandes" class="commandFromCart">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
-            Ajouter un plat
-            </a>`
-        }
+    //     if(modal.dataset.panier === "true"){
+    //         footer.innerHTML = `<a href="/rettine/commandes" class="commandFromCart">
+    //         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+    //         Ajouter un plat
+    //         </a>`
+    //     }
         
-        if(modal.dataset.panier === "false"){
-           footer.innerHTML = `
-            <a href="${url}" id="ouvrirPanierBtn" class="btn btn-open-modal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            </a>`
-        }
+    //     if(modal.dataset.panier === "false"){
+    //        footer.innerHTML = `
+    //         <a href="${url}" id="ouvrirPanierBtn" class="btn btn-open-modal">
+    //             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="33" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+    //         </a>`
+    //     }
       
        
-    }
+    // }
 
-    function showModalMulti (title:string, content:string) {
-        const modal = document.getElementById('multi_tasks_modal') as HTMLElement
-        const contentMain = document.querySelector('.multi_tasks_message') as HTMLElement;
-        const titleContent = document.getElementById('multi_title_modal') as HTMLElement
-
-        contentMain.innerHTML = `${content}`
-        titleContent.textContent = `${title}`
-        modal.style.display = 'flex';
-    }
-
-    function showModalSuppression (plat_id: string, name: string) {
-        const modal = document.getElementById('suppression_dish') as HTMLElement;
-        const contentMain = document.querySelector('.suppression-message') as HTMLElement;
-        const btnSuppression = document.querySelector('.btn-suppression') as HTMLElement;
-        
-        contentMain.innerHTML = `Voulez vous vraiment retirer le plat ${name} du panier ?`
-        btnSuppression.setAttribute('data-id', plat_id)
-        modal.style.display = 'flex';
-    }
-
+  
 
 
     // ======================= FERMETURE DES MODALES =========================
-
-    document.querySelectorAll<HTMLElement>('#closeBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modal = document.getElementById('platWindowsInfo')
-            if (modal) modal.style.display = 'none';
-        })
-    })
 
     document.querySelectorAll<HTMLElement>('#closeModal').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -103,36 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.querySelectorAll<HTMLButtonElement>('.btn-modal-close').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modal = document.getElementById('multi_tasks_modal');
-            const modal2 = document.getElementById('suppression_dish');
-
-            if (modal) modal.style.display = "none"
-            if (modal2) modal2.style.display = "none"
-        })
-    })
-    
-    
-   document.querySelectorAll<HTMLElement>('#closeModal').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const modal = document.getElementById('customModalShow');
-            if (modal) {
-                modal.style.display = "none";
-                document.querySelectorAll('.clickable').forEach((p) => {
-                    p.classList.remove('done')  
-                }) 
-            }
-        });
-    });
-    document.querySelectorAll<HTMLElement>('#closePanierModal').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll<HTMLElement>('#panierModal').forEach(ele => {
-                ele.style.display = "none";
-                console.log("Ok");
-            });
-        });
-    });
+ 
 
     window.addEventListener('keydown', (e: KeyboardEvent) => {
         if(e.key === "Escape" || e.key === 'Esc'){
@@ -144,26 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             
         }
-        // console.log(e.key);
     });
-    // ======================= OUVERTURE DU PANIER =========================
-    document.querySelectorAll<HTMLElement>('#ouvrirPanierBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const panierModal = document.getElementById('panierModal');
-            const customModal = document.getElementById('customModal');
-            if (panierModal) panierModal.style.display = "none";
-            if (customModal) customModal.style.display = "none";
-            loadPanier();
-        });
-    });
+    
 
-    // ==================================================================================
-
-    document.querySelectorAll('.show-panier-plat').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelector('.hidden-part-plat')?.classList.remove('none-height')
-        })
-    })
     // ======================= MODALE D’AUTHENTIFICATION =========================
     function showAuthModal(): void {
         const modal = document.getElementById('modal-connect') as HTMLElement | null;
@@ -200,7 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
             createSessionInvite('invite')
         };
     }
-
+    /**
+     * This function creates an invited
+     * @param {string} session_element 
+     */
     async function createSessionInvite (session_element: string) {
         try {
             const res = await apiFetch('/guest/session', 'POST', {session_element: session_element})
@@ -214,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } 
 
-     async function loadPanierShow (plat_id: string) {
+    async function loadPanierShow (plat_id: string) {
         
         let content:any
         let text:any
@@ -231,16 +162,18 @@ document.addEventListener('DOMContentLoaded', () => {
             let resultat = await apiFetch(`/rettine/plats/${plat_id}`, 'GET');
 
             data = await resultat.data;
-            if(resultat.response.status === 403){
-                data = (await apiFetch(`/guest/plats/${plat_id}`, 'GET')).data
+
+            if(resultat.status === 403){
+                resultat = await apiFetch(`/guest/plats/${plat_id}`, 'GET')
+                data = resultat.data
                 if (text && total) {
                     text.value = `${data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0}`          
-                    total.textContent = `${(data.plat.price * (data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0)).toFixed(2)} €`
+                    total.textContent = `${(data.plat.price * (data.panier ? (data.panier[plat_id] ? data.panier[plat_id]['quantite'] : 0) : 0)).toFixed(2)}€`
                 }
             } else {
                 if (text && total) {
                     text.value = `${data.quantite === undefined  ? "0" : (data.quantite === null ? "0" : data.quantite)}`                              
-                    total.textContent = `${(data.plat.price * data.quantite).toFixed(2)} €`
+                    total.textContent = `${(data.plat.price * data.quantite).toFixed(2)}€`
                 }
             }
                                    
@@ -260,17 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!list || !totalEl) return;
         try {
             let data:any;
-            let resultat = await apiFetch('/rettine/panier/refresh', 'GET');
+            let resultat:any
+
+            resultat = await apiFetch('/rettine/panier/refresh', 'GET');
             data = resultat.data
 
             if (data.session === 'invite') {
                 if (resultat.response.status === 403) {
-                    data = (await apiFetch('/guest/panier/refresh', 'GET')).data                                         
+                    resultat = (await apiFetch('/guest/panier/refresh', 'GET'))
+                    data = resultat.data                                         
                     const modalConnect = document.getElementById('modal-connect');
                     if (modalConnect) modalConnect.style.display = "none";
                 }
             } else {
-                if(resultat.response.status === 403){
+                if(resultat.status === 403){
                     showAuthModal();
                     return;
                 }
@@ -284,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.classList.add('plat-item-modal');
             
                     div.innerHTML = `
-                       <div class="items">
+                        <div class="items">
                             <div class="plat-item panier-item" data-plat="${ item.plat_id }">
                                 <div class="picture-panier-panier">
                                     <img src="${ item.picture }" alt="">
@@ -315,9 +251,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn()
             }
             all()         
-        } catch (err) {
-            console.error(err);
-            showModal("Erreur", "Impossible de charger le panier", "error");
+        } catch {
+            AlertService.erreur('Impossible de charger le panier')
         }
     }
     
@@ -351,8 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
             } 
-            // console.log(data);
-            
+
             if (resultat.status === 422) {
                 AlertService.platIndisponible(resultat.data.message, resultat.data.raison);
                 return;
@@ -362,7 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 complet_actions(data, condition)                                                
                 const totalBtn = document.querySelector(`.total-number-plats-header[data-id="${platId}"]`) as HTMLElement;
                 if (totalBtn) totalBtn.textContent = `${data.platTotal}` 
-                // location.reload();
                 await loadPanierShow(platId);
             }
             
@@ -370,7 +303,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 AlertService.erreur("Une erreur est survenue.");
                 return;
             }
-
             await loadPanier()
         } catch (e){            
             AlertService.erreur("Le serveur est inaccessible.");
@@ -403,9 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         if (condition && data.message_first) {
-            showModal("Ajout du plat dans le panier", data.message_first, "success");
+            AlertService.platAjoute(data.message_first)
         }
     }
+
     function all () {
         document.querySelectorAll<HTMLButtonElement>('.plus').forEach(btn => btn.addEventListener('click', () => modifierQuantite(btn.dataset.id!, 1)));
         document.querySelectorAll<HTMLButtonElement>('.minus').forEach(btn => btn.addEventListener('click', () => modifierQuantite(btn.dataset.id!, -1)));
@@ -417,25 +350,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     all()
-
-  
-
     
-
- 
     // ======================= MODIFIER QUANTITÉ =========================
     async function modifierQuantite(platId: string, delta: number): Promise<void> {
         try {
             let data: any
-            const resultat = await apiFetch('/rettine/panier/modifier', 'POST', { plat_id: platId, delta: delta }) 
+            let resultat: any
+
+            resultat = await apiFetch('/rettine/panier/modifier', 'POST', { plat_id: platId, delta: delta }) 
             data = await resultat.data
             
             if(data.session === 'invite'){
-                if(resultat.response.status === 403){
-                    data = (await apiFetch('/guest/panier/modifier', 'POST', { plat_id: platId, delta: delta })).data
+                if(resultat.status === 403){
+                    resultat = (await apiFetch('/guest/panier/modifier', 'POST', { plat_id: platId, delta: delta })).data
+                    data = resultat.data
                 }
             } else {
-                if(resultat.response.status === 403){
+                if(resultat.status === 403){
                     showAuthModal();
                     return;
                 }
@@ -446,7 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // location.reload();
             }
         } catch (e) {
-            showModal("Erreur serveur", "Impossible de modifier la quantité", "error");
+            AlertService.erreur('Impossible de modifier la quantité')
         }
     }
 
@@ -462,7 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const platId = btn.dataset.id!;
             const quantite = parseInt(btn.dataset.quantite!, 10);               
-            ajouterAuPanier(platId, quantite, false, false);
+            ajouterAuPanier(platId, quantite, true, false);
         });
     });
     
@@ -479,11 +410,13 @@ document.addEventListener('DOMContentLoaded', () => {
     async function validerPanier(auth:any): Promise<void> {
         try {
             let data
-            let resultat = await apiFetch('/rettine/panier/commander', 'POST');
+            let resultat
+            resultat = await apiFetch('/rettine/panier/commander', 'POST');
             data = await resultat.data;      
 
-            if (resultat.response.status === 403) {  
-                data = (await apiFetch('/guest/panier/commander', 'POST')).data;  
+            if (resultat.status === 403) {  
+                resultat = (await apiFetch('/guest/panier/commander', 'POST')); 
+                data = resultat.data 
                 if (data.session){                    
                     window.location.href = `/guest/valide-plats-${auth}`
                 }
@@ -496,9 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 AlertService.panierVide(data.message)
             }
         } catch (e){
-            showModal("Erreur", "Impossible de passer la commande" + e, "error");
-            console.log(e);
-            
+            AlertService.erreur('Impossible de passer la commande')
         }
     }
 
@@ -539,48 +470,22 @@ async function viderPanier() {
 
 
 async function supprimerPlat(platId: string): Promise<void> {
-        try {
-            let data:any
-            const res = await fetch('/rettine/panier/supprimer', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    'Accept': 'application/json'
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify({ plat_id: platId })
-            });
-            data = await res.json();
-            // console.log(data);
-            
-            if (data.session === 'invite') {
-                const resGuest = await fetch('/guest/panier/supprimer', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                        'Accept': 'application/json'
-                    },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({ plat_id: platId})
-                })
-                
-                data = await resGuest.json()
+    try {
+        let data:any
+        let resultat:any
+        resultat = await apiFetch('/rettine/panier/supprimer', 'POST', {plat_id: platId})
+        data = await resultat.data;
 
-            } else {
-                // if (res.status === 430) {
-                //     showAuthModal()
-                //     return
-                // }
-            }
-            location.reload();
-          
-        } catch (e){
-            console.log(e);
-            // showModal("Erreur serveur", "Impossible de supprimer le plat", "error");
-        }
+        if (data.session === 'invite') {
+            resultat = await apiFetch('/guest/panier/supprimer', 'POST', {plat_id: platId});
+            data = await resultat.data
+        } 
+        location.reload();
+        
+    } catch {
+        AlertService.erreur('Impossible de supprimer le plat')
     }
+}
 
 export {
     hideContainer,

@@ -6,6 +6,9 @@
 // //   message?: string;
 // // };
 
+import { apiFetch } from "./apiFetch";
+import AlertService from "./Services/AlertServices";
+
 // // interface AvisWidgetElements {
 // //   root: HTMLElement;
 // //   stars: NodeListOf<HTMLElement>;
@@ -671,9 +674,7 @@ function initAvisWidgets() {
       const value = Number(star.dataset.value);
 
       star.addEventListener('mouseenter', () => highlightStars(elements, value));
-      star.addEventListener('mouseleave', () =>
-        highlightStars(elements, elements.selectedNote ?? 0)
-      );
+      star.addEventListener('mouseleave', () => highlightStars(elements, elements.selectedNote ?? 0));
       star.addEventListener('click', () => {
         elements.selectedNote = value;
         highlightStars(elements, value);
@@ -690,34 +691,20 @@ function initAvisWidgets() {
 
 async function submitAvis(elements: AvisWidgetElements) {
   if (!elements.selectedNote) {
-    showModal("Erreur", "Veuillez sélectionner une note.", "error");
+    AlertService.messageAlert('Etoile non selectionnée', "Veillez sélectionner une note.")
     return;
   }
-
-  const token = (document.querySelector(
-    'meta[name="csrf-token"]'
-  ) as HTMLMetaElement | null)?.content;
 
   try {
     elements.submitBtn!.disabled = true;
 
-    const res = await fetch(`/rettine/plats/${elements.platId}/avis`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { "X-CSRF-TOKEN": token } : {})
-      },
-      body: JSON.stringify({
-        note: elements.selectedNote,
-        commentaire: elements.textarea?.value ?? ""
-      })
-    });
+    const res = await  apiFetch(`/rettine/plats/${elements.platId}/avis`, 'POST', {note: elements.selectedNote, commentaire: elements.textarea?.value ?? ""})
 
-    const data: ServerResponse = await res.json();
+    const data: ServerResponse = res.data;
 
     if (data.success) {
-      showModal("Succès", data.message ?? "Avis enregistré", "success");
-
+      AlertService.messageSimple('Succès avi enregistré', data.message)
+      
       if (elements.moyenneEl && typeof data.moyenne === "number") {
         elements.moyenneEl.textContent = `${data.moyenne.toFixed(1)} / 5`;
       }
@@ -730,22 +717,6 @@ async function submitAvis(elements: AvisWidgetElements) {
   }
 }
 
-/* ============================================================
-   MODAL
-============================================================ */
-
-function showModal(
-  title: string,
-  message: string,
-  type: "success" | "error" | "info" = "info"
-) {
-  const modal = document.getElementById("customModal");
-  if (!modal) return;
-
-  modal.querySelector("#modalTitle")!.textContent = title;
-  modal.querySelector("#modalMessage")!.textContent = message;
-  modal.style.display = "flex";
-}
 
 /* ============================================================
    INIT GLOBAL
@@ -758,4 +729,3 @@ document.addEventListener("DOMContentLoaded", () => {
   initUserAvisStars();
 });
 
-export {};

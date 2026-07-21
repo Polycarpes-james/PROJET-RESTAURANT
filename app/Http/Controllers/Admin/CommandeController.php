@@ -19,7 +19,7 @@ class CommandeController extends Controller
     {
         
         $commandesGuests = CommandeInvite::latest()->paginate(10);
-        $commandes = Commande::with('user')->latest()->paginate(10);
+        $commandes = Commande::with('user')->latest()->paginate(50);
         // dd($commandes);
         return view('admin.commandes.index', [
             'commandesGuests' => $commandesGuests,

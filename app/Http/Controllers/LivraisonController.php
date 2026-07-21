@@ -67,17 +67,14 @@ class LivraisonController extends Controller
             ]
         );
 
-
-        $commande = Commande::where('id', $commande_id)
-            ->where('user_id', Auth::id())
-            ->first();
+        $commande = Commande::where('id', $commande_id)->where('user_id', Auth::id())->first();
 
         if ($commande) {
             $commande->update(['status' => 'livree']);
         }
         $panier = Panier::where('user_id', Auth::id())->first();
 
-
+        // $panier->plats()->detach();
         return to_route('rettine.commandes')->with('success', 'Votre livraison a été enregistrée avec succès.');
     }
 

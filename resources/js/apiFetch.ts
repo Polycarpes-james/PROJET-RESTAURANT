@@ -29,5 +29,6 @@ export async function apiFetch(url: string, method: string, options: Record<stri
         status: response.status,
         ok: response.ok,
         data: data,
+        response: response
     };
 }

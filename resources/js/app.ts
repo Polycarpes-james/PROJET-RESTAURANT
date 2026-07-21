@@ -9,6 +9,8 @@ import './avis';
 import './Alert/Alert';
 import './apiFetch';
 import './profile';
+import './Services/ValidationService';
+import './Services/FormService';
 import './Alert/AlertTypes';
 import './carousel';
 import './platUpdate';

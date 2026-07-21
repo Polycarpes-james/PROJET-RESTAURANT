@@ -81,20 +81,24 @@ class ProfileController extends Controller
     public function update(Request $request):JsonResponse
     {
         // dd($request);
-        $data = $request->validate(
+       $data = $request->validate(
         [
             'name' => ['required', 'string'],
+            'firstname' => ['required', 'string'],
             'email' => ['required', 'email'],
             'password' => ['nullable', 'min:2', 'confirmed', 'required_with:password_confirmation'],
             'password_confirmation' => ['nullable', 'required_with:password'],
         ],
         [
-            'password.min' => 'TOO_SHORT',
-            'password.confirmed' => 'CONFIRMATION_FAILED',
+            'name.required' => 'REQUIRED',
+            'firstname.required' => 'REQUIRED',
+            'email.required' => 'REQUIRED',
+            'email.email' => 'INVALID_EMAIL',
+            'password.min' => 'PASSWORD_TOO_SHORT',
+            'password.confirmed' => 'PASSWORD_CONFIRMATION_FAILED',
             'password.required_with' => 'PASSWORD_REQUIRED',
-            'password_confirmation.required_with' => 'CONFIRMATION_REQUIRED',
-        ]
-    );
+            'password_confirmation.required_with' => 'PASSWORD_CONFIRMATION_REQUIRED',
+        ]);
 
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);

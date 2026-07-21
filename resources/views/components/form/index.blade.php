@@ -13,4 +13,5 @@
             {{ $message }}
         </p>
     @enderror
+    <p class="error_ts" data-target="{{ $name }}"></p>
 </div>  

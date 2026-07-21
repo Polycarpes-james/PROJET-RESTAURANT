@@ -81,33 +81,34 @@ class ProfileController extends Controller
     public function update(Request $request):JsonResponse
     {
         // dd($request);
-        $request->validate([
-            'name' => "required|string", 
-            'firstname' => "required|string", 
-            'email' => "required|email", 
-            'password' => "nullable", 
-            'passwordconfirm' => "same:password|nullable", 
-        ]);
+        $data = $request->validate(
+        [
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['nullable', 'min:2', 'confirmed', 'required_with:password_confirmation'],
+            'password_confirmation' => ['nullable', 'required_with:password'],
+        ],
+        [
+            'password.min' => 'TOO_SHORT',
+            'password.confirmed' => 'CONFIRMATION_FAILED',
+            'password.required_with' => 'PASSWORD_REQUIRED',
+            'password_confirmation.required_with' => 'CONFIRMATION_REQUIRED',
+        ]
+    );
 
-        $request->user()->update([
-            'name' => $request->name, 
-            'firstname' => $request->firstname, 
-            'email' => $request->email, 
-            'password' => Hash::make($request->password), 
-            'passwordconfirm' => $request->passwordconfirm, 
-        ]);
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
 
-        // if ($request->user()->isDirty('email')) {
-        //     $request->user()->email_verified_at = null;
-        // }
-
-        $request->user()->save();
+        $request->user()->update($data);
 
         return response()->json([
                 'success' => true, 
+                'user' => $request->user(),
                 'message' => 'Vos informations ont été modifiées !'
             ])
-        // to_route('rettine.profile.index')
         ;
     }
 

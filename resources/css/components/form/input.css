@@ -43,14 +43,15 @@
     border-radius: 5px;
 }
 
-.error{
+.error, .error_ts{
     margin: 0.4em 0;
     color: var(--white-color);
-    padding: 10px;
     border-radius: 5px;
     background: #ff7e7e;
 }
-
+.error.active, .error_ts.active{
+    padding: 10px;
+}
 /* ================================================================ */
 
 .input-radios{

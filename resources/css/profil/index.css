@@ -1,12 +1,12 @@
-/* .profile-main-container{
+.profile-main-container{
     display: flex;
-    width: 90%;
     align-items: center;
     margin: 0 auto;
     max-width: 100%;
     padding: 30px 20px;
-    justify-content: space-between;
 }
+
+/*
 .profile-main-container .profile-items{
     width: 60%;
     background-color: #7f8cb30e;
@@ -159,6 +159,12 @@
     padding:40px;
 } */
 
+.profile-backgroud-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
 .container{
     width:1200px;
     max-width:100%;
@@ -167,6 +173,8 @@
     border-radius:20px;
     overflow:hidden;
     box-shadow:0 20px 45px rgba(0,0,0,.08);
+
+    min-height:100vh;
 }
 
 /*=====================
@@ -174,12 +182,45 @@
 ======================*/
 
 .sidebar{
-    width:260px;
+    /* width:260px;
     background:#fafafa;
     border-right:1px solid #ececec;
     display:flex;
     flex-direction:column;
+    padding:30px 20px; */
+
+        position:fixed;
+    top:0;
+    left:0;
+
+    width:280px;
+    height:100vh;
+
+    background:#fff;
+
+    border-right:1px solid #ececec;
+
     padding:30px 20px;
+
+    display:flex;
+    flex-direction:column;
+
+    overflow-y:auto;
+
+        position:fixed;
+
+    width:280px;
+
+    height:100vh;
+
+    background:#fff;
+
+    box-shadow:8px 0 25px rgba(0,0,0,.05);
+
+    border-right:none;
+
+    z-index:1000;
+    z-index:1000;
 }
 
 .profile{
@@ -255,9 +296,17 @@
 ======================*/
 
 .content{
-    flex:1;
+    /* flex:1; */
+    margin-left:280px;
+
+    width:calc(100% - 280px);
+
+    min-height:100vh;
+
     padding:40px;
 }
+
+
 
 .content h1{
     font-size:28px;

@@ -20,12 +20,12 @@
             <div style="display: flex; align-items:center;">
                 <p style="margin-bottom:8px; font-size: 19px;margin-right:10px">{{ Auth::user()->name }}</p>
                 <button class="my-profile">
-<svg class="user-icon" xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 24 24"
-     fill="currentColor">
-    <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/>
-</svg>
-</button>
+                    <svg class="user-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z"/>
+                    </svg>
+                </button>
                 <div class="connexion_box tY">
                     <a href="{{ route('rettine.profile.index') }}" class="profile-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>

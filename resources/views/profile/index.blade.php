@@ -3,6 +3,8 @@
 @section('title', "Mon compte")
 
 @section('body-style', 'profile-style')
+
+@section('background_header', 'profile-backgroud-header')
     
 
 @section('content')
@@ -11,186 +13,196 @@
 
         <div class="container">
 
-    <!-- ================= SIDEBAR ================= -->
 
-    <aside class="sidebar">
+        <aside class="sidebar">
 
-        <div class="profile">
+            <div class="profile">
 
-            <img src="#" alt="">
-
-            <div>
-                <h3>Umaima Faisal</h3>
-                <span>Donor</span>
-            </div>
-
-        </div>
-
-        <p class="menu-title">
-            Menu
-        </p>
-
-        <nav>
-
-            <a href="#">
-                <i class="fa-solid fa-house"></i>
-                Home
-            </a>
-
-            <a href="#">
-                <i class="fa-regular fa-file-lines"></i>
-                View Requests
-            </a>
-
-            <a href="#">
-                <i class="fa-solid fa-location-dot"></i>
-                Track Request
-            </a>
-
-            <a href="#">
-                <i class="fa-solid fa-clock-rotate-left"></i>
-                History
-            </a>
-
-            <a href="#" class="active">
-                <i class="fa-regular fa-user"></i>
-                My profile
-            </a>
-
-        </nav>
-
-        <a href="#" class="logout">
-            Logout
-        </a>
-
-    </aside>
-
-    <!-- ================= CONTENT ================= -->
-
-    <main class="content">
-
-        <h1>
-            Account Settings
-        </h1>
-
-        <!-- PROFILE -->
-
-        <section class="card">
-
-            <div class="card-header">
-
-                <h2>My Profile</h2>
-
-                <button>
-                    Edit
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-
-            </div>
-
-            <div class="profile-box">
-
-                <img src="https://i.pravatar.cc/150" alt="">
+                <img src="#" alt="">
 
                 <div>
-
                     <h3>Umaima Faisal</h3>
-
                     <span>Donor</span>
-
-                    <small>Lahore, Punjab</small>
-
                 </div>
 
             </div>
 
-        </section>
+            <p class="menu-title">
+                Menu
+            </p>
 
-        <!-- PERSONAL -->
+            <nav>
 
-        <section class="card">
+                <a href="#">
+                    <i class="fa-solid fa-house"></i>
+                    Home
+                </a>
 
-            <div class="card-header">
+                <a href="#">
+                    <i class="fa-regular fa-file-lines"></i>
+                    View Requests
+                </a>
 
-                <h2>Personal Information</h2>
+                <a href="#">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Track Request
+                </a>
 
-                <button>
-                    Edit
-                    <i class="fa-solid fa-pen"></i>
-                </button>
+                <a href="#">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    History
+                </a>
 
-            </div>
+                <a href="#" class="active">
+                    <i class="fa-regular fa-user"></i>
+                    My profile
+                </a>
 
-            <div class="grid">
+            </nav>
 
-                <div class="item">
-                    <span>First Name</span>
-                    <strong>Umaima</strong>
+            <a href="#" class="logout">
+                Logout
+            </a>
+
+        </aside>
+
+        <!-- ================= CONTENT ================= -->
+
+        <main class="content">
+
+            <h1>
+                Account Settings
+            </h1>
+
+            <!-- PROFILE -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>My Profile</h2>
+
+                    {{-- <button>
+                        Edit
+                        <i class="fa-solid fa-pen"></i>
+                    </button> --}}
+
                 </div>
 
-                <div class="item">
-                    <span>Last Name</span>
-                    <strong>Faisal</strong>
+                <div class="profile-box">
+                    <div class="picture-profile">
+                        <form action="{{ route('rettine.profile.update.avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
+                            @csrf
+                            <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
+                            
+                            @if (Auth::user()->avatar)
+                                <img id="avatarPreview" 
+                                src="{{ asset('storage/' . Auth::user()->avatar)}}" 
+                                alt="Avatar" 
+                                class="profile-avatar">
+                            @else
+                                <p class="cutName" id="avatarPreview">{{ $user->cutName() }}</p>
+                            @endif
+                            
+                            <div id="avatarLoader" class="hidden">
+                                <p>CHANGER</p>
+                            </div>
+                        </form>
+                    </div>                    
+                    <div>
+                        <h3>{{ $user->firstname }}</h3>
+                        <span>{{ $user->role_label }}</span>
+                        <small>{{ $user->email }}</small>
+                    </div>
                 </div>
 
-                <div class="item">
-                    <span>Email</span>
-                    <strong>umaima@gmail.com</strong>
+            </section>
+
+            <!-- PERSONAL -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>Information personelles</h2>
+
+                    <button>
+                        Edit
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
                 </div>
 
-                <div class="item">
-                    <span>Phone</span>
-                    <strong>0312-4567890</strong>
+                <div class="grid">
+
+                    <div class="item">
+                        <span>Nom</span>
+                        <strong>{{ $user->name }}</strong>
+                    </div>
+
+                    <div class="item">
+                        <span>Prenom</span>
+                        <strong>{{ $user->firstname }}</strong>
+                    </div>
+
+                    <div class="item">
+                        <span>Address Email</span>
+                        <strong>{{ $user->email }}</strong>
+                    </div>
+
+                    <div class="item">
+                        <span>Phone</span>
+                        <strong>0312-4567890</strong>
+                    </div>
+
+                    <div class="item">
+                        <span>Role</span>
+                        <strong>{{ $user->role_label }}</strong>
+                    </div>
+
                 </div>
 
-                <div class="item">
-                    <span>Role</span>
-                    <strong>Donor</strong>
+            </section>
+
+            <!-- ADDRESS -->
+
+            <section class="card">
+
+                <div class="card-header">
+
+                    <h2>Address</h2>
+
+                    <button>
+                        Edit
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
                 </div>
 
-            </div>
+                <div class="grid">
 
-        </section>
+                    <div class="item">
+                        <span>Country</span>
+                        <strong>Pakistan</strong>
+                    </div>
 
-        <!-- ADDRESS -->
+                    <div class="item">
+                        <span>City</span>
+                        <strong>Lahore</strong>
+                    </div>
 
-        <section class="card">
+                    <div class="item">
+                        <span>State</span>
+                        <strong>Punjab</strong>
+                    </div>
 
-            <div class="card-header">
-
-                <h2>Address</h2>
-
-                <button>
-                    Edit
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-
-            </div>
-
-            <div class="grid">
-
-                <div class="item">
-                    <span>Country</span>
-                    <strong>Pakistan</strong>
                 </div>
 
-                <div class="item">
-                    <span>City</span>
-                    <strong>Lahore</strong>
-                </div>
+            </section>
 
-                <div class="item">
-                    <span>State</span>
-                    <strong>Punjab</strong>
-                </div>
+        </main>
 
-            </div>
-
-        </section>
-
-    </main>
-
-</div>
+        </div>
 
         {{-- <div class="profile-items">
             <div>

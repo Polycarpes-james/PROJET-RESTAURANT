@@ -6,7 +6,9 @@
             {{ old($name, $value) }}
         </textarea>
     @else
-        <input type="{{ $type }}" name="{{ $name }}" id="{{ $id ?? $name }}" value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}">
+        <div class="search-wrap">
+            <input type="{{ $type }}" name="{{ $name }}" class="item-input-field" id="{{ $id ?? $name }}" value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}">
+        </div> 
     @endif
     @error($name)
         <p class="error">

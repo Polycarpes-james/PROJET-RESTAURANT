@@ -307,7 +307,7 @@
 }   
 
 
-.actions-item-categories input.global-search
+.actions-item-categories input.global-search, .item-input-field
 {
     background: none;
     border: none;

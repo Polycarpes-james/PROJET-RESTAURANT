@@ -13,6 +13,21 @@ a{
     gap: 10px;
     color: initial;
 }
+
+.user-icon{
+    width:30px;
+    height:30px;
+    color:white;
+    transition:.25s;
+    border: 2px solid white;
+    border-radius: 100%;
+    padding: 3px;
+}
+
+.user-icon:hover{
+    color:#2563eb;
+    transform:scale(1.1);
+}
 button { 
     font-family: inherit; 
     cursor: pointer; 

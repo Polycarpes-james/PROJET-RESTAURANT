@@ -24,9 +24,7 @@
     transition: 0.3s;
     transform: translateX(-1%);
 }
-.connexion-container a:hover{
-    transform: scale(1.06);
-}
+
 .body-connexion{
     display: flex;
     align-items: start;
@@ -52,4 +50,41 @@
     height: 100vh;
     width: 100%;
     box-shadow: 0 5px 10px grey;
+}
+
+
+.btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:start;
+    gap:10px;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1px solid transparent;
+    color:var(--text); 
+    text-decoration:none; 
+    font-weight:600;
+    transition:transform .08s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    cursor:pointer;
+}
+.btn:hover{
+    background:var(--btn-hover); 
+}
+.btn:focus{
+    outline: none; 
+    box-shadow:0 0 0 6px var(--ring)
+}
+.btn{
+    background:#0b122520; 
+    color:#e2e8f0; 
+    border:1px solid var(--google-border);
+}
+.btn-google:hover{
+    border-color:#fff; 
+    background:#0e17303e;
+}
+.google-icon, .facebook-icon, .gmail-icon{
+    width:40px;
+    height:40px
 }

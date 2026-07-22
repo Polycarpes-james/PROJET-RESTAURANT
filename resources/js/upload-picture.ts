@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!avatarPreview || !avatarInput || !avatarLoader || !avatarForm) return;
 
-    avatarForm.addEventListener('mousemove', () => {
+    avatarForm.addEventListener('mousemove', () => {        
         avatarLoader.classList.remove('hidden');
         avatarForm.style.cursor = "pointer";
     });

@@ -15,5 +15,7 @@ function updateResult(): void {
     ${totalSeconds} secondes`;
 }
 
-hoursInput.addEventListener("input", updateResult);
-minutesInput.addEventListener("input", updateResult);
+if(hoursInput || minutesInput){
+    hoursInput.addEventListener("input", updateResult);
+    minutesInput.addEventListener("input", updateResult);
+}

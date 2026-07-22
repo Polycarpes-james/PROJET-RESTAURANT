@@ -144,4 +144,26 @@ export default class Alert {
         }
     }
 
+    static async modal (options: {title: string;html:string;text: string}) {
+        const result = await Swal.fire({
+            icon: "warning",
+            title: options.title,
+            text: options.text,
+            html: options.html,
+            showCancelButton: true,
+            confirmButtonText: "Enregistrer",
+            cancelButtonText: "Annuler",
+            backdrop:"rgba(0,0,0,0.35)",
+            confirmButtonColor: "#ff7171",
+            customClass: {
+                confirmButton: "submit-btn",
+                cancelButton: "btn-cancel"
+            }
+        });
+
+        // if (result.isConfirmed) {
+        //     await options.onConfirm();
+        // }
+    }
+
 }

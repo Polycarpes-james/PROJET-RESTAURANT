@@ -5,7 +5,6 @@ import { supprimerUser } from "@/admin/actions";
 export default class AlertService {
 
     static platIndisponible (message?: string, raison?: string) {
-
         return Alert.warning({
             title: "Plat indisponible",
             html: `
@@ -14,9 +13,32 @@ export default class AlertService {
                 ${raison ? `<br><b>Pourquoi ?</b> ${raison}` : ""}
             `,
             confirmButtonText:"Ok"
-
         });
+    }
 
+    static UpdateUser () {
+        return Alert.modal({
+            title : "Modifier vos informations",
+            html : `
+                <div class="formulaire">
+                    <h2>Modifier votre profile actuel</h2>
+                    <form action="{{ route('rettine.profile.update') }}" method="POST" id="profile-formulaire" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <x-form.index name="name" :value="Auth::user()->name" label="Mon nom de profile"/>
+                        <x-form.index name="firstname" :value="Auth::user()->firstname" label="Mon prenom de profile"/>
+                        <x-form.index type="email" name="email" :value="Auth::user()->email" label="Mon adresse email"/>
+                        <div class="change-password">
+                            <h2>Changer de mot de passe</h2>
+                            <p>Vous pouvez changer votre mot de passe actuel</p>
+                        </div>
+                        <x-form.index type="password" name="password" label="Nouveau mot de pass" placeholder="................"/>
+                        <x-form.index type="password" name="password_confirmation" label="Comfirmer le mot de pass" placeholder="................"/>
+                    </form>
+                </div>
+            `,
+            text:'',
+        });
     }
 
     static suppressionPlat (platId: string) {

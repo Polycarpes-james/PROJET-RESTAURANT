@@ -9,10 +9,16 @@
             </div>
         </header>   
         <main class="{{ $mainClass }}">
-            <p class="paragraphe_message"></p>
+            @if($slot)
+                {{ $slot }}
+            @else 
+                <p class="paragraphe_message"></p>
+            @endif
         </main>
         <footer class="{{ $footerClass }}">
-            <button type="submit" class="{{ $kind }}">Ok</button>
+            @if (!$slot)
+                <button type="submit" class="{{ $kind }}">Ok</button>
+            @endif
         </footer>
     </div>
 </aside>

@@ -10,7 +10,7 @@
 </head>
 <body class="body-connexion">
     <div class="picture-part">
-        <img src="/img/logue.jpg" alt="">
+        <img src="{{ image_url("/logue.jpg", 1000, 1200) }}" alt="">
     </div>
     <div class="content-login">
         @yield('content')

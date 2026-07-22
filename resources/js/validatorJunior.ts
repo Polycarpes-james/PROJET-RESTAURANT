@@ -69,6 +69,8 @@ function validField (field:any){
  * @param {HTMLFormElement} formulaire 
  */
 function validator (element:any, formulaire:any){
+    if(!formulaire) return ;
+    
     formulaire.addEventListener('submit', (e:any)=>{
         if (element.parentElement.parentElement.classList.contains('hidden-content')) {
             return

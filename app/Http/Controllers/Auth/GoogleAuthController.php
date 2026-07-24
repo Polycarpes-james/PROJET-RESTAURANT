@@ -26,6 +26,13 @@ class GoogleAuthController extends Controller
 
             $user = User::where('google_id', $googleUser->id)->orWhere('email', $googleUser->email)->first();
 
+            // $fullName = trim($googleUser->name);
+
+            // $parts = preg_split('/\s+/', $fullName);
+
+            // $name = array_shift($parts);           // Premier mot
+            // $firstname = implode(' ', $parts);  
+            
             if (!$user) {
                 $user = User::create([
                     'name'      => $googleUser->name,

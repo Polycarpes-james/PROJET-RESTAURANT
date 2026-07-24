@@ -92,6 +92,69 @@
                         <h1><span>Bonjour</span>, {{ $user->name }}</h1>
                         <p>Bienvenue sur votre compte</p>
                     </div>
+                    <section class="profile-card">
+
+    <div class="profile-card-header">
+
+        <div class="profile-card-icon">
+            👋
+        </div>
+
+        <div>
+
+            <h2>Bienvenue James !</h2>
+
+            <p>
+                Complétez votre profil afin d'accéder à toutes les fonctionnalités.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="progress">
+
+        <div class="progress-bar">
+
+            <div class="progress-fill" style="width:{{ $profile['percentage'] }}%"></div>
+
+        </div>
+
+        <span>55%</span>
+
+    </div>
+
+    <ul class="profile-checklist">
+
+        <li class="complete">
+            ✓ Nom
+        </li>
+
+        <li class="complete">
+            ✓ Email
+        </li>
+
+        <li>
+            ✗ Téléphone
+        </li>
+
+        <li>
+            ✗ Prénom
+        </li>
+
+        <li>
+            ✗ Adresse
+        </li>
+
+    </ul>
+
+    <a href="/profile/edit" class="btn-profile">
+
+        Compléter mon profil
+
+    </a>
+
+</section>
                     <section class="card card-profile">
                         <div class="card-header">
                             <h2>Mon profile</h2>

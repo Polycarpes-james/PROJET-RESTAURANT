@@ -29,6 +29,7 @@ class User extends Authenticatable
         'firstname',
         'email',
         'password',        
+        'phone_number',        
         'admin',
         'avatar',
         'google_id',
@@ -36,8 +37,37 @@ class User extends Authenticatable
         'status',
         'join_date',
         'last_login',
-    ]; 
+    ];
+     
+    public function profileCompletion(): array
+    {
+        $fields = [
+            'name',
+            'firstname',
+            'email',
+            'phone_number',
+            'avatar',
+            'position',
+            'department',
+            'line_manager',
+            'seconde_line_manager',
+        ];
 
+        $completed = collect($fields)
+            ->filter(fn ($field) => !empty($this->$field))
+            ->count();
+
+        $percentage = (int) round(($completed / count($fields)) * 100);
+
+        $missing = collect($fields)
+            ->filter(fn ($field) => empty($this->$field))
+            ->values();
+
+        return [
+            'percentage' => $percentage,
+            'missing' => $missing,
+        ];
+    }
 
     public function getRoleLabelAttribute(): string
     {

@@ -28,8 +28,11 @@ class ProfileController extends Controller
 
         // dd(Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats);
 
+        $profile = auth()->user()->profileCompletion();
+
         return view('profile.index', [
             'user' => Auth::user(),
+            'profile' => $profile,
             'panier' => $panier ?? [],
             'commandes' => Commande::where('user_id', Auth::id())->first(),
             'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],

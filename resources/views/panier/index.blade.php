@@ -78,7 +78,7 @@
                                                     <button class="plus" data-id="{{ $item['plat_id'] }}">+</button>
                                                 </div>
                                                 <div class="total-price-number-item">
-                                                    <p class="total-price-number">{{decimal($item['prix_total'])}} €</p> 
+                                                    <p class="total-price-number">{{ number_format($item['prix_total'], 2, ',', ' ') }} €</p> 
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +120,7 @@
                     @endforeach
                 </div>
                 <div class="footer-header">
-                    <p id="modalPanierTotal">{{ decimal($totalPrice) }} €</p>
+                    <p id="modalPanierTotal">{{ number_format($totalPrice, 2, ',', ' ') }} €</p>
                     <button id="btn-commande" data-panier="{{ $panier->id ?? ($panier === [] ? 0 : $panier) }}" data-auth="{{ Cookie::get('invite_id') }}" >valider le panier</button>
                 </div>
         </footer>

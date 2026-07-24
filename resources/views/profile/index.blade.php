@@ -29,7 +29,7 @@
 @endphp
 @section('content')
     <x-show-modal-admin kind="" contentId="admin_item_delete" contentSecondClass="admin_item_content" headerClass="admin_item_header" mainClass="admin_item_main" footerClass="admin_item_footer">
-        <x-formulaire action="rettine.profile.update" method="POST" :inputs="$fields" btnLabel="Enregistrer">
+        <x-formulaire action="rettine.profile.update.real" method="POST" :inputs="$fields" btnLabel="Enregistrer">
                 <div class="change-password">
                     <h2>Changer de mot de passe</h2>
                     <p>Vous pouvez changer votre mot de passe actuel</p>

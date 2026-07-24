@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="btns-panier">
                                             <p class="description">{{ truncateText($plat->description, 50) }}</p>
-                                            <button class="add-card" type="button" data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" data-price="{{ $plat->price }}" data-picture="{{ $plat->getPicture()->getPictureUrl(100, 100) }}" data-quantite="1">
+                                            <button class="add-card" type="button" data-id="{{ $plat->id }}" data-name="{{ $plat->name }}" data-price="{{ $plat->price }}" data-picture="{{  $plat->getPicture()->getPictureUrl(100, 100) }}" data-quantite="1">
                                                 <span class="clickable"></span>
                                             </button>
                                             @if ($plat->disponible === 'yes')

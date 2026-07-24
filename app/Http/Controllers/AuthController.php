@@ -34,7 +34,6 @@ class AuthController extends Controller
         $user->assignRole('client');
         
         Auth::login($user);
-
         return redirect()->route('.rettine')->with('success', 'Compte créé avec succès.');
     }
 

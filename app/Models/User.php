@@ -12,9 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
-use League\Glide\Urls\UrlBuilderFactory;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -76,15 +74,7 @@ class User extends Authenticatable
     //     return $this->avatar ?? null;        
     // }
 
-    public function getPictureUrl(?int $width = null, ?int $height = null): string
-    {
-        if ($width === null) {
-            return Storage::disk('public')->url($this->avatar);
-        }        
-        $urlBuilder = UrlBuilderFactory::create('images/', config('glide.key'));
-
-        return $urlBuilder->getUrl($this->avatar, ['w' => $width, 'h' => $height, 'fit' => 'crop']);
-    }
+    
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -31,7 +31,7 @@
             </svg>
             Se connecter avec Facebook
             </a>
-            <a class="btn btn-gmail" href="#" aria-label="Se connecter avec Gmail">
+            <a class="btn btn-gmail" href="" aria-label="Se connecter avec Gmail">
             <!-- Icône Google SVG -->
             <svg class="gmail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true">
                 <path fill="#EA4335" d="M24 24L6 11v26h6V22l12 9 12-9v15h6V11z"/>

@@ -1,11 +1,11 @@
 <?php
-use App\Support\Image;
+use App\Support\ImageItem;
 use App\Support\Text;
 use Carbon\Carbon;
 
 if (!function_exists('image_url')) {
     function image_url(?string $path, ?int $width = null, ?int $height = null, string $fit = 'crop'): string {
-        return Image::url($path, $width, $height, $fit);
+        return ImageItem::url($path, $width, $height, $fit);
     }
 }
 

@@ -38,7 +38,7 @@
                 @foreach ($users as $user)
                     <tr class="user-row" data-search="{{ $user->id }}{{ $user->name }}{{ $user->firstname }}{{ $user->role_label }}{{ $user->email }}">
                         <td class="item-id">#{{ $user->id }}</td>
-                        <td><img src="{{ $user->getPictureUrl(40, 40) }}" style="border-radius:30px" alt=""></td>
+                        <td><img src="{{ image_url($user->avatar, 40, 40) }}" style="border-radius:30px" alt=""></td>
                         <td class="item-name">
                             <div class="user-td">
                                 <p class="bold">{{ $user->name }} {{ $user->firstname }}</p>

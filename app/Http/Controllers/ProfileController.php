@@ -21,19 +21,16 @@ class ProfileController extends Controller
         $total_number = 0;
         $commande = Commande::where('user_id', Auth::id())->first();
         
-        if(Auth::user() && $commande && Panier::where('user_id', Auth::id())->first()){
-            $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();
-        } else {
-            $panier = session()->get('panier_invite');          
-            if($panier){
-                $total_number = array_sum(array_column($panier, 'quantite'));
-            }
+        if(Auth::user() && Panier::where('user_id', Auth::id())->first()){
+            $panier = Panier::where('user_id', Auth::id())->with('panierPlats')->first();
+            $total_number = $panier->panierPlats->pluck('quantite')->sum();
         }
 
         // dd(Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats);
 
         return view('profile.index', [
             'user' => Auth::user(),
+            'panier' => $panier ?? [],
             'commandes' => Commande::where('user_id', Auth::id())->first(),
             'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],
             'total' => $total_number

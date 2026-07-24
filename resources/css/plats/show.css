@@ -459,6 +459,11 @@
   font-size: 20px;
 }
 
+.cutName{
+  padding: 18px 23px;
+  font-size: xx-large;
+  letter-spacing: 3px;
+}
 .main-container-show-plat-item .avis-item .item small{
   opacity: 0.5;
 }

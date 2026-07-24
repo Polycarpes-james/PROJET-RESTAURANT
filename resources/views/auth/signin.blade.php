@@ -13,7 +13,7 @@
             <x-form.index type="password" id="password" label='Entrer votre mot de pass' name='password' placeholder="............" />
              <p class="sub">Choisissez Google pour une connexion rapide, ou utilisez votre email.</p>
 
-            <a class="btn btn-google" href="#" aria-label="Se connecter avec Google">
+            <a class="btn btn-google" href="{{ route('google.login') }}" aria-label="Se connecter avec Google">
             <!-- Icône Google SVG -->
             <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true">
                 <path fill="#FFC107" d="M43.6,20.5H42V20H24v8h11.3C33.7,31.9,29.3,35,24,35c-6.6,0-12-5.4-12-12S17.4,11,24,11c3,0,5.7,1.1,7.8,3l5.7-5.7 C34.6,5.1,29.6,3,24,3C12.9,3,4,11.9,4,23s8.9,20,20,20s19-9,19-20C43.9,23.3,43.8,21.8,43.6,20.5z"/>
@@ -31,7 +31,7 @@
             </svg>
             Se connecter avec Facebook
             </a>
-            <a class="btn btn-gmail" href="" aria-label="Se connecter avec Gmail">
+            <a class="btn btn-gmail" href="#" aria-label="Se connecter avec Gmail">
             <!-- Icône Google SVG -->
             <svg class="gmail-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" aria-hidden="true">
                 <path fill="#EA4335" d="M24 24L6 11v26h6V22l12 9 12-9v15h6V11z"/>

@@ -28,10 +28,17 @@ class User extends Authenticatable
         'name',
         'firstname',
         'email',
-        'password',
+        'password',        
         'admin',
         'avatar',
-    ];    
+        'google_id',
+        'provider',
+        'status',
+        'join_date',
+        'last_login',
+    ]; 
+
+
     public function getRoleLabelAttribute(): string
     {
         $role = $this->getRoleNames()->first();
@@ -92,5 +99,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'join_date' => 'datetime',
+        'last_login' => 'datetime',
     ];
 }

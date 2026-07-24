@@ -103,7 +103,7 @@
                                     <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
                                     @if (Auth::user()->avatar)
                                         <img id="avatarPreview" 
-                                        src="{{ asset('storage/' . Auth::user()->avatar)}}" 
+                                        src="{{ asset(Auth::user()->avatar)}}" 
                                         alt="Avatar" 
                                         class="profile-avatar">
                                     @else
@@ -179,15 +179,17 @@
                                 <span class="total-number-plats">{{ $total }}</span>  
                             </div> 
                             <div class="panier-plats">
-                                @foreach ($panier->plats as $plat)
-                                    <div class="plat-item">
-                                        <p class="name">{{ $plat->name }}</p>
-                                        <p>{{ $plat->panierPlats->first()->prix_total }}€</p>
-                                        <div class="quantite-total">
-                                            <p>{{ $plat->panierPlats->first()->quantite }}*{{ $plat->price }}</p>
+                                @if ($panier !== [])
+                                    @foreach ($panier->plats as $plat)
+                                        <div class="plat-item">
+                                            <p class="name">{{ $plat->name }}</p>
+                                            <p>{{ $plat->panierPlats->first()->prix_total }}€</p>
+                                            <div class="quantite-total">
+                                                <p>{{ $plat->panierPlats->first()->quantite }}*{{ $plat->price }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>

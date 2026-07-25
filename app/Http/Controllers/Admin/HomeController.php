@@ -39,7 +39,7 @@ class HomeController extends Controller
                             'lastname'=>$info->lastname,
                             'email'=>$info->email,
                             'phone'=>$info->phone,
-                            'avatar' => image_url($info->user->avatar, 50, 60),
+                            'avatar' => $info->user->is_google_avatar ? $info->user->avatar : image_url($info->user->avatar, 50, 60),
                             'address'=>$info->address,
                             'instructions'=>$info->instructions,
                             'link_commande' => route('admin.commande.show', ['commande' => $info->commande])

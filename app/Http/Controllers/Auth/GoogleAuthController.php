@@ -33,14 +33,15 @@ class GoogleAuthController extends Controller
             // $name = array_shift($parts);  
             //          // Premier mot
             // $firstname = implode(' ', $parts);  
-            
+            $avatar = preg_replace('/=s\d+-c$/', '=s1024-c', $googleUser->avatar);
+
             if (!$user) {
                 $user = User::create([
                     'name'      => $googleUser->name,
                     'email'     => $googleUser->email,
                     'google_id' => $googleUser->id,
                     'provider'  => 'google',
-                    'avatar'    => $googleUser->avatar,
+                    'avatar'    => $avatar,
                     'password'  => bcrypt(Str::random(24)),
                     'status'    => 'Active',
                     'join_date' => now(),

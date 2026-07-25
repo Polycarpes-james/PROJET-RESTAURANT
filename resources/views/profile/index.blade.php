@@ -50,7 +50,7 @@
                 <div class="profile-side-bar">
                     @if (Auth::user()->avatar)
                         <img id="avatarPreview" 
-                        src="{{ asset(($is_google_avatar ? '' : 'storage/') . Auth::user()->avatar)}}" 
+                        src="{{ image_url(Auth::user()->avatar, 40, 40) }}" 
                         alt="Avatar" 
                         class="profile-avatar">
                     @else
@@ -129,7 +129,7 @@
                                         <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
                                         @if (Auth::user()->avatar)
                                             <img id="avatarPreview" 
-                                            src="{{ asset(($is_google_avatar ? '' : 'storage/') . Auth::user()->avatar)}}" 
+                                            src="{{ image_url(Auth::user()->avatar, 40, 40) }}" 
                                             alt="Avatar" 
                                             class="profile-avatar">
                                         @else

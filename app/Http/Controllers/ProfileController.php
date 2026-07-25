@@ -28,7 +28,6 @@ class ProfileController extends Controller
         }
         
         // dd(Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats);
-        $is_google_avatar = str_contains($user->avatar, 'https');
 
         $profile = auth()->user()->profileCompletion();
     
@@ -36,7 +35,6 @@ class ProfileController extends Controller
         return view('profile.index', [
             'user' => Auth::user(),
             'profile' => $profile,
-            'is_google_avatar' => $is_google_avatar, 
             'panier' => $panier ?? [],
             'commandes' => Commande::where('user_id', Auth::id())->first(),
             'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],

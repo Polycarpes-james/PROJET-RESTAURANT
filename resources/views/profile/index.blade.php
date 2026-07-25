@@ -22,6 +22,11 @@
                 'name' => 'email',
                 'value' => Auth::user()->email,
                 'label' => 'Mon adresse email'
+            ],
+            [
+                'name' => 'phone_number',
+                'value' => Auth::user()->phone_number,
+                'label' => 'Mon numero de telephone'
             ]
         ];
 
@@ -45,7 +50,7 @@
                 <div class="profile-side-bar">
                     @if (Auth::user()->avatar)
                         <img id="avatarPreview" 
-                        src="{{ asset('storage/' . Auth::user()->avatar)}}" 
+                        src="{{ asset(($is_google_avatar ? '' : 'storage/') . Auth::user()->avatar)}}" 
                         alt="Avatar" 
                         class="profile-avatar">
                     @else
@@ -92,98 +97,57 @@
                         <h1><span>Bonjour</span>, {{ $user->name }}</h1>
                         <p>Bienvenue sur votre compte</p>
                     </div>
-                    <section class="profile-card">
 
-    <div class="profile-card-header">
-
-        <div class="profile-card-icon">
-            👋
-        </div>
-
-        <div>
-
-            <h2>Bienvenue James !</h2>
-
-            <p>
-                Complétez votre profil afin d'accéder à toutes les fonctionnalités.
-            </p>
-
-        </div>
-
-    </div>
-
-    <div class="progress">
-
-        <div class="progress-bar">
-
-            <div class="progress-fill" style="width:{{ $profile['percentage'] }}%"></div>
-
-        </div>
-
-        <span>55%</span>
-
-    </div>
-
-    <ul class="profile-checklist">
-
-        <li class="complete">
-            ✓ Nom
-        </li>
-
-        <li class="complete">
-            ✓ Email
-        </li>
-
-        <li>
-            ✗ Téléphone
-        </li>
-
-        <li>
-            ✗ Prénom
-        </li>
-
-        <li>
-            ✗ Adresse
-        </li>
-
-    </ul>
-
-    <a href="/profile/edit" class="btn-profile">
-
-        Compléter mon profil
-
-    </a>
-
-</section>
-                    <section class="card card-profile">
-                        <div class="card-header">
-                            <h2>Mon profile</h2>
-                        </div>
-                        <div class="profile-box">
-                            <div class="picture-profile">
-                                <form action="{{ route('rettine.profile.update.avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
-                                    @csrf
-                                    <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
-                                    @if (Auth::user()->avatar)
-                                        <img id="avatarPreview" 
-                                        src="{{ asset(Auth::user()->avatar)}}" 
-                                        alt="Avatar" 
-                                        class="profile-avatar">
-                                    @else
-                                        <p class="cutName" id="avatarPreview">{{ $user->cutName() }}</p>
-                                    @endif                            
-                                    <div id="avatarLoader" class="hidden">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
-                                    </div>
-                                </form>
-                            </div>                    
-                            <div>
-                                <h3>{{ $user->firstname }}</h3>
-                                <span>{{ $user->role_label }}</span>
-                                <small>{{ $user->email }}</small>
+                    @if (!$profile['full'])
+                        <section class="profile-card">
+                            <div class="profile-warning">
+                                <div class="warning-icon">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                </div>
+                                <div class="warning-content">
+                                    <h3>Complétez votre profil La Rettine</h3>
+                                    <p>
+                                        Certaines informations sont encore manquantes.
+                                        Complétez votre profil afin de profiter pleinement des fonctionnalités.
+                                    </p>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: {{ $profile['percentage'] }}%"></div>
+                                    </div>                                    
+                                    <button class="edit-profile-btn btn-edit"><span>{{ $profile['percentage'] }}%</span> Compléter maintenant</button>
+                                </div>
                             </div>
-                        </div>
-                    </section>
+                        </section> 
+                    @else
+                        <section class="card card-profile">
+                            <div class="card-header">
+                                <h2>Mon profile</h2>
+                            </div>
+                            <div class="profile-box">
+                                <div class="picture-profile">
+                                    <form action="{{ route('rettine.profile.update.avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
+                                        @csrf
+                                        <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
+                                        @if (Auth::user()->avatar)
+                                            <img id="avatarPreview" 
+                                            src="{{ asset(($is_google_avatar ? '' : 'storage/') . Auth::user()->avatar)}}" 
+                                            alt="Avatar" 
+                                            class="profile-avatar">
+                                        @else
+                                            <p class="cutName" id="avatarPreview">{{ $user->cutName() }}</p>
+                                        @endif                            
+                                        <div id="avatarLoader" class="hidden">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
+                                        </div>
+                                    </form>
+                                </div>                    
+                                <div>
+                                    <h3>{{ $user->firstname }}</h3>
+                                    <span>{{ $user->role_label }}</span>
+                                    <small>{{ $user->email }}</small>
+                                </div>
+                            </div>
+                        </section>
+                    @endif
                     <section class="card">
                         <div class="card-header">
                             <h2>Information personelles</h2>
@@ -204,7 +168,7 @@
                             </div>
                             <div class="item">
                                 <span>Phone</span>
-                                <strong>{{ $user->phone }}</strong>
+                                <strong>{{ $user->phone_number }}</strong>
                             </div>
                             <div class="item">
                                 <span>Role</span>
@@ -219,15 +183,15 @@
                         </div>
                         <div class="grille-infos">
                             <div class="item">
-                                <span>Country</span>
-                                <strong>Pakistan</strong>
+                                <span>Pays</span>
+                                <strong>Paistan</strong>
                             </div>
                             <div class="item">
-                                <span>City</span>
+                                <span>Ville</span>
                                 <strong>Lahore</strong>
                             </div>
                             <div class="item">
-                                <span>State</span>
+                                <span>Departement</span>
                                 <strong>Punjab</strong>
                             </div>
                         </div>
@@ -236,19 +200,25 @@
                 <div class="section-item section-small">
                     <div class="panier-user">
                         <div class="header-line">
-                            <span>Votre Panier</span>
                             <div class="panier-icon"> 
-                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-                                <span class="total-number-plats">{{ $total }}</span>  
+                                <span class="total-number-plats">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart-icon lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                                    <p>Panier</p>
+                                    <small>{{ $total }}</small>
+                                </span>  
                             </div> 
                             <div class="panier-plats">
                                 @if ($panier !== [])
                                     @foreach ($panier->plats as $plat)
                                         <div class="plat-item">
-                                            <p class="name">{{ $plat->name }}</p>
-                                            <p>{{ $plat->panierPlats->first()->prix_total }}€</p>
-                                            <div class="quantite-total">
-                                                <p>{{ $plat->panierPlats->first()->quantite }}*{{ $plat->price }}</p>
+                                            <div class="item">
+                                                <div class="head">
+                                                    <p class="name">{{ truncateText($plat->name, 14) }}</p>
+                                                    <p class="price">{{ $plat->panierPlats->first()->prix_total }}€</p>
+                                                </div>
+                                                <div class="quantite-total">
+                                                    <p>{{ $plat->panierPlats->first()->quantite }}*{{ $plat->price }}€</p>
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach

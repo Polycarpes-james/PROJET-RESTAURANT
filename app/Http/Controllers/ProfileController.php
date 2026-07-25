@@ -20,19 +20,23 @@ class ProfileController extends Controller
         // dd(Auth::user());
         $total_number = 0;
         $commande = Commande::where('user_id', Auth::id())->first();
-        
-        if(Auth::user() && Panier::where('user_id', Auth::id())->first()){
+        $user = Auth::user();
+
+        if($user && Panier::where('user_id', Auth::id())->first()){
             $panier = Panier::where('user_id', Auth::id())->with('panierPlats')->first();
             $total_number = $panier->panierPlats->pluck('quantite')->sum();
         }
-
+        
         // dd(Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats);
+        $is_google_avatar = str_contains($user->avatar, 'https');
 
         $profile = auth()->user()->profileCompletion();
+    
 
         return view('profile.index', [
             'user' => Auth::user(),
             'profile' => $profile,
+            'is_google_avatar' => $is_google_avatar, 
             'panier' => $panier ?? [],
             'commandes' => Commande::where('user_id', Auth::id())->first(),
             'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],
@@ -86,12 +90,14 @@ class ProfileController extends Controller
             'name' => ['required', 'string'],
             'firstname' => ['required', 'string'],
             'email' => ['required', 'email'],
+            'phone_number' => ['required', 'string'],
             'password' => ['nullable', 'min:2', 'confirmed', 'required_with:password_confirmation'],
             'password_confirmation' => ['nullable', 'required_with:password'],
         ],
         [
             'name.required' => 'REQUIRED',
             'firstname.required' => 'REQUIRED',
+            'phone_number.required' => 'REQUIRED',
             'email.required' => 'REQUIRED',
             'email.email' => 'INVALID_EMAIL',
             'password.min' => 'PASSWORD_TOO_SHORT',

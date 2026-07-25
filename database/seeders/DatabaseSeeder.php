@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(30)->create(); 
         // $avis = Avis::factory(100)->create();
+        
         // Category::factory(10)->create();
 
         // $ingredients = Ingredient::factory(40)->create();

@@ -30,7 +30,8 @@ class GoogleAuthController extends Controller
 
             // $parts = preg_split('/\s+/', $fullName);
 
-            // $name = array_shift($parts);           // Premier mot
+            // $name = array_shift($parts);  
+            //          // Premier mot
             // $firstname = implode(' ', $parts);  
             
             if (!$user) {

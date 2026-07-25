@@ -40,10 +40,13 @@ async function showModalContent (label: string) {
 }
 
 
-const btnProfile = document.querySelector('.edit-profile-btn')
+const btnProfiles = document.querySelectorAll('.edit-profile-btn')
 
-if(btnProfile) {
-    btnProfile.addEventListener('click', () => {
-        showModalContent("Modifier votre profile actuel")
-    })
-}
+btnProfiles.forEach(btn => {
+    if(btn) {
+        btn.addEventListener('click', () => {
+            showModalContent("Modifier votre profile actuel")
+        })
+    }
+})
+

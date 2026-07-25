@@ -38,7 +38,7 @@ class User extends Authenticatable
         'join_date',
         'last_login',
     ];
-     
+
     public function profileCompletion(): array
     {
         $fields = [
@@ -46,11 +46,7 @@ class User extends Authenticatable
             'firstname',
             'email',
             'phone_number',
-            'avatar',
-            'position',
-            'department',
-            'line_manager',
-            'seconde_line_manager',
+            'avatar'
         ];
 
         $completed = collect($fields)
@@ -59,12 +55,13 @@ class User extends Authenticatable
 
         $percentage = (int) round(($completed / count($fields)) * 100);
 
-        $missing = collect($fields)
-            ->filter(fn ($field) => empty($this->$field))
-            ->values();
+        $missing = collect($fields)->filter(fn ($field) => empty($this->$field))->values();
+
+        $profile_complete = $percentage >= 100;     
 
         return [
             'percentage' => $percentage,
+            'full' => $profile_complete,
             'missing' => $missing,
         ];
     }

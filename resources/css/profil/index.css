@@ -343,32 +343,56 @@
 .section-small .panier-user .header-line .panier-plats{
     display: flex;
     flex-wrap: wrap;
-    gap: 2em;
 }
 .section-small .panier-user .header-line .panier-plats .plat-item{
-    border: 1px solid var(--second-pall);
-    position: relative;
+    width: 33.33%;
+}
+
+.section-small .panier-user .header-line .panier-plats .plat-item .item{
     border-radius: 3px;
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 3px 5px;
+    margin: 2px;
+    flex-direction: column;
+    border: 1px solid var(--second-pall);
+    gap: 3px;
+}
+.section-small .panier-user .header-line .panier-plats .plat-item .item .head{
+    padding: 0 3px;
+}
+.section-small .panier-user .header-line .panier-plats .plat-item .name, .section-small .panier-user .header-line .panier-plats .plat-item .price{
+    font-size: 15px;
+}
+.section-small .panier-user .header-line .panier-plats .plat-item .price{
+    opacity: 0.5;
+}
+.section-small .panier-user .header-line .panier-plats .plat-item .name{
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 .quantite-total{
-    position: absolute;
-    bottom: -60%;
-    right: 0;
-    background-color: #ff7300;
-    color: white;
+    background-color: #c2621424;
+    color: #c26214e7;
     opacity: 1!important;
     padding: 3px;
-    display: flex;
+    text-align: end;
+    font-weight: bold;
 }
+
 .quantite-total p{
     font-size: 13px!important;
 }
+.panier-icon{
+    width:  100%;
+}
 .panier-icon .total-number-plats{
-    border-radius: 2px!important;
+    border-radius: 5px!important;
+    padding: 5px;
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+}
+.panier-icon .total-number-plats small{
+    font-size: 20px;
 }
 
 
@@ -482,115 +506,94 @@
     padding: 0 20px 15px;
 }
 
-.item{
+.grille-infos .item{
     display:flex;
     flex-direction:column;
 }
 
-.item span{
+.grille-infos .item span{
     color:#8a8a8a;
     text-transform: uppercase;
     font-size: 13px;
     margin-bottom:7px;
 }
-
-.item strong{
+.grille-infos .item strong{
     font-size:17px;
     color:#222;
 }
 
-/* .profile-warning{
-    display:flex;
-    gap:20px;
-    align-items:center;
 
-    padding:25px;
 
-    border-radius:15px;
-
-    background:#fff7e8;
-
-    border-left:6px solid #ff9800;
-
-    animation:pulseCard 2.5s infinite;
-
-    box-shadow:0 15px 35px rgba(0,0,0,.08);
+.profile-warning{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 25px;
+    border-radius: 15px;
+    background: #fff7e88b;
+    border-left: 10px solid var(--main-color);
+    animation: pulseCard 2.5s infinite;
+    box-shadow: 0 0 20px #30303024;
+    margin-bottom: 2em;
 }
 
 .warning-icon{
-
-    font-size:40px;
-
-    color:#ff9800;
-
-    animation:shake 5s infinite;
+    font-size: 40px;
+    color: var(--main-color);
+    animation: shake 5s infinite;
 }
 
 .warning-content h3{
-
     margin-bottom:8px;
-
 }
 
 @keyframes pulseCard{
-
     0%{
-
         transform:scale(1);
-
     }
-
     50%{
-
         transform:scale(1.02);
-
     }
-
     100%{
-
         transform:scale(1);
-
     }
-
 }
 
 @keyframes shake{
-
-    0%,100%{
-
+    0%,100% {
         transform:rotate(0deg);
-
     }
-
     5%{
-
         transform:rotate(-10deg);
-
     }
-
     10%{
-
         transform:rotate(10deg);
-
     }
-
     15%{
-
         transform:rotate(0deg);
-
     }
-
 }
 
 .warning-content p{
-
     color:#666;
-
     margin-bottom:15px;
- 
 }
-*/
-.profile-card{
+.progress-bar{
+    flex:1;
+    height:12px;
+    border-radius:20px;
+    background:#ececec;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height: 100%;
+    background: linear-gradient(90deg, var(--main-color), #223d66);
+    border-radius: 5px;
+    transition: .5s;
+}
+
+/* .profile-card{
 
     width:100%;
 
@@ -656,31 +659,6 @@
 
 }
 
-.progress-bar{
-
-    flex:1;
-
-    height:12px;
-
-    border-radius:20px;
-
-    background:#ececec;
-
-    overflow:hidden;
-
-}
-
-.progress-fill{
-
-    height:100%;
-
-    background:linear-gradient(90deg,#f59e0b,#ffcc4d);
-
-    border-radius:20px;
-
-    transition:.5s;
-
-}
 
 .profile-checklist{
 
@@ -773,19 +751,16 @@
     }
 
 }
-.btn-complete{
 
-    padding:10px 18px;
-
-    border-radius:8px;
-
-    background:#ff9800;
-
-    color:white;
-
-    text-decoration:none;
-
-}
+*/
+.btn-complete, .warning-content .edit-profile-btn{
+    padding: 10px 18px;
+    border-radius: 8px;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    margin-top: 10px;
+} 
 
 /*=====================
     INPUT DESIGN

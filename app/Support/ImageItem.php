@@ -21,9 +21,7 @@ class ImageItem {
         }
 
         // Récupération de l'image originale
-        $image = Image::read(
-            Storage::disk('public')->get($path)
-        );
+        $image = Image::read(Storage::disk('public')->get($path));
 
         // Redimensionnement façon Glide "fit crop"
         $image->cover($width, $height);

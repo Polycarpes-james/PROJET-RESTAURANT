@@ -11,8 +11,8 @@
             </p>
         </div>
         <div class="action-container">
-            <a href="#">Passer un commande</a>
-            <a href="#">Reserver une table</a>
+            <a href="{{ route('rettine.commandes') }}">Passer un commande</a>
+            <a href="{{ route('rettine.reservations') }}">Reserver une table</a>
         </div>
     </div>
 @endsection

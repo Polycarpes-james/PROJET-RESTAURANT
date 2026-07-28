@@ -3,9 +3,10 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "strict": true,
     "types": [
-      "jquery",
+      "jquery"
     ],
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -13,10 +14,17 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["resources/js/*"]
-    },
-    // "outDir": "public/build"
+      "@/*": [
+        "resources/js/*"
+      ]
+    }
   },
-  "include": ["resources/js/**/*.ts", "resources/js/**/*.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "resources/js/**/*.ts",
+    "resources/js/**/*.tsx",
+    "resources/js/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

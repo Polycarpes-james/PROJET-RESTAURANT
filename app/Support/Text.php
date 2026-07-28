@@ -3,7 +3,7 @@ namespace App\Support;
 
 class Text {
 
-    public static function truncateText($text = null, $maxLength = 200)
+    public static function truncateText($text = null, $maxLength = 200, $three = true)
     {
         $text = mb_convert_encoding($text ?? '', 'UTF-8', 'auto');
         // Si le texte est plus court que la limite → on le retourne tel quel
@@ -19,7 +19,7 @@ class Text {
             $truncated = mb_substr($truncated, 0, $lastSpace, 'UTF-8');
         }
         // Ajoute les points de suspension
-        return rtrim($truncated) . '...';
+        return $three ? rtrim($truncated) . '...' : rtrim($truncated);
     }
 
 

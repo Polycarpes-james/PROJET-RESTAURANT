@@ -5,9 +5,7 @@
     <nav class="nav-content">
         <a href="{{ route('.rettine') }}" @class(['nav-link', 'modify' => str_contains($route, '.rettine')])>Acceuil</a>
         <a href="{{ route('rettine.plats') }}" @class(['nav-link', 'modify' => str_contains($route, '.plats')])>nos Plats</a>
-        {{-- <a href="#">menus</a> --}}
         <a href="{{ route('rettine.commandes') }}" @class(['nav-link', 'modify' => str_contains($route, '.commandes')])>commander</a>
-        {{-- <a href="#">avis</a> --}}
         <a href="{{ route('rettine.reservations') }}" @class(['nav-link', 'modify' => str_contains($route, '.reservations')])>reservation</a>
         <a href="#">nous contacter</a>
     </nav>
@@ -18,7 +16,7 @@
         </a>
         @auth
             <div style="display: flex; align-items:center;">
-                <p style="margin-bottom:8px; font-size: 19px;margin-right:10px">{{ Auth::user()->name }}</p>
+                <p style="margin-bottom:8px; font-size: 19px;margin-right:10px">{{ truncateText(Auth::user()->name, 5, false) }}</p>
                 <button class="my-profile">
                     <svg class="user-icon" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"

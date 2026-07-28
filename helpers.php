@@ -10,8 +10,8 @@ if (!function_exists('image_url')) {
 }
 
 if (!function_exists('truncateText')) {
-    function truncateText(?string $text, $maxLength): string {
-        return Text::truncateText($text, $maxLength);
+    function truncateText(?string $text, $maxLength, $three): string {
+        return Text::truncateText($text, $maxLength, $three);
     }
 }
 

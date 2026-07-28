@@ -239,13 +239,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                             <button class="plus" data-id="${ item.plat_id }">+</button>
                                         </div>
                                         <div class="total-price-number-item">
-                                            <p class="total-price-number innertTotal">${Number(item.prix_total).toFixed(2)} €</p> 
+                                            <p class="total-price-number innertTotal">${Number(item.prix_total).toFixed(2)}€</p> 
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
+                    
                     list.appendChild(div);
                 });
                 btn()

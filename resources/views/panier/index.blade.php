@@ -78,7 +78,7 @@
                                                     <button class="plus" data-id="{{ $item['plat_id'] }}">+</button>
                                                 </div>
                                                 <div class="total-price-number-item">
-                                                    <p class="total-price-number">{{ number_format($item['prix_total'], 2, ',', ' ') }} €</p> 
+                                                    <p class="total-price-number">{{ number_format($item['prix_total'], 2, ',', ' ') }}€</p> 
                                                 </div>
                                             </div>
                                         </div>

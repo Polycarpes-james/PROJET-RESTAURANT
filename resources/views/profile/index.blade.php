@@ -50,7 +50,7 @@
                 <div class="profile-side-bar">
                     @if (Auth::user()->avatar)
                         <img id="avatarPreview" 
-                        src="{{ image_url(Auth::user()->avatar, 40, 40) }}" 
+                        src="{{ image_url(Auth::user()->avatar, 300, 300) }}" 
                         alt="Avatar" 
                         class="profile-avatar">
                     @else
@@ -117,37 +117,36 @@
                                 </div>
                             </div>
                         </section> 
-                    @else
-                        <section class="card card-profile">
-                            <div class="card-header">
-                                <h2>Mon profile</h2>
-                            </div>
-                            <div class="profile-box">
-                                <div class="picture-profile">
-                                    <form action="{{ route('rettine.profile.update.avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
-                                        @csrf
-                                        <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
-                                        @if (Auth::user()->avatar)
-                                            <img id="avatarPreview" 
-                                            src="{{ image_url(Auth::user()->avatar, 40, 40) }}" 
-                                            alt="Avatar" 
-                                            class="profile-avatar">
-                                        @else
-                                            <p class="cutName" id="avatarPreview">{{ $user->cutName() }}</p>
-                                        @endif                            
-                                        <div id="avatarLoader" class="hidden">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
-                                        </div>
-                                    </form>
-                                </div>                    
-                                <div>
-                                    <h3>{{ $user->firstname }}</h3>
-                                    <span>{{ $user->role_label }}</span>
-                                    <small>{{ $user->email }}</small>
-                                </div>
-                            </div>
-                        </section>
                     @endif
+                    <section class="card card-profile">
+                        <div class="card-header">
+                            <h2>Mon profile</h2>
+                        </div>
+                        <div class="profile-box">
+                            <div class="picture-profile">
+                                <form action="{{ route('rettine.profile.update.avatar') }}" method="POST" enctype="multipart/form-data" id="avatarForm">
+                                    @csrf
+                                    <input type="file" id="avatarInput" name="avatar" accept="image/*" hidden>
+                                    @if (Auth::user()->avatar)
+                                        <img id="avatarPreview" 
+                                        src="{{ image_url(Auth::user()->avatar, 300, 300) }}" 
+                                        alt="Avatar" 
+                                        class="profile-avatar">
+                                    @else
+                                        <p class="cutName" id="avatarPreview">{{ $user->cutName() }}</p>
+                                    @endif                            
+                                    <div id="avatarLoader" class="hidden">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen-icon lucide-square-pen"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
+                                    </div>
+                                </form>
+                            </div>                    
+                            <div>
+                                <h3>{{ $user->firstname }}</h3>
+                                <span>{{ $user->role_label }}</span>
+                                <small>{{ $user->email }}</small>
+                            </div>
+                        </div>
+                    </section>
                     <section class="card">
                         <div class="card-header">
                             <h2>Information personelles</h2>

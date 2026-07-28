@@ -353,6 +353,8 @@
     display: flex;
     margin: 2px;
     flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 3px #80808047;
     border: 1px solid var(--second-pall);
     gap: 3px;
 }

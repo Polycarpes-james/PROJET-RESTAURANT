@@ -232,12 +232,11 @@
     gap: 10px;
 }
 
-.avatar {
-    width: 35px;
-    height: 35px;
+/* .avatar {
+ 
     border-radius: 50%;
     background: #ccc;
-}
+} */
 
 /* CONTENT */
 .content {

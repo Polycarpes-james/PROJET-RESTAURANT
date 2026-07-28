@@ -75,7 +75,7 @@
             <div class="sidebar-footer">
                 <div class="sidebar-user">
                     <div class="avatar">
-                        <img src="{{ image_url(Auth::user()->avatar, 40, 40) }}" style="border-radius:100%" alt="">
+                        <img src="{{ image_url(Auth::user()->avatar, 50, 50) }}" style="border-radius:100%" alt="">
                     </div>
                     <div class="user-info">
                         <p class="user-name">{{ Auth::user()->name }}</p>

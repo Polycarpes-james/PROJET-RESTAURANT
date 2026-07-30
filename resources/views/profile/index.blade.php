@@ -213,10 +213,10 @@
                                             <div class="item">
                                                 <div class="head">
                                                     <p class="name">{{ truncateText($plat->name, 14) }}</p>
-                                                    <p class="price">{{ $plat->panierPlats->first()->prix_total }}€</p>
+                                                    <p class="price">{{ $plat->pivot->prix_total }}€</p>
                                                 </div>
                                                 <div class="quantite-total">
-                                                    <p>{{ $plat->panierPlats->first()->quantite }}*{{ $plat->price }}€</p>
+                                                    <p>{{ $plat->pivot->quantite }}*{{ $plat->price }}€</p>
                                                 </div>
                                             </div>
                                         </div>

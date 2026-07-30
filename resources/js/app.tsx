@@ -1,7 +1,11 @@
-function App() {
-    return (
-        <h1>Bienvenue sur Rettine 🚀</h1>
-    );
-}
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Router from "./routes/router";
 
-export default App;
+import "./bootstrap";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+        <Router />
+    </React.StrictMode>
+);

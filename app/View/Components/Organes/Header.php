@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\organes;
+namespace App\View\Components\Organes;
 
 use App\Services\PanierService;
 use Closure;

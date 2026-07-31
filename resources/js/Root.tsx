@@ -1,5 +1,5 @@
-import Profile from "./components/profile/Profile";
+import ProfilePage from "./pages/ProfilePage";
 
 export default function Root() {
-    return <Profile />;
+    return <ProfilePage />;
 }

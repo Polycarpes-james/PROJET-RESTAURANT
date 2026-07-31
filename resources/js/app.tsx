@@ -110,7 +110,6 @@ if (container) {
                 />
 
                 <Root />
-
             </QueryClientProvider>
         </StrictMode>
     );

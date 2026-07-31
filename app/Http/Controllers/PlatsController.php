@@ -33,7 +33,6 @@ class PlatsController extends Controller
         // dd($platService->show($plat)->toArray());
         return view('plats.show', [
             'platService' => $platService->show($plat)->toArray(),
-            'total' => $panierService->total(),
             'avis' => $avis
         ]);
     }

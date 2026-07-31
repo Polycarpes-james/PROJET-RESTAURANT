@@ -13,7 +13,7 @@ class PanierService
         /**
          * La fonction "total" renvoie le nombre total de plats pour les invités et les abonnés
          */
-    public function total () {
+    static public function total () {
         $total_number = 0;
         if(Auth::user() && Commande::where('user_id', Auth::id()) && Panier::where('user_id', Auth::id())->first()){
             $total_number = Panier::where('user_id', Auth::id())->with('panierPlats')->first()->panierPlats->pluck('quantite')->sum();

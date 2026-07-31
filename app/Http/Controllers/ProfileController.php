@@ -27,11 +27,8 @@ class ProfileController extends Controller
             $total_number = $panier->panierPlats->pluck('quantite')->sum();
         }
         
-        // dd($panier->plats);
-
         $profile = auth()->user()->profileCompletion();
     
-
         return view('profile.index', [
             'user' => Auth::user(),
             'profile' => $profile,

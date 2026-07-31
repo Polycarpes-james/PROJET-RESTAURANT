@@ -35,6 +35,7 @@
         "react-hook-form": "^7.83.0",
         "react-icons": "^5.7.0",
         "react-router-dom": "^7.18.1",
+        "sonner": "^2.0.7",
         "sweetalert2": "^11.26.25",
         "tom-select": "^2.6.1",
         "zod": "^4.4.3",

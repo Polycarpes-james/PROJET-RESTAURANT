@@ -62,6 +62,14 @@ declare namespace App {
                 email: string;
                 avatar: string | null;
                 role: string;
+                phone_number:string
+            };
+        }
+        namespace Commande {
+            export type CommandeData = {
+                user_id: number;
+                status: string;
+                total_price: string | null;
             };
         }
     }

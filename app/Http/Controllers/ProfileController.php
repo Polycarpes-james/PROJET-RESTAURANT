@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
-{
+{    
 
     public function index ()
     {
@@ -33,7 +33,7 @@ class ProfileController extends Controller
             'user' => Auth::user(),
             'profile' => $profile,
             'panier' => $panier ?? [],
-            'commandes' => Commande::where('user_id', Auth::id())->first(),
+            'commande' => Commande::where('user_id', Auth::id())->first(),
             'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],
             'total' => $total_number
         ]);
@@ -137,4 +137,9 @@ class ProfileController extends Controller
 
     //     return Redirect::to('/');
     // }
+
+
+    public function avis () {
+        return "Les avis du user";
+    }
 }

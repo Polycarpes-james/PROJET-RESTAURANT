@@ -447,7 +447,7 @@
     color:#222222b0;
 }
 
-.card-header button.btn-edit{
+.card-header .btn-edit, .bnt-edite{
     border:none;
     background: var(--second-pall);
     border-top-right-radius: 8px;

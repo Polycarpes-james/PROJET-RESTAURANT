@@ -26,7 +26,7 @@ class UserData extends Data
             username: $user->name,
             email: $user->email,
             createdAt: $user->created_at,
-            avatar: $user->avatar,
+            avatar: image_url($user->avatar, 300, 300),
             role: $user->role_label
         );
     }

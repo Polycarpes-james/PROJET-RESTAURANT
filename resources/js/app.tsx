@@ -97,7 +97,7 @@ document.querySelectorAll<HTMLAnchorElement>(".js-modal").forEach(element => {
 const queryClient = new QueryClient();
 
 const container = document.getElementById("app");
-
+ 
 if (container) {
     createRoot(container).render(
         <StrictMode>

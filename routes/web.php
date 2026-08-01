@@ -78,6 +78,8 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.update.avatar');
 
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update.real');
+
+    Route::get('/profile/avis/view', [ProfileController::class, 'avis'])->name('profile.avis');
     
     Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     Route::post('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');

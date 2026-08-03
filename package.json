@@ -38,6 +38,7 @@
         "react-router-dom": "^7.18.1",
         "sonner": "^2.0.7",
         "sweetalert2": "^11.26.25",
+        "tailwind-merge": "^3.6.0",
         "tom-select": "^2.6.1",
         "zod": "^4.4.3",
         "zustand": "^5.0.14"

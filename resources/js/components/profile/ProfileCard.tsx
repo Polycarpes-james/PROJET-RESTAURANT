@@ -7,8 +7,6 @@ export default function ProfileCard({ user, role, image }: UserCard) {
         document.getElementById("avatarInput")?.click();
     };
 
-    console.log('dsuf', user);
-    
     return (
         <section className="card card-profile">
             <div className="card-header">

@@ -75,23 +75,6 @@ export default function Rooter ({
             </button>
         </aside>
         <main className="content">
-                 <div className="section-item section-big-first">
-                 <div className="header-line">
-                     <h1>
-                         <span>Bonjour</span>, {user.name}
-                     </h1>
-                     <p>Bienvenue sur votre compte</p>
-                 </div>
-                 {!profile.full && (
-                     <ProfileProgress percentage={profile.percentage} />
-                 )}
-                 <ProfileCard image={image} role={role} user={user} />
-                 <PersonalInformation image={image} role={role} user={user} />
-                 <AddressCard />
-             </div>
-             <div className="section-item section-small">
-                 <Cart panier={panier} total={total} />
-             </div>
             <Outlet/>
         </main>
     </div>

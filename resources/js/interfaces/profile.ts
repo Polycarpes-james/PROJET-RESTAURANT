@@ -16,6 +16,10 @@ export interface UserCard {
     image:string
 }
 
+export interface User {
+    user:App.Data.User.UserData
+}
+
 
 export interface Panier {
     id: number;

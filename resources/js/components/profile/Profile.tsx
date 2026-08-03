@@ -9,7 +9,7 @@ interface Props {
 export default function Cart({
     panier,
     total,
-}: Props) {
+}: Props ) {
 
     return (
         <div className="panier-user">

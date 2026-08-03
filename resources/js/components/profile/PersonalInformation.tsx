@@ -1,19 +1,22 @@
 import { Pencil } from "lucide-react";
 import { UserCard } from "../../interfaces/profile";
 import Button  from "../ui/Button";
-import { useToggle } from "../useToggle";
-// import { Modal } from "../ui/Modal";
+import Modal from "../ui/Modal/Modal";
+import { ProfileForm } from "./ProfileForm";
+import { useModal } from "@/hooks/useModal";
 
 
 export default function PersonalInformation({ user, role }: UserCard) {
-    const [isOpen, toggleOpen] = useToggle(false)
+    const modal = useModal();
 
     return (
         <section className="card">
             <div className="card-header">
                 <h2>Informations personnelles</h2>
-                {/* {isOpen && <Modal>Modification des données</Modal>} */}
-                <Button className="bnt-edite" onClick={toggleOpen}><Pencil width={18}/></Button>
+                <Modal open={modal.isOpen} onClose={modal.close} title="Modifier le profil">
+                    <ProfileForm user={user}/>
+                </Modal>
+                <Button className="bnt-edite" onClick={modal.open}><Pencil width={18}/></Button>
             </div>
             <div className="grille-infos">
                 <div className="item">

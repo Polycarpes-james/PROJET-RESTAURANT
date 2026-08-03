@@ -1,6 +1,6 @@
 import "./bootstrap";
 import "../css/app.css";
-
+import "nprogress/nprogress.css";
 // Modules existants
 import "./reservation";
 import "./admin/grafists";

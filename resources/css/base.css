@@ -46,6 +46,15 @@ button {
 .bold{
     font-weight: bold!important;
 }
+
+#nprogress .bar {
+    background: #ff7300; /* Ta couleur principale */
+    height: 3px;
+}
+
+#nprogress .peg {
+    box-shadow: 0 0 10px #ff7300, 0 0 10px #ff7300;
+}
 .fs-2{
     font-size: .85em;
 }

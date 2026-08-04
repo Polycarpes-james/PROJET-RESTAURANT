@@ -7,11 +7,16 @@ import AddressCard from "@/components/profile/AddressCard";
 import PersonalInformation from "@/components/profile/PersonalInformation";
 import ProfileCard from "@/components/profile/ProfileCard";
 import ProfileProgress from "@/components/profile/ProfileProgress";
+import { UserProvider, useUser } from "@/context/UserContext";
+
+
 
 const router = createBrowserRouter([
     {
         path: '/rettine/profile',
-        element: <Rooter {...window.profileData}/>,
+        element:<UserProvider user={window.profileData.user}>
+                    <Rooter {...window.profileData}/>
+                </UserProvider> ,
         children: [
             // {
             //     path: 'commandes',
@@ -24,6 +29,7 @@ const router = createBrowserRouter([
             {
                 path: '/rettine/profile',
                 element: <>
+
                         <div className="section-item section-big-first">
                             <div className="header-line">
                                 <h1>

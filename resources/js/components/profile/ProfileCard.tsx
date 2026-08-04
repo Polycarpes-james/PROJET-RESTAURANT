@@ -1,11 +1,15 @@
+import { useUser } from "@/context/UserContext";
 import { UserCard } from "@/interfaces/profile";
 
 
-export default function ProfileCard({ user, role, image }: UserCard) {
+export default function ProfileCard({ role, image }: UserCard) {
 
     const selectAvatar = () => {
         document.getElementById("avatarInput")?.click();
     };
+
+    const { currentUser } = useUser();
+
 
     return (
         <section className="card card-profile">
@@ -15,19 +19,19 @@ export default function ProfileCard({ user, role, image }: UserCard) {
             <div className="profile-box">
                 <div className="picture-profile" onClick={selectAvatar}>
                     <input id="avatarInput" type="file" hidden accept="image/*"/>
-                    {user.avatar ? (
+                    {currentUser.avatar ? (
                         <img src={image} className="profile-avatar"/>
                     ) : (
                         <p className="cutName">
-                            {user.firstname?.charAt(0)}
-                            {user.name.charAt(0)}
+                            {currentUser.firstname?.charAt(0)}
+                            {currentUser.name.charAt(0)}
                         </p>
                     )}
                 </div>
                 <div>
-                    <h3>{user.firstname}</h3>
+                    <h3>{currentUser.firstname}</h3>
                     <span>{role}</span>
-                    <small>{user.email}</small>
+                    <small>{currentUser.email}</small>
                 </div>
             </div>
         </section>

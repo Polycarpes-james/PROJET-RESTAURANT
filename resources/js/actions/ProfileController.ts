@@ -11,6 +11,11 @@ const ProfileController = {
         return new Action("/rettine/profile/update", "POST");
     },
 
+    show() {
+        return new Action("/rettine/profile", "GET");
+    },
+
+
     destroy() {
         // return new Action("/rettine/profile", "GET");
     },

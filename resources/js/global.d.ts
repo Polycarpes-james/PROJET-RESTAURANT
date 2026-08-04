@@ -34,5 +34,10 @@ declare global {
             plats: App.Data.Plat.PlatData;
         };
     }
+    interface Window {
+        user: {
+            user: App.Data.User.UserData;
+        };
+    }
 }
 export {};

@@ -48,12 +48,26 @@ button {
 }
 
 #nprogress .bar {
-    background: #ff7300; /* Ta couleur principale */
-    height: 3px;
+    background: #ff7300!important; /* Ta couleur principale */
+    height: 5px!important
+}
+
+#nprogress {
+    pointer-events: none;
+}
+
+#nprogress .bar {
+    background: #ff7300 !important;
+    position: fixed !important;
+    z-index: 999999 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 5px !important;
 }
 
 #nprogress .peg {
-    box-shadow: 0 0 10px #ff7300, 0 0 10px #ff7300;
+    box-shadow: none!important;
 }
 .fs-2{
     font-size: .85em;

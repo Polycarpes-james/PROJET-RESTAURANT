@@ -6,14 +6,11 @@ import PersonalInformation from "./PersonalInformation";
 import ProfileCard from "./ProfileCard";
 import ProfileProgress from "./ProfileProgress";
 import { Archive, Calendar, CircleUser, CircleUserRound } from "lucide-react";
+import { useUser } from "@/context/UserContext";
 
 
 
 export default function Rooter ({
-    user,
-    profile,
-    panier,
-    total,
     role,
     image
 }: ProfilePageProps)  {
@@ -21,17 +18,18 @@ export default function Rooter ({
     const handleLogout = () => {
         return null
     };
+    const { currentUser } = useUser();
 
     return <div className="profile-main">
         <aside className="sidebar">
             <div className="profile-side-bar">
-                {user.avatar ? (
+                {currentUser.avatar ? (
                     <img src={image} className="profile-avatar"/>
                 ) : (
-                    <p className="cutName">{user.firstname?.charAt(0)}{user.name.charAt(0)}</p>
+                    <p className="cutName">{currentUser.firstname?.charAt(0)}{currentUser.name.charAt(0)}</p>
                 )}
                 <div>
-                    <h3>{user.name} {user.firstname}</h3>
+                    <h3>{currentUser.name} {currentUser.firstname}</h3>
                     <span>{role}</span>
                 </div>
             </div>

@@ -6,11 +6,13 @@ import { ProfileForm } from "./ProfileForm";
 import { useModal } from "@/hooks/useModal";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useUser } from "@/context/UserContext";
 
 
-export default function PersonalInformation({ user, role }: UserCard) {
+export default function PersonalInformation({ role }: UserCard) {
     const modal = useModal();
-    const [currentUser, setCurrentUser] = useState(user);
+    const { currentUser, setCurrentUser  } = useUser();
+
 
     return (
         <section className="card">
@@ -20,11 +22,7 @@ export default function PersonalInformation({ user, role }: UserCard) {
                     <ProfileForm user={currentUser}  onSuccess={(response) => {
                             setCurrentUser(response.user)
                             modal.close();
-                            
-                            toast.success(
-                                response.message
-                            );
-
+                            toast.success(response.message);
                         }}
                     />
                 </Modal>
@@ -33,7 +31,7 @@ export default function PersonalInformation({ user, role }: UserCard) {
             <div className="grille-infos">
                 <div className="item">
                     <span>Nom</span>
-                    <strong>{user.name}</strong>
+                    <strong>{currentUser.name}</strong>
                 </div>
                 <div className="item">
                     <span>Prénom</span>

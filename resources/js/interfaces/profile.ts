@@ -9,7 +9,7 @@ export interface ProfilePageProps {
     total: number;
     image:string
 }
-
+    
 export interface UserCard {
     user: App.Data.User.UserData;
     role:string;

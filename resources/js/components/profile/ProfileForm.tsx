@@ -5,43 +5,35 @@ import { request } from "@/https/fetch";
 import ProfileController from "@/actions/ProfileController";
 import { useState } from "react";
 import { Spinner } from "../ui/spinner";
-import { Progress } from "@/Services/Progress";
+import ProgressService from "@/Services/ProgressService";
+import { useProfile } from "@/hooks/useProfile";
+import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 
 type ProfileFormProps = {
     user: User["user"];
     onSuccess?: (response: any) => void;
 };
 
+
 export function ProfileForm({user, onSuccess}:ProfileFormProps) {
    
-    const [loading, setLoading] = useState(false);
+    const mutation = useUpdateProfile();
 
-
-   async function handlerSubmit(
+    async function handlerSubmit(
         e: React.FormEvent<HTMLFormElement>
-    ) { 
+    ) {
         e.preventDefault();
 
-        // await new Promise(resolve => setTimeout(resolve, 2000));
+        const data = new FormData(e.currentTarget);
 
-        Progress.start()
-
-        // setLoading(true);
-        const form = e.currentTarget;
-        const data = new FormData(form)
-
-        try {
-            const response = await request(ProfileController.update(), data);
-            console.log(response);
-            
-            onSuccess?.(response)
-            
-        } catch (error) {
-            console.error(error);
-        } finally {
-            Progress.done()
-            setLoading(false);
-        }
+        mutation.mutate(data, {
+            onSuccess: (response) => {
+                onSuccess?.(response);
+            },
+            onError: (error) => {
+                console.error(error);
+            }
+        });
     }
 
     return (
@@ -57,7 +49,7 @@ export function ProfileForm({user, onSuccess}:ProfileFormProps) {
             <InputLabel type="password" name="password" className="">Entrer votre nouveau mot de pass</InputLabel>
             <InputLabel type="password" name="password_confirmation" className="">Comfirmer votre nouveau mot de pass</InputLabel>    
             <div className="modal-footer">
-                <Button type="submit" disabled={loading} className="btn btn-primary" >{loading ? <Spinner/>  : "Enregistrer"}</Button>
+                <Button type="submit" disabled={mutation.isPending} className="btn btn-primary" >{mutation.isPending ? <Spinner /> : "Enregistrer"}</Button>
             </div>
         </form>
 

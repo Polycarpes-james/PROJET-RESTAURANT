@@ -66,6 +66,31 @@ button {
     height: 5px !important;
 }
 
+.skeleton {
+    border-radius: 8px;
+    background: linear-gradient(
+        90deg,
+        #f1f1f1 25%,
+        #e3e3e3 50%,
+        #f1f1f1 75%
+    );
+
+    background-size: 200% 100%;
+
+    animation: skeleton-loading 1.2s infinite;
+}
+
+@keyframes skeleton-loading {
+
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+
+}
 #nprogress .peg {
     box-shadow: none!important;
 }

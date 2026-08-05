@@ -4,25 +4,25 @@ import Button  from "../ui/Button";
 import Modal from "../ui/Modal/Modal";
 import { ProfileForm } from "./ProfileForm";
 import { useModal } from "@/hooks/useModal";
-import { toast } from "sonner";
-import { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import { useProfile } from "@/context/ProfileContext";
 
 
-export default function PersonalInformation({ role }: UserCard) {
+export default function PersonalInformation() {
     const modal = useModal();
-    const { currentUser, setCurrentUser  } = useUser();
-
+    const { data, setData  } = useProfile();
+    const { user } = data  
 
     return (
         <section className="card">
             <div className="card-header">
                 <h2>Informations personnelles</h2>
                 <Modal open={modal.isOpen} onClose={modal.close} title="Modifier le profil">
-                    <ProfileForm user={currentUser}  onSuccess={(response) => {
-                            setCurrentUser(response.user)
+                    <ProfileForm user={user}  onSuccess={(response) => {
+                            setData(previous => ({
+                                ...previous,
+                                user: response.user
+                            }));
                             modal.close();
-                            toast.success(response.message);
                         }}
                     />
                 </Modal>
@@ -31,23 +31,23 @@ export default function PersonalInformation({ role }: UserCard) {
             <div className="grille-infos">
                 <div className="item">
                     <span>Nom</span>
-                    <strong>{currentUser.name}</strong>
+                    <strong>{user.name}</strong>
                 </div>
                 <div className="item">
                     <span>Prénom</span>
-                    <strong>{currentUser.firstname}</strong>
+                    <strong>{user.firstname}</strong>
                 </div>
                 <div className="item">
                     <span>Email</span>
-                    <strong>{currentUser.email}</strong>
+                    <strong>{user.email}</strong>
                 </div>
                 <div className="item">
                     <span>Téléphone</span>
-                    <strong>{currentUser.phone_number ?? "-"}</strong>
+                    <strong>{user.phone_number ?? "-"}</strong>
                 </div>
                 <div className="item">
                     <span>Rôle</span>
-                    <strong>{role}</strong>
+                    <strong>{data.role}</strong>
                 </div>
             </div>
         </section>

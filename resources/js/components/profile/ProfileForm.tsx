@@ -1,12 +1,7 @@
 import { User } from "@/interfaces/profile";
 import Button from "../ui/Button";
 import { InputLabel } from "../ui/pieceInput";
-import { request } from "@/https/fetch";
-import ProfileController from "@/actions/ProfileController";
-import { useState } from "react";
 import { Spinner } from "../ui/spinner";
-import ProgressService from "@/Services/ProgressService";
-import { useProfile } from "@/hooks/useProfile";
 import { useUpdateProfile } from "@/hooks/useUpdateProfile";
 
 type ProfileFormProps = {

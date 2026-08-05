@@ -38,6 +38,13 @@ class ProfileController extends Controller
             'total' => $total_number
         ]);
     }
+    public function commandes () 
+    {
+        return view('profile.index', [
+            'commande' => Commande::where('user_id', Auth::id())->first(),
+            'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],
+        ]);;
+    } 
 
     public function updateAvatar (Request $request)
     {

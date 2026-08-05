@@ -79,7 +79,8 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
 
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update.real');
 
-    Route::get('/profile/avis/view', [ProfileController::class, 'avis'])->name('profile.avis');
+    Route::get('/profile/avis', [ProfileController::class, 'avis'])->name('profile.avis');
+    Route::get('/profile/commandes', [ProfileController::class, 'commandes'])->name('profile.commandes');
     
     Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     Route::post('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');

@@ -16,6 +16,8 @@ document.addEventListener("click", (e) => {
     if (link.target === "_blank") return;
     if (link.href.startsWith(window.location.origin)) {
         ProgressService.start();
+    } else {
+        ProgressService.done()
     }
 });
 

@@ -1,42 +1,43 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { ProfilePageProps, UserCard } from "../../interfaces/profile";
-import Cart from "./Profile";
-import AddressCard from "./AddressCard";
-import PersonalInformation from "./PersonalInformation";
-import ProfileCard from "./ProfileCard";
-import ProfileProgress from "./ProfileProgress";
-import { Archive, Calendar, CircleUser, CircleUserRound } from "lucide-react";
-import { useUser } from "@/context/UserContext";
+import { NavLink, Outlet, useNavigation } from "react-router-dom";
+import { ProfilePageProps } from "../../interfaces/profile";
+import { Calendar, CircleUserRound } from "lucide-react";
+import { useProfile } from "@/context/ProfileContext";
+import { Spinner } from "../ui/spinner";
+import { useEffect } from "react";
+import ProgressService from "@/Services/ProgressService";
+import { useProgress } from "@/hooks/useProgress";
 
 
 
-export default function Rooter ({
-    role,
-    image
-}: ProfilePageProps)  {
+export default function Rooter ( )  {
     
+  const navigation = useNavigation();
+    useProgress()
+
     const handleLogout = () => {
         return null
     };
-    const { currentUser } = useUser();
+    const { data } = useProfile();
+
+    // console.log("dkodfs", user);
+    
 
     return <div className="profile-main">
         <aside className="sidebar">
             <div className="profile-side-bar">
-                {currentUser.avatar ? (
-                    <img src={image} className="profile-avatar"/>
+                {data.user.avatar ? (
+                    <img src={data.image} className="profile-avatar"/>
                 ) : (
-                    <p className="cutName">{currentUser.firstname?.charAt(0)}{currentUser.name.charAt(0)}</p>
+                    <p className="cutName">{data.user.firstname?.charAt(0)}{data.user.name.charAt(0)}</p>
                 )}
                 <div>
-                    <h3>{currentUser.name} {currentUser.firstname}</h3>
-                    <span>{role}</span>
+                    <h3>{data.user.name} {data.user.firstname}</h3>
+                    <span>{data.role}</span>
                 </div>
             </div>
             <nav>
-                <NavLink to='/rettine/profile'><CircleUserRound />Profle</NavLink>
-                <NavLink to='/rettine/profile/commandes'><Archive />Commande</NavLink>
-                <NavLink to='/rettine/profile/avis/view'><Calendar />Avis</NavLink>
+                <NavLink to='/rettine/profile'><CircleUserRound />Profile</NavLink>
+                <NavLink to='/rettine/profile/commandes'><Calendar />Commandes</NavLink>
             </nav>
             <button
                 className="deconnexion"
@@ -70,10 +71,14 @@ export default function Rooter ({
                         strokeLinejoin="round"
                     />
                 </svg>
+                {/* <DoorOpenIcon/> */}
             </button>
         </aside>
         <main className="content">
-            <Outlet/>
+            {navigation.state === "loading"
+    ? <Spinner width={400} height={400} />
+    : <Outlet />
+}
         </main>
     </div>
 }

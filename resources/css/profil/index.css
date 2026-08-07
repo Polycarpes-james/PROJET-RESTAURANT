@@ -446,8 +446,78 @@
     text-transform: uppercase;
     color:#222222b0;
 }
+.plats-commande-profile .items{
+    display: flex;
+    flex-wrap: wrap;
+}
+.plats-commande-profile-item{
+    width: 20%;
+}
+.plats-commande-profile-item .item{
+    margin: 5px;
+    box-shadow: 4px 4px 3px 2px #80808010;
+    border: 1px solid var(--orange-light);
+    padding: 5px;
+}
+.plats-commande-profile-item .item .description{
+    opacity: 0.6;
+}
+
+.item-label-par{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-label-par p{
+    text-transform: uppercase;
+    font-size: 13px;
+    opacity: 0.8;
+}
+.column{
+    flex-direction: column!important;
+    align-items: start;
+    gap: 1px;
+}
+.strong{
+    font-weight: bold;
+}
+
+.plats-commande-profile .item .multiple{
+    background-color: var(--second-pall);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border-radius: 3px;
+    color: var(--second-color);
+}
+
+.plats-commande-profile .item .multiple span{
+    background-color: var(--second-color);
+    width: 4px;
+    border-radius: 100%;
+    height: 3px;
+}
+
+.supplement-info{
+    border-left: 8px solid var(--second-color);
+    box-shadow: 0 0 5px #80808040;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+.supplement-info .info{
+    width: 80px;
+    height: 60px;
+    color: var(--second-color);
+}
 
 .card-header .btn-edit, .bnt-edite{
+
     border:none;
     background: var(--second-pall);
     border-top-right-radius: 8px;

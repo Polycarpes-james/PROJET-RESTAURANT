@@ -14,6 +14,8 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {    
+    protected string $route = 'profile';
+
 
     public function index ()
     {
@@ -38,13 +40,17 @@ class ProfileController extends Controller
             'total' => $total_number
         ]);
     }
-    public function commandes () 
-    {
+    public function commandes () {
+        $commande = Commande::where('user_id', Auth::id())->first();
+        $panier = Panier::where('user_id', Auth::id())->with('panierPlats')->first();
+
         return view('profile.index', [
-            'commande' => Commande::where('user_id', Auth::id())->first(),
-            'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats : [],
-        ]);;
-    } 
+            'commande' => Commande::where('user_id', Auth::id())->with('user', 'livraisons', 'paniers')->first(),
+            'platsCommande' => $commande ? Panier::with('plats')->where('user_id', $commande->user_id)->first()->plats()->with('category')->get() : [],
+            'panier' => $panier ?? [],
+
+        ]);
+    }
 
     public function updateAvatar (Request $request)
     {
@@ -71,6 +77,7 @@ class ProfileController extends Controller
         return to_route('rettine.profile.index');
    
     }
+  
     /**
      * Display the user's profile form.
      */
@@ -123,6 +130,7 @@ class ProfileController extends Controller
             ])
         ;
     }
+
 
     // /**
     //  * Delete the user's account.

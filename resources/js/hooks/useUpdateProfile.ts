@@ -17,24 +17,14 @@ export function useUpdateProfile() {
 
         onSuccess(response) {
 
-            queryClient.setQueryData(
-                ["profile"],
-                response.user
-            );
-
+            queryClient.setQueryData(["profile"], response.user);
             toast.success(response.message);
         },
-
         onError(error) {
-
             console.error(error);
-
         },
-
         onSettled() {
-
             ProgressService.done();
-
         }
 
     });

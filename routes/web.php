@@ -73,14 +73,14 @@ Route::middleware('auth')->prefix('rettine')->name('rettine.')->group(function (
             'plat' => '[0-9]+'
         ]);
 
-    Route::resource('profile', ProfileController::class);
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/prop_commandes', [ProfileController::class, 'commandes'])->name('profile.commandes');
     
     Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.update.avatar');
 
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update.real');
 
     Route::get('/profile/avis', [ProfileController::class, 'avis'])->name('profile.avis');
-    Route::get('/profile/commandes', [ProfileController::class, 'commandes'])->name('profile.commandes');
     
     Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
     Route::post('/profile/change-password', [ProfileController::class, 'changePassword'])->name('profile.changePassword');

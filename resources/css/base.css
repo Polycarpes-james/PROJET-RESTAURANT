@@ -91,6 +91,23 @@ button {
     }
 
 }
+.carde{
+    display: flex;
+    flex-direction: column;
+}
+.part-first, .part-txo{
+    display: flex;
+    gap: 3em;
+    margin: 1em;
+}
+
+.big-error{
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 #nprogress .peg {
     box-shadow: none!important;
 }

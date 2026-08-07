@@ -5,6 +5,7 @@ import Modal from "../ui/Modal/Modal";
 import { ProfileForm } from "./ProfileForm";
 import { useModal } from "@/hooks/useModal";
 import { useProfile } from "@/context/ProfileContext";
+import { LabelPar } from "../ui/pieceLabel";
 
 
 export default function PersonalInformation() {
@@ -29,26 +30,11 @@ export default function PersonalInformation() {
                 <Button className="bnt-edite" onClick={modal.open}><Pencil width={18}/></Button>
             </div>
             <div className="grille-infos">
-                <div className="item">
-                    <span>Nom</span>
-                    <strong>{user.name}</strong>
-                </div>
-                <div className="item">
-                    <span>Prénom</span>
-                    <strong>{user.firstname}</strong>
-                </div>
-                <div className="item">
-                    <span>Email</span>
-                    <strong>{user.email}</strong>
-                </div>
-                <div className="item">
-                    <span>Téléphone</span>
-                    <strong>{user.phone_number ?? "-"}</strong>
-                </div>
-                <div className="item">
-                    <span>Rôle</span>
-                    <strong>{data.role}</strong>
-                </div>
+                <LabelPar className="" column='column' label={user.name} par="Nom"/>
+                <LabelPar className="" column='column' label={user.firstname} par="Prénom"/>
+                <LabelPar className="" column='column' label={user.email} par="email"/>
+                <LabelPar className="" column='column' label={user.phone_number} par="téléphone"/>
+                <LabelPar className="" column='column' label={data.role} par="role"/>
             </div>
         </section>
     );

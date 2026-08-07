@@ -9,6 +9,8 @@ import ProfileProgress from "./ProfileProgress";
 export default function ProfileHome () {    
     const { data } = useProfile();
     const { user } = data;
+    console.log("fklskfl", data);
+    
     return <>
             <div className="section-item section-big-first">
                 <div className="header-line">

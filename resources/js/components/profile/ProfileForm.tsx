@@ -20,7 +20,7 @@ export function ProfileForm({user, onSuccess}:ProfileFormProps) {
         e.preventDefault();
 
         const data = new FormData(e.currentTarget);
-
+        
         mutation.mutate(data, {
             onSuccess: (response) => {
                 onSuccess?.(response);

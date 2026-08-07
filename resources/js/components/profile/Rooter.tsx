@@ -6,6 +6,7 @@ import { Spinner } from "../ui/spinner";
 import { useEffect } from "react";
 import ProgressService from "@/Services/ProgressService";
 import { useProgress } from "@/hooks/useProgress";
+import UserCardSkeleton from "../UserSkeleton";
 
 
 
@@ -37,7 +38,7 @@ export default function Rooter ( )  {
             </div>
             <nav>
                 <NavLink to='/rettine/profile'><CircleUserRound />Profile</NavLink>
-                <NavLink to='/rettine/profile/commandes'><Calendar />Commandes</NavLink>
+                <NavLink to='/rettine/profile/prop_commandes'><Calendar />Commandes</NavLink>
             </nav>
             <button
                 className="deconnexion"
@@ -75,10 +76,7 @@ export default function Rooter ( )  {
             </button>
         </aside>
         <main className="content">
-            {navigation.state === "loading"
-    ? <Spinner width={400} height={400} />
-    : <Outlet />
-}
+          {navigation.state === "loading" ? <UserCardSkeleton/> : <Outlet/>}
         </main>
     </div>
 }

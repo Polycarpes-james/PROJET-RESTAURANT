@@ -66,10 +66,12 @@ declare namespace App {
             };
         }
         namespace Commande {
-            export type CommandeData = {
+            export type CommandeData = {ù
+                id:number;
                 user_id: number;
                 status: string;
                 total_price: string | null;
+                user: App.Data.User.UserData
             };
         }
     }

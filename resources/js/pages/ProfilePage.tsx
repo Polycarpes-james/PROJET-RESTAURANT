@@ -12,7 +12,6 @@ const router = createBrowserRouter([
         errorElement:<PageError />,
         element:(
             <ProfileProvider>
-                
                 <Rooter />
             </ProfileProvider>
         ) ,
@@ -22,8 +21,9 @@ const router = createBrowserRouter([
                 element: <ProfileHome/>
             },
             {
-                path: 'commandes',
-                element: <CommandeIndexPage />
+                path: 'prop_commandes',
+                element: <CommandeIndexPage/>,
+                loader: () => window.commandeUserProfileData
             }
         ]
     }
@@ -32,12 +32,12 @@ const router = createBrowserRouter([
 function PageError () {
     const error = useRouteError()
 
-    return <>
-         <h1>Une erreur est survenu ! </h1>
+    return <div className="big-error">
+        <h1>Une erreur est survenu ! </h1>
         <p>
             {error?.toString()}
         </p>
-    </>
+    </div>
 }
 
 export default function ProfilePage() {
